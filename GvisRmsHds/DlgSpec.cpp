@@ -6,6 +6,10 @@
 #include "DlgSpec.h"
 #include "afxdialogex.h"
 
+#include "MainFrm.h"
+#include "GvisRmsHdsDoc.h"
+#include "GvisRmsHdsView.h"
+
 
 // CDlgSpec 대화 상자입니다.
 
@@ -69,6 +73,9 @@ void CDlgSpec::OnShowWindow(BOOL bShow, UINT nStatus)
 
 BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	//	if (pMsg->message == WM_SYSKEYDOWN && pMsg->wParam == VK_F4)
 	//		return TRUE;
 	//
@@ -104,7 +111,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//					//DisplayChangedData();
 	//					if (m_nSpreadCellFocusPos[0] < 16) // Total Rows
 	//					{
-	//						if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 8)	//150611 hjc add
+	//						if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 8)	//150611 hjc add
 	//							m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] + 3; //Complete Editing Without Error.
 	//						else
 	//							m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] + 1; //Complete Editing Without Error.
@@ -120,7 +127,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//					//DisplayChangedData();
 	//					if (m_nSpreadCellFocusPos[1] < 16) // Total Rows
 	//					{
-	//						if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 8)	//150611 hjc add
+	//						if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 8)	//150611 hjc add
 	//							m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] + 3; //Complete Editing Without Error.
 	//						else
 	//							m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] + 1; //Complete Editing Without Error.
@@ -136,7 +143,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//					//DisplayChangedData();
 	//					if (m_nSpreadCellFocusPos[2] < 9)
 	//					{
-	//						if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 4)	//150611 hjc add
+	//						if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 4)	//150611 hjc add
 	//							m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] + 2; //Complete Editing Without Error.
 	//						else
 	//							m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] + 1; //Complete Editing Without Error.
@@ -152,7 +159,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//					//DisplayChangedData();
 	//					int nMax = 12;
 	//
-	//					if (SpecData.bEnableCharInspection)
+	//					if (pDoc->SpecData.bEnableCharInspection)
 	//						nMax = 15;
 	//
 	//					if (m_nSpreadCellFocusPos[3] < nMax) // Total Rows		//jun 20120903 for LG_CCL-Inspector
@@ -319,16 +326,16 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//	{
 	//		if (pMsg->message == WM_LBUTTONDOWN)
 	//		{
-	//			pGlobalDoc->m_bRestedMotion = FALSE;
-	//			pGlobalDoc->m_dCurrSystemTime = pGlobalDoc->m_dRestedSystemTime = GetTickCount64(); //pGlobalView->GetSystemTimeVal();
+	//			pDoc->m_bRestedMotion = FALSE;
+	//			pDoc->m_dCurrSystemTime = pDoc->m_dRestedSystemTime = GetTickCount64(); //pGlobalView->GetSystemTimeVal();
 	//		}
 	//		return CDialog::PreTranslateMessage(pMsg);
 	//	}
 	//
 	//	if ((pMsg->lParam & 0x40000000) == 0 && pMsg->message == WM_KEYDOWN)
 	//	{
-	//		pGlobalDoc->m_bRestedMotion = FALSE;
-	//		pGlobalDoc->m_dCurrSystemTime = pGlobalDoc->m_dRestedSystemTime = GetTickCount64(); //pGlobalView->GetSystemTimeVal();
+	//		pDoc->m_bRestedMotion = FALSE;
+	//		pDoc->m_dCurrSystemTime = pDoc->m_dRestedSystemTime = GetTickCount64(); //pGlobalView->GetSystemTimeVal();
 	//
 	//		switch (pMsg->wParam)
 	//		{
@@ -389,7 +396,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//					/*
 	//					AfxMessageBox("Screen Capture Fail",MB_ICONWARNING|MB_OK);
 	//					*/
-	//					pGlobalView->m_strAfxMsg = _T("[MSG235] ") + pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "AFX_MSG", "PreTranslateMessage_P1_M1");
+	//					pGlobalView->m_strAfxMsg = _T("[MSG235] ") + pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "AFX_MSG", "PreTranslateMessage_P1_M1");
 	//					AfxMessageBox(pGlobalView->m_strAfxMsg, MB_ICONWARNING | MB_OK);
 	//				}
 	//				return TRUE;
@@ -496,7 +503,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			{
 	//				if (m_nSpreadCellFocusPos[0] < 16) // Total Rows
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 8)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 8)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] + 3; //Complete Editing Without Error.
 	//					else
 	//						m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] + 1; //Complete Editing Without Error.
@@ -511,7 +518,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			{
 	//				if (m_nSpreadCellFocusPos[1] < 16) // Total Rows
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 8)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 8)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] + 3; //Complete Editing Without Error.
 	//					else
 	//						m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] + 1; //Complete Editing Without Error.
@@ -525,7 +532,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			{
 	//				if (m_nSpreadCellFocusPos[2] < 9)
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 4)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 4)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] + 2; //Complete Editing Without Error.
 	//					else
 	//						m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] + 1; //Complete Editing Without Error.
@@ -622,7 +629,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			{
 	//				if (m_nSpreadCellFocusPos[0] < 16) // Total Rows
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 8)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 8)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] + 3; //Complete Editing Without Error.
 	//					else
 	//						m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] + 1; //Complete Editing Without Error.
@@ -638,7 +645,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			{
 	//				if (m_nSpreadCellFocusPos[1] < 16) // Total Rows
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 8)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 8)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] + 3; //Complete Editing Without Error.
 	//					else
 	//						m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] + 1; //Complete Editing Without Error.
@@ -653,7 +660,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			{
 	//				if (m_nSpreadCellFocusPos[2] < 9)
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 4)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 4)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] + 2; //Complete Editing Without Error.
 	//					else
 	//						m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] + 1; //Complete Editing Without Error.
@@ -754,9 +761,9 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			break;
 	//
 	//		case VK_PRIOR: //pgup lgh add 130515
-	//			if (!pGlobalDoc->m_bTesting)
+	//			if (!pDoc->m_bTesting)
 	//			{
-	//				if (pGlobalDoc->m_DefectListItem[pGlobalView->m_nSelectDefectListID].GetCount()>0)
+	//				if (pDoc->m_DefectListItem[pGlobalView->m_nSelectDefectListID].GetCount()>0)
 	//				{
 	//					((CCustomCmdButton*)pGlobalView->GetButtonItem(IDC_BTN_THUMBNAIL_PACK_PAGEUP))->SetValue(TRUE);
 	//					pGlobalView->MoveThumbPos(0);
@@ -766,9 +773,9 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//			break;
 	//
 	//		case VK_NEXT: //pgdown lgh add 130515
-	//			if (!pGlobalDoc->m_bTesting)
+	//			if (!pDoc->m_bTesting)
 	//			{
-	//				if (pGlobalDoc->m_DefectListItem[pGlobalView->m_nSelectDefectListID].GetCount()>0)
+	//				if (pDoc->m_DefectListItem[pGlobalView->m_nSelectDefectListID].GetCount()>0)
 	//				{
 	//					((CCustomCmdButton*)pGlobalView->GetButtonItem(IDC_BTN_THUMBNAIL_PACK_PAGEDOWN))->SetValue(TRUE);
 	//					pGlobalView->MoveThumbPos(0);
@@ -788,7 +795,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//				}
 	//				else
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 11)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[0] == 11)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] - 3;
 	//					else
 	//						m_nSpreadCellFocusPos[0] = m_nSpreadCellFocusPos[0] - 1; //Complete Editing Without Error.
@@ -803,7 +810,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//				}
 	//				else
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 11)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[1] == 11)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] - 3;
 	//					else
 	//						m_nSpreadCellFocusPos[1] = m_nSpreadCellFocusPos[1] - 1; //Complete Editing Without Error.
@@ -818,7 +825,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//				}
 	//				else
 	//				{
-	//					if (pGlobalDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 6)	//150611 hjc add
+	//					if (pDoc->m_bUseCombo && m_nSpreadCellFocusPos[2] == 6)	//150611 hjc add
 	//						m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] - 2;
 	//					else
 	//						m_nSpreadCellFocusPos[2] = m_nSpreadCellFocusPos[2] - 1; //Complete Editing Without Error.
@@ -927,7 +934,7 @@ BOOL CDlgSpec::PreTranslateMessage(MSG* pMsg)
 	//		case VK_HOME:
 	//			pMotion->GotoLoadingPosition(WAIT);
 	//#if CUSTOMER_COMPANY == SUMITOMO	//121031 hjc add
-	//			pGlobalDoc->m_bTowerLampFlag = FALSE;
+	//			pDoc->m_bTowerLampFlag = FALSE;
 	//			pGlobalView->TowerLampControl(TOWER_LAMP_GREEN);
 	//#endif
 	//			pGlobalView->Air_Restore();
@@ -1204,6 +1211,9 @@ LRESULT CDlgSpec::OnKeyDownFpspread1(WPARAM wParam, LPARAM lParam)
 
 LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	LPSS_LEAVECELL info = (LPSS_LEAVECELL)lParam;
 
@@ -1263,7 +1273,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -1290,7 +1300,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][2] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (Row - 1)); // Bit Flag.
@@ -1326,7 +1336,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -1361,7 +1371,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -1398,7 +1408,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -1433,7 +1443,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -1469,7 +1479,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -1497,7 +1507,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -1506,9 +1516,9 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	}
 
-	if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 	{
-	if (!pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (!pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	if (Col == 1 && Row == 9)	//150413 hjc add
 	{
@@ -1529,7 +1539,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -1556,7 +1566,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -1595,7 +1605,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][11] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -1635,7 +1645,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][12] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -1663,7 +1673,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][13] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -1689,7 +1699,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][14] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -1716,7 +1726,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][15] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -1742,7 +1752,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][16] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (16 - 1)); // Bit Flag.
@@ -1779,7 +1789,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -1805,7 +1815,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][2] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -1831,7 +1841,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -1865,7 +1875,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -1900,7 +1910,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[1][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -1933,7 +1943,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -1959,7 +1969,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -1985,7 +1995,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -1994,9 +2004,9 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	}
 
-	if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 	{
-	if (!pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (!pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	if (Col == 1 && Row == 9)	//150413 hjc add
 	{
@@ -2017,7 +2027,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -2046,7 +2056,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[1][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -2085,7 +2095,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][11] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -2124,7 +2134,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][12] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -2151,7 +2161,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][13] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -2177,7 +2187,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][14] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -2203,7 +2213,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][15] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -2229,7 +2239,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][16] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (16 - 1)); // Bit Flag.
@@ -2275,7 +2285,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[2][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -2312,7 +2322,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[2][2] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -2348,7 +2358,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[2][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -2376,14 +2386,14 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[2][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (4 - 1)); // Bit Flag.
 	}
 	m_fMinSpWidth = _ttof(strTemp);
 	}
-	if (!pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (!pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	if (Col == 1 && Row == 5)
 	{
@@ -2416,7 +2426,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[2][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -2457,7 +2467,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[2][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -2484,7 +2494,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[2][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -2512,7 +2522,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[2][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -2542,7 +2552,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[2][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -2587,7 +2597,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -2614,13 +2624,13 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (3 - 1)); // Bit Flag.
 	}
 
-	if (pGlobalDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])
+	if (pDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])
 	{
 	m_fPinHoleMin = _ttof(strTemp);
 
@@ -2670,7 +2680,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -2697,7 +2707,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -2724,7 +2734,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -2751,7 +2761,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -2777,7 +2787,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -2803,7 +2813,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][11] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -2829,7 +2839,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][12] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -2857,7 +2867,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][13] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -2885,7 +2895,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (fabs(_ttof(m_strOriginData[3][14]) - _ttof(strTemp)) > 0.01)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -2913,7 +2923,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (fabs(_ttof(m_strOriginData[3][15]) - _ttof(strTemp)) > 0.01)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -2959,12 +2969,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (1 - 1)); // Bit Flag.
 	}
-	SpecData.nVDrillDiffBrightGray = _ttoi(strTemp);		//150606 hjc mod
+	pDoc->SpecData.nVDrillDiffBrightGray = _ttoi(strTemp);		//150606 hjc mod
 	}
 
 	if (Col == 1 && Row == 2)
@@ -2993,12 +3003,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][2] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (2 - 1)); // Bit Flag.
 	}
-	SpecData.nVDrillDiffDarkGray = _ttoi(strTemp);		//150606 hjc mod
+	pDoc->SpecData.nVDrillDiffDarkGray = _ttoi(strTemp);		//150606 hjc mod
 	}
 
 	if (Col == 1 && Row == 3)
@@ -3020,12 +3030,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (3 - 1)); // Bit Flag.
 	}
-	SpecData.fVDPadPrecName = _ttof(strTemp);
+	pDoc->SpecData.fVDPadPrecName = _ttof(strTemp);
 	}
 	//20090419 hjc
 	if (Col == 1 && Row == 4)
@@ -3047,7 +3057,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -3074,7 +3084,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -3110,7 +3120,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -3138,7 +3148,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	//111214 hjc add
 	if (m_strOriginData[4][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -3165,7 +3175,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -3192,7 +3202,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][11] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -3219,7 +3229,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][13] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -3246,12 +3256,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][14] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (14 - 1)); // Bit Flag.
 	}
-	SpecData.fHoleFillExt = _ttof(strTemp);
+	pDoc->SpecData.fHoleFillExt = _ttof(strTemp);
 	}
 
 	if (Col == 1 && Row == 15)
@@ -3273,7 +3283,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][15] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -3300,7 +3310,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][17] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (17 - 1)); // Bit Flag.
@@ -3328,12 +3338,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][19] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (19 - 1)); // Bit Flag.
 	}
-	SpecData.fCO2HoleFillExt = _ttof(strTemp);
+	pDoc->SpecData.fCO2HoleFillExt = _ttof(strTemp);
 	}
 
 	if (Col == 1 && Row == 20)
@@ -3362,7 +3372,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][20] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (20 - 1)); // Bit Flag.
@@ -3389,7 +3399,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][22] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (22 - 1)); // Bit Flag.
@@ -3428,7 +3438,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -3466,7 +3476,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (_ttof(m_strOriginData[5][2]) != _ttof(strTemp))
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -3503,7 +3513,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (_ttof(m_strOriginData[5][3]) != _ttof(strTemp))
 	//if(m_strOriginData[5][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -3538,7 +3548,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -3572,7 +3582,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -3609,7 +3619,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -3636,7 +3646,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -3671,7 +3681,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -3698,7 +3708,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][11] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -3732,7 +3742,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][12] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -3767,7 +3777,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][13] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -3793,7 +3803,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][14] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -3831,14 +3841,14 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][15] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (15 - 1)); // Bit Flag.
 	}
 	}
 
-	SpecData.nVHEdgeThrDiffGray = _ttoi(strTemp);
+	pDoc->SpecData.nVHEdgeThrDiffGray = _ttoi(strTemp);
 	}
 
 	if (Col == 1 && Row == 16)
@@ -3871,14 +3881,14 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][16] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (16 - 1)); // Bit Flag.
 	}
 	}
 
-	SpecData.nVHBreakOutGray = _ttoi(strTemp);
+	pDoc->SpecData.nVHBreakOutGray = _ttoi(strTemp);
 
 	}
 
@@ -3912,14 +3922,14 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][17] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (17 - 1)); // Bit Flag.
 	}
 	}
 
-	SpecData.nVHDissmearGray = _ttoi(strTemp);
+	pDoc->SpecData.nVHDissmearGray = _ttoi(strTemp);
 	}
 
 	if (Col == 1 && Row == 18)
@@ -3952,14 +3962,14 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][18] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (18 - 1)); // Bit Flag.
 	}
 	}
 
-	SpecData.nVHContiBreakOutNum = _ttoi(strTemp);
+	pDoc->SpecData.nVHContiBreakOutNum = _ttoi(strTemp);
 	}
 
 	if (m_bKeyDown)
@@ -3998,7 +4008,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -4033,7 +4043,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][2] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -4067,7 +4077,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -4094,7 +4104,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -4121,7 +4131,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -4150,7 +4160,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -4177,7 +4187,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -4205,7 +4215,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -4232,7 +4242,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -4259,7 +4269,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -4286,7 +4296,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][11] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -4313,7 +4323,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][12] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -4340,7 +4350,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][13] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -4367,7 +4377,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][14] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -4394,7 +4404,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[6][15] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -4431,12 +4441,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][1] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001); // Bit Flag.
 	}
-	pGlobalDoc->m_nPtSrchRngExt = _ttoi(strTemp);
+	pDoc->m_nPtSrchRngExt = _ttoi(strTemp);
 	}
 
 	if (Col == 1 && Row == 3)
@@ -4469,7 +4479,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][3] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -4490,7 +4500,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -4525,13 +4535,13 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	SizeData[COMMON_PARAMETER].fPixelSizeX,
 	pGlobalView->GetLanguageString("MENU", "MUST_OVER"));
 	MessageBox(strMsg);
-	m_fDefMaskSize = max(SizeData[COMMON_PARAMETER].fPixelSizeX, SpecData.fDefMaskSize);
+	m_fDefMaskSize = max(SizeData[COMMON_PARAMETER].fPixelSizeX, pDoc->SpecData.fDefMaskSize);
 	DisplaySpread(7);
 	return 0;
 	}
 	else if (m_strOriginData[7][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -4557,7 +4567,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][6] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -4582,7 +4592,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][8] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -4605,7 +4615,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -4622,7 +4632,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	for (int i = 0; i < 12; i++)
 	{
-	double dPosName = fabs(pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[i] - _ttof(strTemp));
+	double dPosName = fabs(pDoc->m_IRISAxisControl.m_dIRISPosName[i] - _ttof(strTemp));
 
 	if (dPosName < 0.01)
 	{
@@ -4633,7 +4643,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (fabs(_ttof(m_strOriginData[7][10]) - _ttof(strTemp)) > 0.01)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -4656,7 +4666,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	for (int i = 0; i < 12; i++)
 	{
-	double dPosName = fabs(pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[i] - _ttof(strTemp));
+	double dPosName = fabs(pDoc->m_IRISAxisControl.m_dIRISPosName[i] - _ttof(strTemp));
 
 	if (dPosName < 0.01)
 	{
@@ -4667,7 +4677,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (fabs(_ttof(m_strOriginData[7][8]) - _ttof(strTemp)) > 0.01)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -4698,9 +4708,9 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	switch (m_nTabNum)
 	{
 	case 0:
-	if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 	{
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	//m_nSpreadCellFocusPos[0] = Row;
 
@@ -4724,7 +4734,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -4753,7 +4763,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -4766,10 +4776,10 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case 1:
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	//m_nSpreadCellFocusPos[1] = Row;
-	if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 	{
 	if (Col == 1 && Row == 9)
 	{
@@ -4791,7 +4801,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -4820,7 +4830,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -4833,7 +4843,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case 2:
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	//m_nSpreadCellFocusPos[2] = Row;
 
@@ -4857,7 +4867,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[2][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -4876,7 +4886,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	m_Spread.SetCol(1);
 	m_Spread.SetRow(2);
 	strTemp = m_Spread.GetText();
-	//strcpy(SpecData.szVDPadPrecName, strTemp);
+	//strcpy(pDoc->SpecData.szVDPadPrecName, strTemp);
 	int nPos = strTemp.Find(_T(" "), 0);
 	strTemp = strTemp.Left(nPos);
 	if (!(strTemp == "Highest" || strTemp == "VeryHigh" || strTemp == "High"
@@ -4892,12 +4902,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][2] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M4");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M4");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -4909,7 +4919,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_LARGE, ModifiedNum, strTemp) == SUCCESS)
 	//	m_strOriginData[3][17] = m_strLP_Prec;
-	m_strOriginData[3][2] = SpecData.szLPADRLName;	//20100305 hjc mod
+	m_strOriginData[3][2] = pDoc->SpecData.szLPADRLName;	//20100305 hjc mod
 	}
 	}
 	else
@@ -4951,12 +4961,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][5] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -4967,7 +4977,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_SPACE, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[3][5] = SpecData.szSPRLName;
+	m_strOriginData[3][5] = pDoc->SpecData.szSPRLName;
 	}
 	}
 	else
@@ -5009,12 +5019,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[3][8] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -5025,7 +5035,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_SPACEEXT, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[3][8] = SpecData.szSPACEEXTRLName;
+	m_strOriginData[3][8] = pDoc->SpecData.szSPACEEXTRLName;
 	}
 	}
 	else
@@ -5070,12 +5080,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][7] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M1");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M1");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (7 - 1)); // Bit Flag.
 
@@ -5086,7 +5096,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_SMALL, ModifiedNum, strTemp) == SUCCESS)
 	//	m_strOriginData[3][6] = m_strPadBallPrec;
-	m_strOriginData[4][7] = SpecData.szPADRLPrecName;	//20100305 hjc mod
+	m_strOriginData[4][7] = pDoc->SpecData.szPADRLPrecName;	//20100305 hjc mod
 	}
 	}
 	else
@@ -5128,12 +5138,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][9] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M3");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M3");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -5144,7 +5154,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_PADTIP, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[4][9] = SpecData.szPADTipPrecName;
+	m_strOriginData[4][9] = pDoc->SpecData.szPADTipPrecName;
 	}
 	}
 	else
@@ -5185,12 +5195,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][12] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M2");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M2");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -5201,7 +5211,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_AR, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[4][12] = SpecData.szARLandPrecName;
+	m_strOriginData[4][12] = pDoc->SpecData.szARLandPrecName;
 	}
 	}
 	else
@@ -5245,12 +5255,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][16] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M15");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M15");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (16 - 1)); // Bit Flag.
@@ -5261,7 +5271,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_CO2, ModifiedNum, strTemp) == SUCCESS)	//20100322 hjc mod
-	m_strOriginData[4][16] = SpecData.szCO2LandPrecName;
+	m_strOriginData[4][16] = pDoc->SpecData.szCO2LandPrecName;
 	}
 	}
 	else
@@ -5302,33 +5312,33 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][18] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (18 - 1)); // Bit Flag.
 
-	StringToChar(strTemp, SpecData.szCO2LandAlignMode);
-	//					strcpy(SpecData.szCO2LandAlignMode, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szCO2LandAlignMode);
+	//					strcpy(pDoc->SpecData.szCO2LandAlignMode, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
 	else
 	{
-	StringToChar(m_strOriginData[4][18], SpecData.szCO2LandAlignMode);
-	//					strcpy(SpecData.szCO2LandAlignMode, m_strOriginData[4][18]);
+	StringToChar(m_strOriginData[4][18], pDoc->SpecData.szCO2LandAlignMode);
+	//					strcpy(pDoc->SpecData.szCO2LandAlignMode, m_strOriginData[4][18]);
 	strTemp = m_strOriginData[4][18];	//20100305 hjc mod
 	DisplaySpread(4);
 	}
 	}
 	if (strTemp == "Yes")
-	SpecData.nCO2LandAlignMode = 1;
+	pDoc->SpecData.nCO2LandAlignMode = 1;
 	else
-	SpecData.nCO2LandAlignMode = 0;
+	pDoc->SpecData.nCO2LandAlignMode = 0;
 
-	StringToChar(strTemp, SpecData.szCO2LandAlignMode);
-	//			strcpy(SpecData.szCO2LandAlignMode, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szCO2LandAlignMode);
+	//			strcpy(pDoc->SpecData.szCO2LandAlignMode, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
@@ -5355,12 +5365,12 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][21] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M6");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M6");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (21 - 1)); // Bit Flag.
@@ -5371,7 +5381,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_FINE, ModifiedNum, strTemp) == SUCCESS)  // 20101208 bug fix PAD_SPACE->PAD_FINE by ljg
-	m_strOriginData[4][21] = SpecData.szPADFine_PrecName;
+	m_strOriginData[4][21] = pDoc->SpecData.szPADFine_PrecName;
 	}
 	}
 	else
@@ -5418,7 +5428,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[5][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -5447,13 +5457,13 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[5][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (9 - 1)); // Bit Flag.
 	}
-	StringToChar(strTemp, SpecData.szVHMode);
-	//			strcpy(SpecData.szVHMode, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szVHMode);
+	//			strcpy(pDoc->SpecData.szVHMode, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	//20090311 hjc add
@@ -5542,7 +5552,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[7][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -5555,7 +5565,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	int nPos;
 	m_Spread.SetCol(1);
 	m_Spread.SetRow(7);
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 	{
 	strTemp = m_Spread.GetText();
 	nPos = strTemp.Find(_T(" "), 0);
@@ -5573,16 +5583,16 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[7][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (7 - 1)); // Bit Flag.
 	}
 	m_strSelectVaccum = strTemp;
 	if (strTemp == "Both")
-	SpecData.nSelectVaccum = 1;
+	pDoc->SpecData.nSelectVaccum = 1;
 	else
-	SpecData.nSelectVaccum = 2;
+	pDoc->SpecData.nSelectVaccum = 2;
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
@@ -5592,7 +5602,7 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 	nPos = strTemp.Find(_T(" "), 0);
 	strTemp = strTemp.Left(nPos);
 	m_strSelectVaccum = strTemp;
-	SpecData.nSelectVaccum = 1;
+	pDoc->SpecData.nSelectVaccum = 1;
 	}
 	}
 	break;
@@ -5605,6 +5615,9 @@ LRESULT CDlgSpec::OnLeaveCellFpspread1(WPARAM wParam, LPARAM lParam)
 LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 {
 	// TODO: Add your control notification handler code here
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	/*	SS_COORD col, row;
 	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	m_Spread.GetActiveCell(&col, &row);
@@ -5625,18 +5638,18 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	{
 	if (Col == 1 && Row >= 9 && Row <= 16)
 	{
-	if (SpecData.nLineWidthGroupNum > 0)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 	{
 	BOOL bLineWidthChanged = FALSE;
 	CDlgMultiLineSpec dlg;
-	dlg.LoadFractionData(pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+	dlg.LoadFractionData(pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 
 	dlg.m_nNum = m_nLineWidthGroupNum;
 	for (idx = 0; idx < max(1, m_nLineWidthGroupNum + 1); idx++)
 	{
 	dlg.m_dGroupLower[idx] = m_fLineWidthGroupLower[idx];
 	dlg.m_dGroup[idx] = m_fLineWidthGroup[idx];
-	dlg.m_dAdjusted[idx] = SpecData.fLineWidthGroupAdjusted[idx];
+	dlg.m_dAdjusted[idx] = pDoc->SpecData.fLineWidthGroupAdjusted[idx];
 	dlg.m_strNick[idx] = m_strNick[idx];
 	dlg.m_strProtrusion[idx] = m_strProtrusion[idx];
 	dlg.m_nNickPercent[idx] = m_nNickPercent[idx];
@@ -5665,8 +5678,8 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	if (m_nLineWidthGroupNum != dlg.m_nNum)
 	{
 	pGlobalView->m_bInitVisionAdjust = 0;
-	pGlobalDoc->m_fEntireMeanLineWidthDiff = 0.0;
-	pGlobalDoc->m_fEntireMeanFineLineWidthDiff = 0.0;
+	pDoc->m_fEntireMeanLineWidthDiff = 0.0;
+	pDoc->m_fEntireMeanFineLineWidthDiff = 0.0;
 	g_nProcessStepState[PSTEP_ADJUST] = 0;
 	m_bReloadReference = 1;
 	m_bMultilineSaved = 1;
@@ -5674,38 +5687,38 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	m_nLineWidthGroupNum = dlg.m_nNum;
 	}
 
-	SpecData.nLineWidthGroupNum = SpecData.nLineWidthGroupNum = dlg.m_nNum;
-	m_nLineWidthGroupNum = SpecData.nLineWidthGroupNum;
-	//		m_nFineLineWidthGroupNum = SpecData.nLineWidthGroupNum;
-	SpecData.nLineWidthGroupNum = SpecData.nLineWidthGroupNum = dlg.m_nNum;
+	pDoc->SpecData.nLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum = dlg.m_nNum;
+	m_nLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum;
+	//		m_nFineLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum;
+	pDoc->SpecData.nLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum = dlg.m_nNum;
 
 	for (idx = 0; idx < m_nLineWidthGroupNum + 1; idx++)
 	{
 	if (idx < m_nLineWidthGroupNum)
 	{
-	if (SpecData.fLineWidthGroup[idx] != dlg.m_dGroup[idx])
+	if (pDoc->SpecData.fLineWidthGroup[idx] != dlg.m_dGroup[idx])
 	{
 	m_bMultilineSaved = 1;
 	bLineWidthChanged = TRUE;
-	SpecData.fLineWidthGroup[idx] = dlg.m_dGroup[idx];
+	pDoc->SpecData.fLineWidthGroup[idx] = dlg.m_dGroup[idx];
 	}
 
-	m_fLineWidthGroup[idx] = SpecData.fLineWidthGroup[idx];
-	SpecData.fFineLineWidthGroup[idx] = SpecData.fLineWidthGroup[idx];
-	m_fFineLineWidthGroup[idx] = SpecData.fLineWidthGroup[idx];
+	m_fLineWidthGroup[idx] = pDoc->SpecData.fLineWidthGroup[idx];
+	pDoc->SpecData.fFineLineWidthGroup[idx] = pDoc->SpecData.fLineWidthGroup[idx];
+	m_fFineLineWidthGroup[idx] = pDoc->SpecData.fLineWidthGroup[idx];
 	}
 	else
 	{
-	SpecData.fLineWidthGroup[idx] = 999999;
-	SpecData.fFineLineWidthGroup[idx] = 999999;
+	pDoc->SpecData.fLineWidthGroup[idx] = 999999;
+	pDoc->SpecData.fFineLineWidthGroup[idx] = 999999;
 	m_fLineWidthGroup[idx] = 999999;
 	m_fFineLineWidthGroup[idx] = 999999;
 	}
 
-	if (SpecData.fLineWidthGroupAdjusted[idx] != dlg.m_dAdjusted[idx])
+	if (pDoc->SpecData.fLineWidthGroupAdjusted[idx] != dlg.m_dAdjusted[idx])
 	{
 	bLineWidthChanged = TRUE;
-	SpecData.fLineWidthGroupAdjusted[idx] = dlg.m_dAdjusted[idx];
+	pDoc->SpecData.fLineWidthGroupAdjusted[idx] = dlg.m_dAdjusted[idx];
 	}
 
 	if (m_strNick[idx] != dlg.m_strNick[idx])
@@ -5854,8 +5867,8 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	int nLastNo = m_nLineWidthGroupNum;
 	for (idx = m_nLineWidthGroupNum + 1; idx < 15; idx++)
 	{
-	SpecData.fLineWidthGroup[idx] = 999999;
-	SpecData.fFineLineWidthGroup[idx] = 999999;
+	pDoc->SpecData.fLineWidthGroup[idx] = 999999;
+	pDoc->SpecData.fFineLineWidthGroup[idx] = 999999;
 	m_fLineWidthGroup[idx] = 999999;
 	m_fFineLineWidthGroup[idx] = 999999;
 
@@ -5886,7 +5899,7 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	{
 	LoadSpreadDataTab0();
 
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	}
 	}
 	}
@@ -5895,7 +5908,7 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	{
 	if (m_nTabNum == 0)
 	{
-	if (SpecData.nLineWidthGroupNum > 0)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 	{
 	BOOL bLineWidthChanged = FALSE;
 	CDlgMultiLineSpec_Old dlg;
@@ -5933,13 +5946,13 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 
 	if (bLineWidthChanged)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	CString strVal;
 	strTemp = "";
 
 
 	idx = 0;
-	for (idx; idx < SpecData.nLineWidthGroupNum; idx++)
+	for (idx; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	{
 	if (idx < 4)
 	{
@@ -5960,7 +5973,7 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 
 	strTemp = _T("(MT) ");
 	idx = 0;
-	for (idx; idx < SpecData.nLineWidthGroupNum; idx++)
+	for (idx; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	{
 	if (idx < 2)
 	{
@@ -5985,12 +5998,12 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	}
 	else if (m_nTabNum == 1)
 	{
-	if (SpecData.nLineWidthGroupNum > 0)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 	{
 	BOOL bLineWidthChanged = FALSE;
 	CDlgMultiLineSpec_Old dlg;
-	dlg.m_nNum = SpecData.nLineWidthGroupNum;
-	for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+	dlg.m_nNum = pDoc->SpecData.nLineWidthGroupNum;
+	for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	{
 	dlg.m_dGroupLower[idx] = m_fLineWidthGroupLower[idx];
 	dlg.m_dGroup[idx] = m_fFineLineWidthGroup[idx];
@@ -6001,7 +6014,7 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	dlg.m_strDlgCaption = _T("Fine Mulit Line Spec");
 	dlg.DoModal();
 
-	for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+	for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	{
 	if (m_fFineLineWidthGroup[idx] != dlg.m_dGroup[idx])
 	{
@@ -6024,10 +6037,10 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 
 	if (bLineWidthChanged)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	CString strVal;
 	strTemp = "";
-	for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+	for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	{
 	if (idx < 4)
 	{
@@ -6047,7 +6060,7 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 	m_Spread.SetTypeButtonText(strTemp);
 
 	strTemp = _T("");
-	for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+	for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	{
 	if (idx < 2)
 	{
@@ -6094,8 +6107,11 @@ LRESULT CDlgSpec::OnButtonClickedFpspreadDown(WPARAM wParam, LPARAM lParam)
 
 LRESULT CDlgSpec::OnClickFpspread1(WPARAM wParam, LPARAM lParam)
 {
-	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	// TODO: Add your control notification handler code here
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 	SS_CELLCOORD* info = (SS_CELLCOORD*)lParam;
 
@@ -6120,7 +6136,7 @@ LRESULT CDlgSpec::OnClickFpspread1(WPARAM wParam, LPARAM lParam)
 	m_nSpreadCellFocusPos[0] = Row;
 
 	//150611 hjc add
-	if (pGlobalDoc->m_bUseCombo)
+	if (pDoc->m_bUseCombo)
 	{
 	//Combo Box를 클릭 할때 Edit Mode를 막는다.
 	if (Col == 1 && (Row == 9 || Row == 10))
@@ -6134,7 +6150,7 @@ LRESULT CDlgSpec::OnClickFpspread1(WPARAM wParam, LPARAM lParam)
 	m_nSpreadCellFocusPos[1] = Row;
 
 	//150611 hjc add
-	if (pGlobalDoc->m_bUseCombo)
+	if (pDoc->m_bUseCombo)
 	{
 	//Combo Box를 클릭 할때 Edit Mode를 막는다.
 	if (Col == 1 && (Row == 9 || Row == 10))
@@ -6148,7 +6164,7 @@ LRESULT CDlgSpec::OnClickFpspread1(WPARAM wParam, LPARAM lParam)
 	m_nSpreadCellFocusPos[2] = Row;
 
 	//150611 hjc add
-	if (pGlobalDoc->m_bUseCombo)
+	if (pDoc->m_bUseCombo)
 	{
 	//Combo Box를 클릭 할때 Edit Mode를 막는다.
 	if (Col == 1 && Row == 5)
@@ -6234,6 +6250,9 @@ LRESULT CDlgSpec::OnClickFpspread1(WPARAM wParam, LPARAM lParam)
 
 LRESULT CDlgSpec::OnDblClickFpspread1(WPARAM wParam, LPARAM lParam)
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	SS_CELLCOORD* info = (SS_CELLCOORD*)lParam;
 
@@ -6254,7 +6273,7 @@ LRESULT CDlgSpec::OnDblClickFpspread1(WPARAM wParam, LPARAM lParam)
 	switch (m_nTabNum)
 	{
 	case 0:
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	if (Col == 1 && (Row == 9 || Row == 10))
 	{
@@ -6265,7 +6284,7 @@ LRESULT CDlgSpec::OnDblClickFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case 1:
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	if (Col == 1 && (Row == 9 || Row == 10))
 	{
@@ -6276,7 +6295,7 @@ LRESULT CDlgSpec::OnDblClickFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case 2:
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	if (Col == 1 && Row == 5)
 	{
@@ -6331,6 +6350,9 @@ LRESULT CDlgSpec::OnDblClickFpspread1(WPARAM wParam, LPARAM lParam)
 
 LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	SS_CELLCOORD* pCombo = (SS_CELLCOORD*)lParam;
 
@@ -6349,9 +6371,9 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	{
 
 	case 0:
-	if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 	{
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	m_nSpreadCellFocusPos[0] = Row;
 
@@ -6400,7 +6422,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[0][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -6454,7 +6476,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[0][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -6467,9 +6489,9 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case 1:
-	if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 	{
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	m_nSpreadCellFocusPos[1] = Row;
 
@@ -6518,7 +6540,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -6573,7 +6595,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[1][10] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -6587,7 +6609,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	break;
 
 	case 2:
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	m_nSpreadCellFocusPos[2] = Row;
 
@@ -6635,7 +6657,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[2][5] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -6654,7 +6676,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	m_Spread.SetCol(1);
 	m_Spread.SetRow(2);
 	strTemp = m_Spread.GetText();
-	//strcpy(SpecData.szVDPadPrecName, strTemp);
+	//strcpy(pDoc->SpecData.szVDPadPrecName, strTemp);
 	int nPos = strTemp.Find(_T(" "), 0);
 	strTemp = strTemp.Left(nPos);
 	if (!(strTemp == "Highest" || strTemp == "VeryHigh" || strTemp == "High"
@@ -6677,12 +6699,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[3][2] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M4");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M4");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -6694,7 +6716,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_LARGE, ModifiedNum, strTemp) == SUCCESS)
 	//	m_strOriginData[3][17] = m_strLP_Prec;
-	m_strOriginData[3][2] = SpecData.szLPADRLName;	//20100305 hjc mod
+	m_strOriginData[3][2] = pDoc->SpecData.szLPADRLName;	//20100305 hjc mod
 	}
 	}
 	else
@@ -6743,12 +6765,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[3][5] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -6759,7 +6781,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_SPACE, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[3][5] = SpecData.szSPRLName;
+	m_strOriginData[3][5] = pDoc->SpecData.szSPRLName;
 	}
 	}
 	else
@@ -6808,12 +6830,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[3][8] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P0_M5");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -6824,7 +6846,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_SPACEEXT, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[3][8] = SpecData.szSPACEEXTRLName;
+	m_strOriginData[3][8] = pDoc->SpecData.szSPACEEXTRLName;
 	}
 	}
 	else
@@ -6876,12 +6898,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][7] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M1");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M1");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (7 - 1)); // Bit Flag.
 
@@ -6892,7 +6914,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_SMALL, ModifiedNum, strTemp) == SUCCESS)
 	//	m_strOriginData[3][6] = m_strPadBallPrec;
-	m_strOriginData[4][7] = SpecData.szPADRLPrecName;	//20100305 hjc mod
+	m_strOriginData[4][7] = pDoc->SpecData.szPADRLPrecName;	//20100305 hjc mod
 	}
 	}
 	else
@@ -6940,12 +6962,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][9] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M3");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M3");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -6956,13 +6978,13 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_PADTIP, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[4][9] = SpecData.szPADTipPrecName;
+	m_strOriginData[4][9] = pDoc->SpecData.szPADTipPrecName;
 	}
 	}
 	else
 	{
 	strTemp = m_strPadTip_Prec = m_strOriginData[4][9];	//170112 hjc mod
-	//	StringToChar(m_strOriginData[4][9],SpecData.szPADTipPrecName);
+	//	StringToChar(m_strOriginData[4][9],pDoc->SpecData.szPADTipPrecName);
 	//	strTemp = m_strOriginData[4][9];	//20100305 hjc mod
 	DisplaySpread(4);
 	}
@@ -6974,7 +6996,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	}
 	m_strPadTip_Prec = strTemp;	//170112 hjc mod
-	//	StringToChar(strTemp,SpecData.szPADTipPrecName);
+	//	StringToChar(strTemp,pDoc->SpecData.szPADTipPrecName);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
@@ -7006,12 +7028,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][12] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M2");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M2");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -7022,7 +7044,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_AR, ModifiedNum, strTemp) == SUCCESS)
-	m_strOriginData[4][12] = SpecData.szARLandPrecName;
+	m_strOriginData[4][12] = pDoc->SpecData.szARLandPrecName;
 	}
 	}
 	else
@@ -7038,8 +7060,8 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	}
 	m_strARLand_Prec = strTemp;
-	StringToChar(strTemp, SpecData.szARLandPrecName);
-	//			strcpy(SpecData.szARLandPrecName, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szARLandPrecName);
+	//			strcpy(pDoc->SpecData.szARLandPrecName, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
@@ -7072,12 +7094,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][16] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M15");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M15");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (16 - 1)); // Bit Flag.
@@ -7088,7 +7110,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_CO2, ModifiedNum, strTemp) == SUCCESS)	//20100322 hjc mod
-	m_strOriginData[4][16] = SpecData.szCO2LandPrecName;
+	m_strOriginData[4][16] = pDoc->SpecData.szCO2LandPrecName;
 	}
 	}
 	else
@@ -7123,33 +7145,33 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[4][18] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (18 - 1)); // Bit Flag.
 
-	StringToChar(strTemp, SpecData.szCO2LandAlignMode);
-	//					strcpy(SpecData.szCO2LandAlignMode, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szCO2LandAlignMode);
+	//					strcpy(pDoc->SpecData.szCO2LandAlignMode, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
 	else
 	{
-	StringToChar(m_strOriginData[4][18], SpecData.szCO2LandAlignMode);
-	//					strcpy(SpecData.szCO2LandAlignMode, m_strOriginData[4][18]);
+	StringToChar(m_strOriginData[4][18], pDoc->SpecData.szCO2LandAlignMode);
+	//					strcpy(pDoc->SpecData.szCO2LandAlignMode, m_strOriginData[4][18]);
 	strTemp = m_strOriginData[4][18];	//20100305 hjc mod
 	DisplaySpread(4);
 	}
 	}
 	if (strTemp == "Yes")
-	SpecData.nCO2LandAlignMode = 1;
+	pDoc->SpecData.nCO2LandAlignMode = 1;
 	else
-	SpecData.nCO2LandAlignMode = 0;
+	pDoc->SpecData.nCO2LandAlignMode = 0;
 
-	StringToChar(strTemp, SpecData.szCO2LandAlignMode);
-	//			strcpy(SpecData.szCO2LandAlignMode, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szCO2LandAlignMode);
+	//			strcpy(pDoc->SpecData.szCO2LandAlignMode, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
@@ -7181,12 +7203,12 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[4][21] != strTemp)
 	{
-	if (pGlobalDoc->CheckAllMasterLoc(TRUE))
+	if (pDoc->CheckAllMasterLoc(TRUE))
 	{
-	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M6");
+	pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "OnComboCloseUpFpspread1_P3_M6");
 	if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (21 - 1)); // Bit Flag.
@@ -7197,7 +7219,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	if (ModifiedNum != 0)
 	{
 	if (ChangePADModifiyDataAllClient(PAD_FINE, ModifiedNum, strTemp) == SUCCESS)  // 20101208 bug fix PAD_SPACE->PAD_FINE by ljg
-	m_strOriginData[4][21] = SpecData.szPADFine_PrecName;
+	m_strOriginData[4][21] = pDoc->SpecData.szPADFine_PrecName;
 	}
 	}
 	else
@@ -7267,7 +7289,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (m_strOriginData[5][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -7290,13 +7312,13 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[5][9] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (9 - 1)); // Bit Flag.
 	}
-	StringToChar(strTemp, SpecData.szVHMode);
-	//			strcpy(SpecData.szVHMode, strTemp);
+	StringToChar(strTemp, pDoc->SpecData.szVHMode);
+	//			strcpy(pDoc->SpecData.szVHMode, strTemp);
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	//20090311 hjc add
@@ -7379,7 +7401,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][4] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -7392,7 +7414,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	int nPos;
 	m_Spread.SetCol(1);
 	m_Spread.SetRow(7);
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 	{
 	strTemp = m_Spread.GetText();
 	nPos = strTemp.Find(_T(" "), 0);
@@ -7404,16 +7426,16 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	}
 	if (m_strOriginData[7][7] != strTemp)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (7 - 1)); // Bit Flag.
 	}
 	m_strSelectVaccum = strTemp;
 	if (strTemp == "Both")
-	SpecData.nSelectVaccum = 1;
+	pDoc->SpecData.nSelectVaccum = 1;
 	else
-	SpecData.nSelectVaccum = 2;
+	pDoc->SpecData.nSelectVaccum = 2;
 	if (m_Spread.GetEditMode())
 	m_Spread.SetEditMode(FALSE);
 	}
@@ -7423,7 +7445,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 	nPos = strTemp.Find(_T(" "), 0);
 	strTemp = strTemp.Left(nPos);
 	m_strSelectVaccum = strTemp;
-	SpecData.nSelectVaccum = 1;
+	pDoc->SpecData.nSelectVaccum = 1;
 	}
 	}
 
@@ -7445,7 +7467,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	for (int i = 0; i < 12; i++)
 	{
-	double dPosName = fabs(pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[i] - _ttof(strTemp));
+	double dPosName = fabs(pDoc->m_IRISAxisControl.m_dIRISPosName[i] - _ttof(strTemp));
 
 	if (dPosName < 0.01)
 	{
@@ -7456,7 +7478,7 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 
 	if (fabs(_ttof(m_strOriginData[7][nCheckRow]) - _ttof(strTemp)) > 0.01)
 	{
-	m_bSpecDataChanged = TRUE;
+	m_bpDoc->SpecDataChanged = TRUE;
 	m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 	m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (nCheckRow - 1)); // Bit Flag.
@@ -7477,6 +7499,9 @@ LRESULT CDlgSpec::OnComboCloseUpFpspread1(WPARAM wParam, LPARAM lParam)
 void CDlgSpec::OnMouseDownFpspread1(short Button, short Shift, long x, long y)
 {
 	// TODO: Add your control notification handler code here
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	/*
 	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 
@@ -7537,7 +7562,7 @@ void CDlgSpec::OnMouseDownFpspread1(short Button, short Shift, long x, long y)
 	{
 	m_nSpreadCellFocusPos[0] = 8;
 	}
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	// Combo Box 영역
 	m_Spread.GetCellPos(1, 9, &lx, &ly, &lw, &lh); // 트윕좌표를 받아옴.
@@ -7647,7 +7672,7 @@ void CDlgSpec::OnMouseDownFpspread1(short Button, short Shift, long x, long y)
 	m_nSpreadCellFocusPos[1] = 8;
 	}
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	// Combo Box 영역
 	m_Spread.GetCellPos(1, 9, &lx, &ly, &lw, &lh); // 트윕좌표를 받아옴.
@@ -7734,7 +7759,7 @@ void CDlgSpec::OnMouseDownFpspread1(short Button, short Shift, long x, long y)
 	{
 	m_nSpreadCellFocusPos[2] = 4;
 	}
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 	// Combo Box 영역
 	m_Spread.GetCellPos(1, 5, &lx, &ly, &lw, &lh); // 트윕좌표를 받아옴.
@@ -7854,7 +7879,7 @@ void CDlgSpec::OnMouseDownFpspread1(short Button, short Shift, long x, long y)
 	m_nSpreadCellFocusPos[3] = 12;
 	}
 
-	if (SpecData.bEnableCharInspection)
+	if (pDoc->SpecData.bEnableCharInspection)
 	{
 	m_Spread.GetCellPos(1, 13, &lx, &ly, &lw, &lh); // 트윕좌표를 받아옴.
 	if (lx < lCol && lCol < lx + lw && ly < lRow && lRow < ly + lh) // Cell퉩E㎨효?들엉邦툈E
@@ -8261,19 +8286,22 @@ void CDlgSpec::OnMouseDownFpspread1(short Button, short Shift, long x, long y)
 
 void CDlgSpec::AutoChangeSpecControl(int nDefType, int nRecordK)
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	//POSITION p = NULL;
 
 	//int nSelID = pGlobalView->m_nSelectDefectListID;
 
-	//POSITION pHead = pGlobalDoc->m_DefectListItem[nSelID].GetHeadPosition();
+	//POSITION pHead = pDoc->m_DefectListItem[nSelID].GetHeadPosition();
 
 	//CDefectRawData* pDefect = NULL;
 	//BOOL bFind = FALSE;
 
 	//int nCurrentID = 0;
-	//for (p = pHead; p != NULL; pGlobalDoc->m_DefectListItem[nSelID].GetNext(p))
+	//for (p = pHead; p != NULL; pDoc->m_DefectListItem[nSelID].GetNext(p))
 	//{
-	//	pDefect = (CDefectRawData*)pGlobalDoc->m_DefectListItem[nSelID].GetAt(p);
+	//	pDefect = (CDefectRawData*)pDoc->m_DefectListItem[nSelID].GetAt(p);
 
 	//	if (pDefect == NULL)
 	//	{
@@ -8288,7 +8316,7 @@ void CDlgSpec::AutoChangeSpecControl(int nDefType, int nRecordK)
 	//		{
 	//			pGlobalView->m_nPrevKDefectID = nCurrentID;
 
-	//			pGlobalDoc->m_nGridIndex = nCurrentID + 1;
+	//			pDoc->m_nGridIndex = nCurrentID + 1;
 	//			pGlobalView->m_nCurrentDefect = nCurrentID;
 
 	//			int nCurGridIndex = nCurrentID;// 130701 TEST DISALBE
@@ -8304,12 +8332,12 @@ void CDlgSpec::AutoChangeSpecControl(int nDefType, int nRecordK)
 	//				if (nRow < 1)
 	//					return;
 
-	//				pGlobalDoc->m_bContinuousDefViewStart = FALSE;
-	//				pGlobalDoc->m_bContinuousAOMViewStart = FALSE;
-	//				pGlobalDoc->m_nGridIndex = nRow - 1;
+	//				pDoc->m_bContinuousDefViewStart = FALSE;
+	//				pDoc->m_bContinuousAOMViewStart = FALSE;
+	//				pDoc->m_nGridIndex = nRow - 1;
 
 	//				if (AoiParam()->m_bUseNewUI)
-	//					pGlobalView->m_pDlgVerifyView->m_nGlobalDefectIdx = pGlobalDoc->m_nGridIndex + 1;
+	//					pGlobalView->m_pDlgVerifyView->m_nGlobalDefectIdx = pDoc->m_nGridIndex + 1;
 
 	//				pGlobalView->m_pDlgVerifySub->PostMessage(WM_VERIFY_NEXT, 0, 0); // OnVerifyNext() Call
 	//			}
@@ -8324,10 +8352,10 @@ void CDlgSpec::AutoChangeSpecControl(int nDefType, int nRecordK)
 	//					return;
 	//				}
 
-	//				if (pGlobalDoc->m_nSaveThumbImg != -1)
+	//				if (pDoc->m_nSaveThumbImg != -1)
 	//				{
 	//					pGlobalView->m_GLopen = 2;
-	//					if (pGlobalDoc->m_nGridIndex <= 0)
+	//					if (pDoc->m_nGridIndex <= 0)
 	//					{
 	//						pGlobalView->SetThumbnailImgPack(0);
 	//						//pGlobalView->GotoThumbnailPosition(0);//131001 lgh remove
@@ -8336,7 +8364,7 @@ void CDlgSpec::AutoChangeSpecControl(int nDefType, int nRecordK)
 	//					{
 	//						if (nCurGridIndex <= 0) //130520 lgh add For thumbnailpos Bugfix
 	//						{
-	//							preindex = pGlobalDoc->m_nGridIndex - 1;
+	//							preindex = pDoc->m_nGridIndex - 1;
 	//							pGlobalView->SetThumbnailImgPack(0);//1301516 lgh add if Preindex > Gridindex, Set Thumbnail St Index Set 0
 	//																//pGlobalView->GotoThumbnailPosition(0); //131001 lgh remove
 	//						}
@@ -8428,10 +8456,13 @@ void CDlgSpec::AutoChangeSpecControl(int nDefType, int nRecordK)
 
 void CDlgSpec::AtDlgShow()
 {
-//	if (!pGlobalDoc->m_bSpecLoaded)
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	if (!pDoc->m_bSpecLoaded)
 //		return;
 //	for (int i = 0; i < MAX_HOLE_TYPE; i++)
-//		memcpy(&m_DlgSroSpec.m_SRSpec[i], &SpecData.SRSpec[i], sizeof(SROSpec));
+//		memcpy(&m_DlgSroSpec.m_SRSpec[i], &pDoc->SpecData.SRSpec[i], sizeof(SROSpec));
 //#if CUSTOMER_COMPANY == SHINKO_DENKKI
 //	pGlobalView->ViewDlgShinkoRecipe(1);
 //#else
@@ -8514,25 +8545,25 @@ void CDlgSpec::AtDlgShow()
 //
 //	// 2009-04-13 jsy
 //	// Lang.ini file path change
-//	switch (pGlobalDoc->m_nSelectedLanguage)
+//	switch (pDoc->m_nSelectedLanguage)
 //	{
 //	case KOREAN:
-//		strPath.Format(_T("%sLanguage\\InSmart_Lang-kor.ini"), pGlobalDoc->m_strAoiSetDir);
+//		strPath.Format(_T("%sLanguage\\InSmart_Lang-kor.ini"), pDoc->m_strAoiSetDir);
 //		break;
 //	case ENGLISH:
-//		strPath.Format(_T("%sLanguage\\InSmart_Lang-eng.ini"), pGlobalDoc->m_strAoiSetDir);
+//		strPath.Format(_T("%sLanguage\\InSmart_Lang-eng.ini"), pDoc->m_strAoiSetDir);
 //		break;
 //	case JAPAN:
-//		strPath.Format(_T("%sLanguage\\InSmart_Lang-jpn.ini"), pGlobalDoc->m_strAoiSetDir);
+//		strPath.Format(_T("%sLanguage\\InSmart_Lang-jpn.ini"), pDoc->m_strAoiSetDir);
 //		break;
 //	case CHINESE:
-//		strPath.Format(_T("%sLanguage\\InSmart_Lang-chi.ini"), pGlobalDoc->m_strAoiSetDir);
+//		strPath.Format(_T("%sLanguage\\InSmart_Lang-chi.ini"), pDoc->m_strAoiSetDir);
 //		break;
 //	case VIETNAMESE:
-//		strPath.Format(_T("%sLanguage\\InSmart_Lang-viet.ini"), pGlobalDoc->m_strAoiSetDir);
+//		strPath.Format(_T("%sLanguage\\InSmart_Lang-viet.ini"), pDoc->m_strAoiSetDir);
 //		break;
 //	case CHINESE_SIMPLE:
-//		strPath.Format(_T("%sLanguage\\InSmart_Lang-chi_simple.ini"), pGlobalDoc->m_strAoiSetDir);
+//		strPath.Format(_T("%sLanguage\\InSmart_Lang-chi_simple.ini"), pDoc->m_strAoiSetDir);
 //		break;
 //	}
 //
@@ -8543,7 +8574,7 @@ void CDlgSpec::AtDlgShow()
 //
 //
 //#if WIN_OS == WIN_10
-//	if (pGlobalDoc->m_nSelectedLanguage == CHINESE || pGlobalDoc->m_nSelectedLanguage == CHINESE_SIMPLE)
+//	if (pDoc->m_nSelectedLanguage == CHINESE || pDoc->m_nSelectedLanguage == CHINESE_SIMPLE)
 //	{
 //		m_fDataFontSize = 12;
 //	}
@@ -8557,21 +8588,21 @@ void CDlgSpec::AtDlgShow()
 //
 //		CString strSpecNew;
 //		strSpecNew.Format(_T("%s%s\\%s_speclock.bin"),
-//			pGlobalDoc->m_strSpecDir,
-//			pGlobalDoc->m_strModel,
-//			pGlobalDoc->m_strLayer);
+//			pDoc->m_strSpecDir,
+//			pDoc->m_strModel,
+//			pDoc->m_strLayer);
 //
 //		if (finder.FindFile(strSpecNew))
 //		{
-//			LoadLockedSpecData(strSpecNew);
+//			LoadLockedpDoc->SpecData(strSpecNew);
 //		}
 //		else if (finder.FindFile(SPEC_LOCK_1_PATH))
 //		{
-//			LoadLockedSpecData(SPEC_LOCK_1_PATH);
+//			LoadLockedpDoc->SpecData(SPEC_LOCK_1_PATH);
 //		}
 //		else if (finder.FindFile(SPEC_LOCK_2_PATH))
 //		{
-//			LoadLockedSpecData(SPEC_LOCK_2_PATH);
+//			LoadLockedpDoc->SpecData(SPEC_LOCK_2_PATH);
 //		}
 //		else
 //		{
@@ -8595,7 +8626,7 @@ void CDlgSpec::AtDlgShow()
 //
 //
 //
-//	if (!pGlobalDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])	//jun 20120903 for LG_CCL-Inspector
+//	if (!pDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])	//jun 20120903 for LG_CCL-Inspector
 //		LoadOriginDataTab(0);
 //	else
 //		LoadOriginDataTab(3);
@@ -8618,7 +8649,7 @@ void CDlgSpec::AtDlgShow()
 //
 //	INSPECTION_MODE nInspMode = AoiParam()->m_nCurrentInspectionMode;
 //
-//	if (pGlobalDoc->m_bInspCCL[nInspMode])	//jun 20120903 for LG_CCL-Inspector
+//	if (pDoc->m_bInspCCL[nInspMode])	//jun 20120903 for LG_CCL-Inspector
 //	{
 //		InitSpreadTab3();
 //		LoadSpreadDataTab3();
@@ -8633,7 +8664,7 @@ void CDlgSpec::AtDlgShow()
 //	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	m_Spread.SetReDraw(TRUE);
 //	SetSpecAccess(pGlobalView->m_nUserID); // syd-20100115
-//	if (!pGlobalDoc->m_bInspCCL[nInspMode])		//jun 20120903 for LG_CCL-Inspector
+//	if (!pDoc->m_bInspCCL[nInspMode])		//jun 20120903 for LG_CCL-Inspector
 //		m_nTabNum = 0;
 //	else
 //		m_nTabNum = 3;
@@ -8645,7 +8676,7 @@ void CDlgSpec::AtDlgShow()
 //	m_PADTipFlag = FALSE;
 //	m_PADSpaceFlag = FALSE;
 //
-//	if (pGlobalDoc->m_DefectListItem[pGlobalDoc->m_cboSelDefID].GetCount()>0)
+//	if (pDoc->m_DefectListItem[pDoc->m_cboSelDefID].GetCount()>0)
 //	{
 //
 //		if (pGlobalView->m_pDlgInspection != NULL)
@@ -8671,12 +8702,12 @@ void CDlgSpec::AtDlgShow()
 //
 //	}
 //
-//	int nCurGridIndex = pGlobalDoc->m_nGridIndex - 1;// 130701 TEST DISALBE
+//	int nCurGridIndex = pDoc->m_nGridIndex - 1;// 130701 TEST DISALBE
 //
-//	if (pGlobalDoc->m_nSaveThumbImg != -1)
+//	if (pDoc->m_nSaveThumbImg != -1)
 //	{
 //		pGlobalView->m_GLopen = 2;
-//		if (pGlobalDoc->m_nGridIndex <= 0)
+//		if (pDoc->m_nGridIndex <= 0)
 //		{
 //			pGlobalView->SetThumbnailImgPack(0);
 //		}
@@ -8684,7 +8715,7 @@ void CDlgSpec::AtDlgShow()
 //		{
 //			if (nCurGridIndex <= 0) //130520 lgh add For thumbnailpos Bugfix
 //			{
-//				preindex = pGlobalDoc->m_nGridIndex - 1;
+//				preindex = pDoc->m_nGridIndex - 1;
 //				pGlobalView->SetThumbnailImgPack(0);//1301516 lgh add if Preindex > Gridindex, Set Thumbnail St Index Set 0
 //			}
 //			else
@@ -8712,7 +8743,9 @@ void CDlgSpec::AtDlgShow()
 
 void CDlgSpec::AtDlgHide()
 {
-//
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 //	if (g_bDestroy)
 //		return;
 //
@@ -8742,39 +8775,39 @@ void CDlgSpec::AtDlgHide()
 //
 //		for (int i = 0; i < pSROData->m_nNumOfType; i++)
 //		{
-//			if (fabs(SpecData.SRSpec[i].dAreaPercent - m_DlgSroSpec.m_SRSpec[i].dAreaPercent) > 0.01)
+//			if (fabs(pDoc->SpecData.SRSpec[i].dAreaPercent - m_DlgSroSpec.m_SRSpec[i].dAreaPercent) > 0.01)
 //			{
-//				m_bSpecDataChanged = 1;
+//				m_bpDoc->SpecDataChanged = 1;
 //				break;
 //			}
 //
-//			if (fabs(SpecData.SRSpec[i].dCircleShiftSpecUm - m_DlgSroSpec.m_SRSpec[i].dCircleShiftSpecUm) > 0.01)
+//			if (fabs(pDoc->SpecData.SRSpec[i].dCircleShiftSpecUm - m_DlgSroSpec.m_SRSpec[i].dCircleShiftSpecUm) > 0.01)
 //			{
-//				m_bSpecDataChanged = 1;
+//				m_bpDoc->SpecDataChanged = 1;
 //				break;
 //			}
 //
-//			if (fabs(SpecData.SRSpec[i].dDiameterSpecLower - m_DlgSroSpec.m_SRSpec[i].dDiameterSpecLower) > 0.01)
+//			if (fabs(pDoc->SpecData.SRSpec[i].dDiameterSpecLower - m_DlgSroSpec.m_SRSpec[i].dDiameterSpecLower) > 0.01)
 //			{
-//				m_bSpecDataChanged = 1;
+//				m_bpDoc->SpecDataChanged = 1;
 //				break;
 //			}
 //
-//			if (fabs(SpecData.SRSpec[i].dDiameterSpecUpper - m_DlgSroSpec.m_SRSpec[i].dDiameterSpecUpper) > 0.01)
+//			if (fabs(pDoc->SpecData.SRSpec[i].dDiameterSpecUpper - m_DlgSroSpec.m_SRSpec[i].dDiameterSpecUpper) > 0.01)
 //			{
-//				m_bSpecDataChanged = 1;
+//				m_bpDoc->SpecDataChanged = 1;
 //				break;
 //			}
 //
-//			if (fabs(SpecData.SRSpec[i].nSROGray - m_DlgSroSpec.m_SRSpec[i].nSROGray) > 0)
+//			if (fabs(pDoc->SpecData.SRSpec[i].nSROGray - m_DlgSroSpec.m_SRSpec[i].nSROGray) > 0)
 //			{
-//				m_bSpecDataChanged = 1;
+//				m_bpDoc->SpecDataChanged = 1;
 //				break;
 //			}
 //
-//			if (fabs(SpecData.SRSpec[i].nPrecision - m_DlgSroSpec.m_SRSpec[i].nPrecision) > 0)
+//			if (fabs(pDoc->SpecData.SRSpec[i].nPrecision - m_DlgSroSpec.m_SRSpec[i].nPrecision) > 0)
 //			{
-//				m_bSpecDataChanged = 1;
+//				m_bpDoc->SpecDataChanged = 1;
 //				break;
 //			}
 //
@@ -8790,17 +8823,17 @@ void CDlgSpec::AtDlgHide()
 //	{
 //
 //
-//		if (m_bSpecDataChanged || m_dlgViaSpec.m_bSpecDataChanged || m_dlgViaSpec.m_bClientSpecDataUpdate)
+//		if (m_bpDoc->SpecDataChanged || m_dlgViaSpec.m_bpDoc->SpecDataChanged || m_dlgViaSpec.m_bClientpDoc->SpecDataUpdate)
 //		{
 //			//
 //
-//			pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "MSG_BOX", "AtDlgHide_P0_M1");
+//			pGlobalView->m_strMsgBox = pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "MSG_BOX", "AtDlgHide_P0_M1");
 //			if (MessageBox(pGlobalView->m_strMsgBox, NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 //			{
-//				m_dlgViaSpec.m_bClientSpecDataUpdate = 1;
+//				m_dlgViaSpec.m_bClientpDoc->SpecDataUpdate = 1;
 //				pGlobalView->m_pDlgSpecSub->SaveSpec();
-//				m_dlgViaSpec.m_bClientSpecDataUpdate = 0;
-//				m_bClientSpecDataUpdate = TRUE;
+//				m_dlgViaSpec.m_bClientpDoc->SpecDataUpdate = 0;
+//				m_bClientpDoc->SpecDataUpdate = TRUE;
 //			}
 //			else
 //			{
@@ -8841,18 +8874,18 @@ void CDlgSpec::AtDlgHide()
 //
 //		strMsg = _T("Saving..");
 //
-//		if (pGlobalDoc->m_nSelectedLanguage == CHINESE_SIMPLE)
+//		if (pDoc->m_nSelectedLanguage == CHINESE_SIMPLE)
 //			strMsg = _T("正在保存配置...稍等一下。[Spec]");
 //
 //		pGlobalView->DispMessage(strTitleMsg, _T("Saving.."), RGB_LTGREEN);
 //
 //		m_bMultilineSaved = 0;
 //		if (m_dlgViaSpec.GetSafeHwnd())
-//			m_dlgViaSpec.m_bClientSpecDataUpdate = 1;
+//			m_dlgViaSpec.m_bClientpDoc->SpecDataUpdate = 1;
 //		pGlobalView->m_pDlgSpecSub->SaveSpec();
 //		if (m_dlgViaSpec.GetSafeHwnd())
-//			m_dlgViaSpec.m_bClientSpecDataUpdate = 0;
-//		m_bClientSpecDataUpdate = TRUE;
+//			m_dlgViaSpec.m_bClientpDoc->SpecDataUpdate = 0;
+//		m_bClientpDoc->SpecDataUpdate = TRUE;
 //		InitSpreadInfoVariables();
 //		if (m_dlgViaSpec.GetSafeHwnd())
 //			m_dlgViaSpec.InitSpreadInfoVariables();
@@ -8865,21 +8898,21 @@ void CDlgSpec::AtDlgHide()
 //		pGlobalView->ClearDispMessage();
 //
 //	}
-//	else if (m_bClientSpecDataUpdate && pGlobalView->CheckAllClientsReady())
+//	else if (m_bClientpDoc->SpecDataUpdate && pGlobalView->CheckAllClientsReady())
 //	{
 //		// Send Spec to Client
 //		strTitleMsg.Format(_T("%s"), pGlobalView->GetLanguageString("SYSTEM", "NOTIFY"));
 //		strMsg.Format(_T("%s"), pGlobalView->GetLanguageString("NETWORK", "SEND_SPEC_DATA"));
 //		pGlobalView->DispMessage(strTitleMsg, strMsg, RGB_LTGREEN);
 //
-//		if (pGlobalView->SendSpecDataToAllClient() != SUCCESS || pGlobalView->SendSystemParamToAllClient() != SUCCESS)
+//		if (pGlobalView->SendpDoc->SpecDataToAllClient() != SUCCESS || pGlobalView->SendSystemParamToAllClient() != SUCCESS)
 //		{
 //#if CUSTOMER_COMPANY == UMTC || CUSTOMER_COMPANY == ZDT || CUSTOMER_COMPANY == SAMSUNG_VIETNAM  //NTH Add for GEM
-//			if (pGlobalDoc->m_bUseGemComm)
+//			if (pDoc->m_bUseGemComm)
 //			{
-//				if (!pGlobalDoc->m_bCheckAlarm)
+//				if (!pDoc->m_bCheckAlarm)
 //				{
-//					pGlobalDoc->m_bCheckAlarm = TRUE;
+//					pDoc->m_bCheckAlarm = TRUE;
 //					pMainFrame->SetEESAlarm(60, EES_ACTIVATE_ALARM);
 //				}
 //			}
@@ -8904,11 +8937,11 @@ void CDlgSpec::AtDlgHide()
 //#endif
 //
 //#if CUSTOMER_COMPANY == UMTC || CUSTOMER_COMPANY == ZDT || CUSTOMER_COMPANY == SAMSUNG_VIETNAM  //NTH Add for GEM
-//			if (pGlobalDoc->m_bUseGemComm)
+//			if (pDoc->m_bUseGemComm)
 //			{
-//				if (pGlobalDoc->m_bCheckAlarm)
+//				if (pDoc->m_bCheckAlarm)
 //				{
-//					pGlobalDoc->m_bCheckAlarm = FALSE;
+//					pDoc->m_bCheckAlarm = FALSE;
 //					pMainFrame->SetEESAlarm(60, EES_DEACTIVATE_ALARM);
 //				}
 //			}
@@ -8924,7 +8957,7 @@ void CDlgSpec::AtDlgHide()
 //
 //
 //	//	GetDlgItem(IDC_BUTTON_SAVEMASK)->SetFocus();
-//	m_bClientSpecDataUpdate = FALSE;
+//	m_bClientpDoc->SpecDataUpdate = FALSE;
 }
 
 void CDlgSpec::InitSpread()
@@ -8951,14 +8984,14 @@ void CDlgSpec::InitSpread()
 
 	HFONT hfont = CreateFont(10 + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, _T(""));
 	m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
-	//if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+	//if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 	//{
-	//	HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+	//	HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 	//	m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 	//}
 	//else
 	//{
-	//	HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+	//	HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 	//	m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 	//}
 }
@@ -9024,7 +9057,10 @@ void CDlgSpec::DisplaySpread(int nTabNum)
 
 void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	//syd-091008
 //	CString strTemp, strVal;
 //	int idx;
@@ -9036,48 +9072,48 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //		{
 //		case 0:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);
 //			if (g_bSuccessMeasureEtch)
 //			{
 //				strTemp.Format(_T("%s[e:%.1fum]"),
-//					pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2") + GetRangeString(nTab, 2, _T("")), g_dCurrentEtchValue);
+//					pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2") + GetRangeString(nTab, 2, _T("")), g_dCurrentEtchValue);
 //
 //				m_Spread.SetText(strTemp);
 //			}
 //			else
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_10") + GetRangeString(nTab, 10, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_10") + GetRangeString(nTab, 10, _T("")));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_11") + GetRangeString(nTab, 11, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_11") + GetRangeString(nTab, 11, _T("")));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_12") + GetRangeString(nTab, 12, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_12") + GetRangeString(nTab, 12, _T("")));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_13") + GetRangeString(nTab, 13, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_13") + GetRangeString(nTab, 13, _T("")));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_14") + GetRangeString(nTab, 14, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_14") + GetRangeString(nTab, 14, _T("")));
 //
 //			m_Spread.SetRow(15);
-//			if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
+//			if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
 //			{
 //				strTemp = "";
-//				for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+//				for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 //				{
 //					if (idx < 2)
 //					{
@@ -9097,42 +9133,42 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			}
 //			else
 //			{
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_15") + GetRangeString(nTab, 15, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_15") + GetRangeString(nTab, 15, _T("")));
 //
 //				m_Spread.SetRow(16);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_16") + GetRangeString(nTab, 16, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_16") + GetRangeString(nTab, 16, _T("")));
 //			}
 //
 //			break;
 //		case 1:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_10") + GetRangeString(nTab, 10, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_10") + GetRangeString(nTab, 10, _T("")));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_11") + GetRangeString(nTab, 11, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_11") + GetRangeString(nTab, 11, _T("")));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_12") + GetRangeString(nTab, 12, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_12") + GetRangeString(nTab, 12, _T("")));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_13") + GetRangeString(nTab, 13, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_13") + GetRangeString(nTab, 13, _T("")));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_14") + GetRangeString(nTab, 14, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_14") + GetRangeString(nTab, 14, _T("")));
 //
 //			if (AoiParam()->m_bUseMultilineSpecEx && m_nLineWidthGroupNum > 0)
 //			{
@@ -9140,7 +9176,7 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //				{
 //					CString strVal;
 //					strTemp = "";
-//					for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+//					for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 //					{
 //						if (idx < 4)
 //						{
@@ -9160,7 +9196,7 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //					m_Spread.SetTypeButtonText(strTemp);
 //
 //					strTemp = _T("");
-//					for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+//					for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 //					{
 //						if (idx < 2)
 //						{
@@ -9185,65 +9221,65 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			else
 //			{
 //				m_Spread.SetRow(15);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_15") + GetRangeString(nTab, 15, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_15") + GetRangeString(nTab, 15, _T("")));
 //
 //				m_Spread.SetRow(16);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_16") + GetRangeString(nTab, 16, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_16") + GetRangeString(nTab, 16, _T("")));
 //			}
 //
 //			break;
 //		case 2:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			//20090412 hjc
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			m_Spread.SetRow(9);	//121226 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			//------------
 //			break;
 //		case 3:		//20100322 hjc add
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			//jun 20120903 for LG_CCL-Inspector
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_10") + GetRangeString(nTab, 10, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_10") + GetRangeString(nTab, 10, _T("")));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_11") + GetRangeString(nTab, 11, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_11") + GetRangeString(nTab, 11, _T("")));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_12") + GetRangeString(nTab, 12, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_12") + GetRangeString(nTab, 12, _T("")));
 //			//------------
 //
 //			//2022 01 10 ㅣ호 ㅁㅇㅇ
-//			if (SpecData.bEnableCharInspection)
+//			if (pDoc->SpecData.bEnableCharInspection)
 //			{
 //				m_Spread.SetRow(13);
 //				m_Spread.SetText(_T("문자열기준밝기") + GetRangeString(nTab, 13, _T("")));
@@ -9258,114 +9294,114 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //
 //			break;
 //		case 4:
-//			if (pGlobalDoc->m_bUseTeachingLineWidth)
+//			if (pDoc->m_bUseTeachingLineWidth)
 //			{
-//				if (pGlobalDoc->m_bUseOnlyViaInsp[AoiParam()->m_nCurrentInspectionMode])	//151210 hjc add
+//				if (pDoc->m_bUseOnlyViaInsp[AoiParam()->m_nCurrentInspectionMode])	//151210 hjc add
 //				{
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nViaHoleMeanDiff, 255 - pGlobalDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nViaHoleMeanDiff, 255 - pDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //					m_Spread.SetRow(1);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 1, _T("")));
 //					m_Spread.SetRow(2);
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nViaHoleMeanDiff, pGlobalDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nViaHoleMeanDiff, pDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 2, _T("")));
 //				}
-//				else if (pGlobalDoc->m_nVDMeanDiff > 0)
+//				else if (pDoc->m_nVDMeanDiff > 0)
 //				{
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nVDMeanDiff, 255 - pGlobalDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nVDMeanDiff, 255 - pDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //					m_Spread.SetRow(1);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 1, _T("")));
 //					m_Spread.SetRow(2);
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nVDMeanDiff, pGlobalDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nVDMeanDiff, pDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 2, _T("")));
 //				}
 //				else
 //				{
-//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //					m_Spread.SetRow(1);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 1, _T("")));
 //					m_Spread.SetRow(2);
-//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 2, _T("")));
 //				}
 //			}
 //			else
 //			{
 //				m_Spread.SetRow(1);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //				m_Spread.SetRow(2);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //			}
 //
 //
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_10") + GetRangeString(nTab, 10, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_10") + GetRangeString(nTab, 10, _T("")));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_11") + GetRangeString(nTab, 11, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_11") + GetRangeString(nTab, 11, _T("")));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_12") + GetRangeString(nTab, 12, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_12") + GetRangeString(nTab, 12, _T("")));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_13") + GetRangeString(nTab, 13, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_13") + GetRangeString(nTab, 13, _T("")));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_14") + GetRangeString(nTab, 14, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_14") + GetRangeString(nTab, 14, _T("")));
 //			m_Spread.SetRow(15);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_15") + GetRangeString(nTab, 15, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_15") + GetRangeString(nTab, 15, _T("")));
 //			m_Spread.SetRow(16);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_16") + GetRangeString(nTab, 16, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_16") + GetRangeString(nTab, 16, _T("")));
 //			m_Spread.SetRow(17);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_17") + GetRangeString(nTab, 17, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_17") + GetRangeString(nTab, 17, _T("")));
 //			m_Spread.SetRow(18);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_18") + GetRangeString(nTab, 18, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_18") + GetRangeString(nTab, 18, _T("")));
 //			m_Spread.SetRow(19);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_19") + GetRangeString(nTab, 19, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_19") + GetRangeString(nTab, 19, _T("")));
 //			m_Spread.SetRow(20);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_20") + GetRangeString(nTab, 20, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_20") + GetRangeString(nTab, 20, _T("")));
 //			m_Spread.SetRow(21);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_21") + GetRangeString(nTab, 21, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_21") + GetRangeString(nTab, 21, _T("")));
 //			m_Spread.SetRow(22);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_22") + GetRangeString(nTab, 22, _T("")));		//150606 hjc add
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_22") + GetRangeString(nTab, 22, _T("")));		//150606 hjc add
 //			break;
 //		case 5:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //
-//			if (pGlobalDoc->m_bUseTeachingLineWidth)
+//			if (pDoc->m_bUseTeachingLineWidth)
 //			{
-//				if (pGlobalDoc->m_nHoleMeanDiff > 0)
+//				if (pDoc->m_nHoleMeanDiff > 0)
 //				{
-//					strTemp.Format(_T("[T:%d]   %s"), pGlobalDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
+//					strTemp.Format(_T("[T:%d]   %s"), pDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
 //					m_Spread.SetRow(4);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 4, _T("")));
 //
-//					strTemp.Format(_T("[T:%d]   %s"), pGlobalDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
+//					strTemp.Format(_T("[T:%d]   %s"), pDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
 //					m_Spread.SetRow(5);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 5, _T("")));
 //				}
 //				else
 //				{
 //					//160125 lgh 
-//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
+//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
 //					m_Spread.SetRow(4);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 4, _T("")));
 //
-//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
+//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
 //					m_Spread.SetRow(5);
 //					m_Spread.SetText(strTemp + GetRangeString(nTab, 5, _T("")));
 //				}
@@ -9373,100 +9409,100 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			else
 //			{
 //				m_Spread.SetRow(4);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //				m_Spread.SetRow(5);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //
 //			}
 //
 //
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_10") + GetRangeString(nTab, 10, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_10") + GetRangeString(nTab, 10, _T("")));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_11") + GetRangeString(nTab, 11, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_11") + GetRangeString(nTab, 11, _T("")));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_12") + GetRangeString(nTab, 12, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_12") + GetRangeString(nTab, 12, _T("")));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_13") + GetRangeString(nTab, 13, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_13") + GetRangeString(nTab, 13, _T("")));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_14") + GetRangeString(nTab, 14, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_14") + GetRangeString(nTab, 14, _T("")));
 //			m_Spread.SetRow(15);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_15") + GetRangeString(nTab, 15, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_15") + GetRangeString(nTab, 15, _T("")));
 //			m_Spread.SetRow(16);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_16") + GetRangeString(nTab, 16, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_16") + GetRangeString(nTab, 16, _T("")));
 //			m_Spread.SetRow(17);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_17") + GetRangeString(nTab, 17, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_17") + GetRangeString(nTab, 17, _T("")));
 //			m_Spread.SetRow(18);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_18") + GetRangeString(nTab, 18, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_18") + GetRangeString(nTab, 18, _T("")));
 //			break;
 //		case 6:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_1") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_1") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);	//111214 hjc mod
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_2") + GetRangeString(nTab, 2, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_2") + GetRangeString(nTab, 2, _T("")));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_3") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_3") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_4") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_4") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_5") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_5") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_6") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_6") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_7") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_7") + GetRangeString(nTab, 7, _T("")));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_8") + GetRangeString(nTab, 8, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_8") + GetRangeString(nTab, 8, _T("")));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_9") + GetRangeString(nTab, 9, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_9") + GetRangeString(nTab, 9, _T("")));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_10") + GetRangeString(nTab, 10, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_10") + GetRangeString(nTab, 10, _T("")));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_11") + GetRangeString(nTab, 11, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_11") + GetRangeString(nTab, 11, _T("")));
 //			m_Spread.SetRow(12);	//120105 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_12") + GetRangeString(nTab, 12, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_12") + GetRangeString(nTab, 12, _T("")));
 //			m_Spread.SetRow(13);	//120109 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_13") + GetRangeString(nTab, 13, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_13") + GetRangeString(nTab, 13, _T("")));
 //			m_Spread.SetRow(14);	//120105 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_14") + GetRangeString(nTab, 14, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_14") + GetRangeString(nTab, 14, _T("")));
 //			m_Spread.SetRow(15);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_15") + GetRangeString(nTab, 15, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_15") + GetRangeString(nTab, 15, _T("")));
 //			//----------------
 //			break;
 //		case 7:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_3") + GetRangeString(nTab, 1, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_3") + GetRangeString(nTab, 1, _T("")));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_4") + GetRangeString(nTab, 2, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_4") + GetRangeString(nTab, 2, _T("")));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_5") + GetRangeString(nTab, 3, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_5") + GetRangeString(nTab, 3, _T("")));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_6") + GetRangeString(nTab, 4, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_6") + GetRangeString(nTab, 4, _T("")));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_7") + GetRangeString(nTab, 5, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_7") + GetRangeString(nTab, 5, _T("")));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_8") + GetRangeString(nTab, 6, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_8") + GetRangeString(nTab, 6, _T("")));
 //			m_Spread.SetRow(7);	//20100210 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_9") + GetRangeString(nTab, 7, _T("")));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_9") + GetRangeString(nTab, 7, _T("")));
 //			if (AoiParam()->m_bUseAutoPinPosAdjust || g_bUsePinPosEstimate)
 //			{
 //				m_Spread.SetRow(8);	//20100210 hjc add
-//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_X, pGlobalDoc->m_nSelectedLanguage));
+//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_X, pDoc->m_nSelectedLanguage));
 //
 //				m_Spread.SetRow(9);	//20100210 hjc add
-//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_Y, pGlobalDoc->m_nSelectedLanguage));
+//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_Y, pDoc->m_nSelectedLanguage));
 //#ifdef IRIS_AXIS
 //				m_Spread.SetRow(10);	//20100210 hjc add
-//				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+//				if (pDoc->m_nSelectedLanguage == KOREA)
 //					m_Spread.SetText(_T("조리개 위치"));
-//				else if (pGlobalDoc->m_nSelectedLanguage == JAPANESE)
+//				else if (pDoc->m_nSelectedLanguage == JAPANESE)
 //					m_Spread.SetText(_T("カメラ絞り位置"));
 //				else
 //					m_Spread.SetText(_T("IrisPos"));
@@ -9476,9 +9512,9 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			{
 //#ifdef IRIS_AXIS
 //				m_Spread.SetRow(8);	//20100210 hjc add
-//				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+//				if (pDoc->m_nSelectedLanguage == KOREA)
 //					m_Spread.SetText(_T("조리개 위치"));
-//				else if (pGlobalDoc->m_nSelectedLanguage == JAPANESE)
+//				else if (pDoc->m_nSelectedLanguage == JAPANESE)
 //					m_Spread.SetText(_T("カメラ絞り位置"));
 //				else
 //					m_Spread.SetText(_T("IrisPos"));
@@ -9495,49 +9531,49 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //		{
 //		case 0:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_1"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_1"));
 //			m_Spread.SetRow(2);
 //			if (g_bSuccessMeasureEtch)
 //			{
 //				strTemp.Format(_T("%s[e:%.1fum, %.1fum]"),
-//					pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2"), g_dCurrentEtchValue, SpecData.fNominalLineWidth - g_dCurrentEtchValue);
+//					pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2"), g_dCurrentEtchValue, pDoc->SpecData.fNominalLineWidth - g_dCurrentEtchValue);
 //
 //				m_Spread.SetText(strTemp);
 //			}
 //			else
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_2"));
 //
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_3"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_4"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_5"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_7"));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_8"));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_9"));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_10"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_10"));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_11"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_11"));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_12"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_12"));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_13"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_13"));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_14"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_14"));
 //
 //			m_Spread.SetRow(15);
 //
-//			if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
+//			if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
 //			{
 //				strTemp = "";
-//				for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+//				for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 //				{
 //					if (idx < 2)
 //					{
@@ -9557,41 +9593,41 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			}
 //			else
 //			{
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_15"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_15"));
 //				m_Spread.SetRow(16);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_16"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_0", "ROW_16"));
 //			}
 //
 //			break;
 //		case 1:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_1"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_1"));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_2"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_2"));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_3"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_4"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_5"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_7"));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_8"));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_9"));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_10"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_10"));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_11"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_11"));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_12"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_12"));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_13"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_13"));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_14"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_14"));
 //
 //
 //			if (AoiParam()->m_bUseMultilineSpecEx && m_nLineWidthGroupNum > 0)
@@ -9600,7 +9636,7 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //				{
 //					CString strVal;
 //					strTemp = "";
-//					for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+//					for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 //					{
 //						if (idx < 4)
 //						{
@@ -9620,7 +9656,7 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //					m_Spread.SetTypeButtonText(strTemp);
 //
 //					strTemp = _T("");
-//					for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+//					for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 //					{
 //						if (idx < 2)
 //						{
@@ -9645,171 +9681,171 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			else
 //			{
 //				m_Spread.SetRow(15);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_15"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_15"));
 //
 //				m_Spread.SetRow(16);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_16"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_1", "ROW_16"));
 //			}
 //			break;
 //		case 2:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_1"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_1"));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_2"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_2"));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_3"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_4"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_5"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_7"));
 //			//20090412 hjc
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_8"));
 //			m_Spread.SetRow(9);	//121226 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_2", "ROW_9"));
 //			//------------
 //			break;
 //		case 3:		//20100322 hjc add
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_1"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_1"));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_2"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_2"));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_3"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_4"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_5"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_7"));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_8"));
 //			//jun 20120903 for LG_CCL-Inspector
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_9"));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_10"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_10"));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_11"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_11"));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_12"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_3", "ROW_12"));
 //			//------------
 //			break;
 //		case 4:
-//			if (pGlobalDoc->m_bUseTeachingLineWidth)
+//			if (pDoc->m_bUseTeachingLineWidth)
 //			{
-//				if (pGlobalDoc->m_bUseOnlyViaInsp[AoiParam()->m_nCurrentInspectionMode])	//151210 hjc add
+//				if (pDoc->m_bUseOnlyViaInsp[AoiParam()->m_nCurrentInspectionMode])	//151210 hjc add
 //				{
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nViaHoleMeanDiff, 255 - pGlobalDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nViaHoleMeanDiff, 255 - pDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //					m_Spread.SetRow(1);
 //					m_Spread.SetText(strTemp);
 //					m_Spread.SetRow(2);
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nViaHoleMeanDiff, pGlobalDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nViaHoleMeanDiff, pDoc->m_nViaHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //					m_Spread.SetText(strTemp);
 //				}
-//				else if (pGlobalDoc->m_nVDMeanDiff > 0)
+//				else if (pDoc->m_nVDMeanDiff > 0)
 //				{
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nVDMeanDiff, 255 - pGlobalDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nVDMeanDiff, 255 - pDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //					m_Spread.SetRow(1);
 //					m_Spread.SetText(strTemp);
 //					m_Spread.SetRow(2);
-//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pGlobalDoc->m_nVDMeanDiff, pGlobalDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//					strTemp.Format(_T("[T:%d][Max:%d]  %s"), pDoc->m_nVDMeanDiff, pDoc->m_nVDMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //					m_Spread.SetText(strTemp);
 //				}
 //				else
 //				{
-//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //					m_Spread.SetRow(1);
 //					m_Spread.SetText(strTemp);
 //					m_Spread.SetRow(2);
-//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//					strTemp.Format(_T("[(X)VD Data]  %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //					m_Spread.SetText(strTemp);
 //				}
 //			}
 //			else
 //			{
 //				m_Spread.SetRow(1);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_1"));
 //				m_Spread.SetRow(2);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_2"));
 //			}
 //
 //
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_3"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_4"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_5"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_7"));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_8"));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_9"));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_10"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_10"));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_11"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_11"));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_12"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_12"));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_13"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_13"));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_14"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_14"));
 //			m_Spread.SetRow(15);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_15"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_15"));
 //			m_Spread.SetRow(16);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_16"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_16"));
 //			m_Spread.SetRow(17);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_17"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_17"));
 //			m_Spread.SetRow(18);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_18"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_18"));
 //			m_Spread.SetRow(19);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_19"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_19"));
 //			m_Spread.SetRow(20);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_20"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_20"));
 //			m_Spread.SetRow(21);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_21"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_21"));
 //			m_Spread.SetRow(22);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_22"));		//150606 hjc add
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_4", "ROW_22"));		//150606 hjc add
 //			break;
 //		case 5:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_1"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_1"));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_2"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_2"));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_3"));
 //
-//			if (pGlobalDoc->m_bUseTeachingLineWidth)
+//			if (pDoc->m_bUseTeachingLineWidth)
 //			{
-//				if (pGlobalDoc->m_nHoleMeanDiff > 0)
+//				if (pDoc->m_nHoleMeanDiff > 0)
 //				{
-//					strTemp.Format(_T("[T:%d]   %s"), pGlobalDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
+//					strTemp.Format(_T("[T:%d]   %s"), pDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
 //					m_Spread.SetRow(4);
 //					m_Spread.SetText(strTemp);
 //
-//					strTemp.Format(_T("[T:%d]   %s"), pGlobalDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
+//					strTemp.Format(_T("[T:%d]   %s"), pDoc->m_nHoleMeanDiff, pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
 //					m_Spread.SetRow(5);
 //					m_Spread.SetText(strTemp);
 //				}
 //				else
 //				{
 //					//160125 lgh 
-//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
+//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
 //					m_Spread.SetRow(4);
 //					m_Spread.SetText(strTemp);
 //
-//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
+//					strTemp.Format(_T("[(X) HoleData]   %s"), pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
 //					m_Spread.SetRow(5);
 //					m_Spread.SetText(strTemp);
 //				}
@@ -9817,101 +9853,101 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			else
 //			{
 //				m_Spread.SetRow(4);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_4"));
 //				m_Spread.SetRow(5);
-//				m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
+//				m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_5"));
 //
 //			}
 //
 //
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_7"));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_8"));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_9"));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_10"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_10"));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_11"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_11"));
 //			m_Spread.SetRow(12);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_12"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_12"));
 //			m_Spread.SetRow(13);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_13"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_13"));
 //			m_Spread.SetRow(14);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_14"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_14"));
 //			m_Spread.SetRow(15);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_15"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_15"));
 //			m_Spread.SetRow(16);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_16"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_16"));
 //			m_Spread.SetRow(17);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_17"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_17"));
 //			m_Spread.SetRow(18);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_18"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_5", "ROW_18"));
 //			break;
 //		case 6:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_1"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_1"));
 //			m_Spread.SetRow(2);	//111214 hjc mod
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_2"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_2"));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_3"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_4"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_5"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_6"));
 //			m_Spread.SetRow(7);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_7"));
 //			m_Spread.SetRow(8);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_8"));
 //			m_Spread.SetRow(9);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_9"));
 //			m_Spread.SetRow(10);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_10"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_10"));
 //			m_Spread.SetRow(11);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_11"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_11"));
 //			m_Spread.SetRow(12);	//120105 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_12"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_12"));
 //			m_Spread.SetRow(13);	//120109 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_13"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_13"));
 //			m_Spread.SetRow(14);	//120105 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_14"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_14"));
 //			m_Spread.SetRow(15);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_15"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_6", "ROW_15"));
 //			//----------------
 //			break;
 //		case 7:
 //			m_Spread.SetRow(1);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_3"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_3"));
 //			m_Spread.SetRow(2);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_4"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_4"));
 //			m_Spread.SetRow(3);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_5"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_5"));
 //			m_Spread.SetRow(4);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_6"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_6"));
 //			m_Spread.SetRow(5);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_7"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_7"));
 //			m_Spread.SetRow(6);
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_8"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_8"));
 //			m_Spread.SetRow(7);	//20100210 hjc add
-//			m_Spread.SetText(pGlobalView->GetMultiLangString(pGlobalDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_9"));
+//			m_Spread.SetText(pGlobalView->GetMultiLangString(pDoc->m_nSelectedLanguage, "SPEC_TAB_7", "ROW_9"));
 //
 //			if (AoiParam()->m_bUseAutoPinPosAdjust || g_bUsePinPosEstimate)
 //			{
 //				m_Spread.SetRow(8);	//20100210 hjc add
-//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_X, pGlobalDoc->m_nSelectedLanguage));
+//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_X, pDoc->m_nSelectedLanguage));
 //
 //				m_Spread.SetRow(9);	//20100210 hjc add
-//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_Y, pGlobalDoc->m_nSelectedLanguage));
+//				m_Spread.SetText(LoadLanguageString(ID_PANEL_SIZE_Y, pDoc->m_nSelectedLanguage));
 //#ifdef IRIS_AXIS
 //				m_Spread.SetRow(10);	//20100210 hjc add
-//				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+//				if (pDoc->m_nSelectedLanguage == KOREA)
 //					m_Spread.SetText(_T("조리개 위치"));
-//				else if (pGlobalDoc->m_nSelectedLanguage == JAPANESE)
+//				else if (pDoc->m_nSelectedLanguage == JAPANESE)
 //					m_Spread.SetText(_T("カメラ絞り位置"));
 //				else
 //					m_Spread.SetText(_T("IrisPos"));
@@ -9921,9 +9957,9 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 //			{
 //#ifdef IRIS_AXIS
 //				m_Spread.SetRow(8);	//20100210 hjc add
-//				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+//				if (pDoc->m_nSelectedLanguage == KOREA)
 //					m_Spread.SetText(_T("조리개 위치"));
-//				else if (pGlobalDoc->m_nSelectedLanguage == JAPANESE)
+//				else if (pDoc->m_nSelectedLanguage == JAPANESE)
 //					m_Spread.SetText(_T("カメラ絞り位置"));
 //				else
 //					m_Spread.SetText(_T("IrisPos"));
@@ -9937,193 +9973,198 @@ void CDlgSpec::ChangeSpecSpreadCaption(int nTab)
 
 void CDlgSpec::InitSpreadTab0()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
-//	//	m_Spread.SetBool()
-//	//	m_Spread.SetAppearanceStyle(0);// FOR CLASSIC
-//	// Initialize Tab ctrl for information viewer
-//	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
-//
-//	//Tab Index
-//	m_nTabNum = 0;
-//	m_tabDlgInspection.HighlightItem(m_nTabNum, TRUE);
-//
-//	m_Spread.SetReDraw(FALSE);
-//	InitSpread();
-//	//Column Width twip
-//	m_Spread.SetMaxCols(2);
-//
-//	//161123 lgh
-//	if (SpecData.nLineWidthGroupNum >0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
-//		m_Spread.SetMaxRows(15);
-//	else
-//		m_Spread.SetMaxRows(16);
-//
-//	//m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
-//	SS_CELLTYPE stype;
-//
-//	m_Spread.SetTypeEdit(&stype, 0, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
-//	m_Spread.SetCellType(SS_ALLCOLS, SS_ALLROWS, &stype);
-//
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	//	m_Spread.SetBool()
+	//	m_Spread.SetAppearanceStyle(0);// FOR CLASSIC
+	// Initialize Tab ctrl for information viewer
+	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
+
+	//Tab Index
+	m_nTabNum = 0;
+	m_tabDlgInspection.HighlightItem(m_nTabNum, TRUE);
+
+	m_Spread.SetReDraw(FALSE);
+	InitSpread();
+	//Column Width twip
+	m_Spread.SetMaxCols(2);
+
+	//161123 lgh
+	//if (pDoc->SpecData.nLineWidthGroupNum >0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
+	//	m_Spread.SetMaxRows(15);
+	//else
+		m_Spread.SetMaxRows(16);
+
+	//m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
+	SS_CELLTYPE stype;
+
+	m_Spread.SetTypeEdit(&stype, 0, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
+	m_Spread.SetCellType(SS_ALLCOLS, SS_ALLROWS, &stype);
+
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
-//
-//		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
-//
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
-//		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
-//
-//		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
-//
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
-//
-//		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
-//
-//	}
-//	else
-//	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
-//		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
-//	}
-//
+		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, m_Language.lfCharSet, 0, 0, 0, 0, m_Language.lfFaceName);
+		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
+		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, m_Language.lfCharSet, 0, 0, 0, 0, m_Language.lfFaceName);
+		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
+		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
+		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, m_Language.lfCharSet, 0, 0, 0, 0, m_Language.lfFaceName);
+		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
+
+		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
+		//m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
+		//hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
+		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
+		//m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
+		//hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
+		//m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
+	//}
+	//else
+	//{
+	//	HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
+	//	m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
+	//}
+
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
 //
-//
-//	//m_Spread.SetCol(SS_HEADER);	
-//	//m_Spread.SetRow(SS_ALLROWS);
-//
-//	//헤더 컨트롤
-//	m_Spread.SetTypeStaticText(&stype, SS_TEXT_SHADOW | SS_TEXT_VCENTER | SS_TEXT_RIGHT);
-//	m_Spread.SetCellType(SS_HEADER, SS_ALLROWS, &stype);
-//
-//	//Column Caption
-//	//m_Spread.SetBackColor(RGB(226,233,251));
-//
-//	// ?E시스템의 픽셀큱ETwips값을 파악한다.
-//	CDC* pDC = GetDC();
-//	int nLogX = pDC->GetDeviceCaps(LOGPIXELSX);
-//	ReleaseDC(pDC);
-//	int nTwipPerPixel = 1440 / nLogX;
-//
-//	// 리소스 에디터로 그려햨E스프레드의 크기를 Twips단위로 파악한다.
-//	CRect rect;
-//	m_Spread.GetClientRect(rect);
-//	long twpWidth = (rect.right - rect.left);
-//
-//	// 스프레드의 폭을  Column Width단위로 변환한다.
-//	double fSpreadWidth, EachColWidth;
-//	m_Spread.LogUnitsToColWidth(twpWidth, &fSpreadWidth);
-//
-//	if (AoiParam()->m_bSetSpecLocking)
-//	{
-//		m_Spread.SetColWidth(0, 37);	//20090311 hjc modify
-//		m_Spread.SetColWidth(2, 20);	//140314 hjc mod
-//	}
-//	else
-//	{
-//		m_Spread.SetColWidth(0, 32);	//20090311 hjc modify
-//		m_Spread.SetColWidth(2, 28);	//140314 hjc mod
-//	}
-//
-//	double dColGetWidth = 0;
-//	double dColGetWidth2 = 0;
-//	m_Spread.GetColWidth(0, &dColGetWidth);
-//
-//	EachColWidth = (float)(fSpreadWidth - (dColGetWidth + m_Spread.GetColWidth(2)) - 0.5);
-//	m_Spread.SetColWidth(1, EachColWidth);
-//
-//	m_Spread.SetRowHeight(0, 5); // COL(0)'S HEIGHT
-//
-//								 // 리소스 에디터로 그려햨E스프레드의 크기를 Twips단위로 파악한다.
-//	long twpHeight = (rect.bottom - rect.top);
-//
-//	// 스프레드의 높이를 Row Height단위로 변환한다.
-//	double fSpreadHeight;//, EachRowHeight
-//
-//
-//
-//	long nRow;
-//	m_Spread.LogUnitsToRowHeight(0, twpHeight, &fSpreadHeight);
-//	double dSepHeight = (fSpreadHeight - 10) / max(1, m_Spread.GetMaxRows() + 1);
-//	for (nRow = 1; nRow <= m_Spread.GetMaxRows(); nRow++)
-//	{
-//
-//		m_Spread.SetRowHeight(nRow, dSepHeight);
-//	}
-//
-//	//Column Caption
-//	m_Spread.SetRow(0);
-//
-//	m_Spread.SetCol(1);
-//	m_Spread.SetText(_T(" "));
-//	m_Spread.SetCol(2);
-//	m_Spread.SetText(_T(" "));
-//
-//
-//
-//	ChangeSpecSpreadCaption(0);
-//	m_Spread.SetCellBorder(-1, -1, -1, -1, SS_BORDERTYPE_BOTTOM | SS_BORDERTYPE_RIGHT, RGB(180, 180, 180), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//
-//	for (int iRow = 1; iRow <= m_Spread.GetMaxRows(); iRow++)
-//	{
-//		m_Spread.SetRow(iRow);
-//		m_Spread.SetCol(1);
-//		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_VCENTER | SSS_ALIGN_CENTER, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
-//		m_Spread.SetCellType(SS_ALLCOLS, iRow, &stype);
-//		//m_Spread.SetCellType(TYPE_DEFAULT,SSS_ALIGN_VCENTER |SSS_ALIGN_CENTER);
-//		//m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER);
-//		//m_Spread.SetTypeAlign(SSS_ALIGN_RIGHT);
-//
-//		if (m_bMasterLocalFlag[0][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
-//		{
-//			//m_Spread.SetForeColor(RGB(58,53,151));
-//			m_Spread.SetColor(1, iRow, RGB(255, 255, 255), RGB(58, 53, 151));
-//		}
-//		else
-//		{
-//			m_Spread.SetColor(1, iRow, RGB(255, 255, 255), RGB(60, 145, 103));
-//			//m_Spread.SetForeColor(RGB(60,145,103));
-//		}
-//		//m_Spread.SetEditMode(TRUE);
-//		//m_Spread.SetBackColor(RGB(255,255,255));
-//		m_Spread.SetLock(FALSE);
-//
-//		m_Spread.SetCol(2);
-//		m_Spread.SetCellType(TYPE_STATIC, SSS_ALIGN_VCENTER | SSS_ALIGN_LEFT);
-//
-//		m_Spread.SetColor(1, iRow, RGB(255, 255, 255), RGB(0, 0, 0));
-//
-//		// Clear Cell Boarder
-//		//m_Spread.SetCellBorder(0,iRow,2,iRow,8,0,-1); // Bottom Line - Default Style.
-//	}
-//
-//	m_bEnableCheckBox = FALSE;
-//
-//	// Clear Spread Sheet
-//	m_Spread.ClearRange(1, 1, m_Spread.GetMaxCols(), m_Spread.GetMaxRows());
-//
-//	// syd-091008
-//	// Button in Cell
-//	m_Spread.SetCol(1);
-//	if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
-//	{
+
+	//m_Spread.SetCol(SS_HEADER);	
+	//m_Spread.SetRow(SS_ALLROWS);
+
+	//헤더 컨트롤
+	m_Spread.SetTypeStaticText(&stype, SS_TEXT_SHADOW | SS_TEXT_VCENTER | SS_TEXT_RIGHT);
+	m_Spread.SetCellType(SS_HEADER, SS_ALLROWS, &stype);
+
+	//Column Caption
+	//m_Spread.SetBackColor(RGB(226,233,251));
+
+	// ?E시스템의 픽셀큱ETwips값을 파악한다.
+	CDC* pDC = GetDC();
+	int nLogX = pDC->GetDeviceCaps(LOGPIXELSX);
+	ReleaseDC(pDC);
+	int nTwipPerPixel = 1440 / nLogX;
+
+	// 리소스 에디터로 그려햨E스프레드의 크기를 Twips단위로 파악한다.
+	CRect rect;
+	m_Spread.GetClientRect(rect);
+	long twpWidth = (rect.right - rect.left);
+
+	// 스프레드의 폭을  Column Width단위로 변환한다.
+	double fSpreadWidth, EachColWidth;
+	m_Spread.LogUnitsToColWidth(twpWidth, &fSpreadWidth);
+
+	//if (AoiParam()->m_bSetSpecLocking)
+	//{
+	//	m_Spread.SetColWidth(0, 37);	//20090311 hjc modify
+	//	m_Spread.SetColWidth(2, 20);	//140314 hjc mod
+	//}
+	//else
+	//{
+		m_Spread.SetColWidth(0, 32);	//20090311 hjc modify
+		m_Spread.SetColWidth(2, 28);	//140314 hjc mod
+	//}
+
+	double dColGetWidth = 0;
+	double dColGetWidth2 = 0;
+	m_Spread.GetColWidth(0, &dColGetWidth);
+
+	EachColWidth = (float)(fSpreadWidth - (dColGetWidth + m_Spread.GetColWidth(2)) - 0.5);
+	m_Spread.SetColWidth(1, EachColWidth);
+
+	m_Spread.SetRowHeight(0, 5); // COL(0)'S HEIGHT
+
+								 // 리소스 에디터로 그려햨E스프레드의 크기를 Twips단위로 파악한다.
+	long twpHeight = (rect.bottom - rect.top);
+
+	// 스프레드의 높이를 Row Height단위로 변환한다.
+	double fSpreadHeight;//, EachRowHeight
+
+
+
+	long nRow;
+	m_Spread.LogUnitsToRowHeight(0, twpHeight, &fSpreadHeight);
+	double dSepHeight = (fSpreadHeight - 10) / max(1, m_Spread.GetMaxRows() + 1);
+	for (nRow = 1; nRow <= m_Spread.GetMaxRows(); nRow++)
+	{
+
+		m_Spread.SetRowHeight(nRow, dSepHeight);
+	}
+
+	//Column Caption
+	m_Spread.SetRow(0);
+
+	m_Spread.SetCol(1);
+	m_Spread.SetText(_T(" "));
+	m_Spread.SetCol(2);
+	m_Spread.SetText(_T(" "));
+
+
+
+	ChangeSpecSpreadCaption(0);
+	m_Spread.SetCellBorder(-1, -1, -1, -1, SS_BORDERTYPE_BOTTOM | SS_BORDERTYPE_RIGHT, RGB(180, 180, 180), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+
+	for (int iRow = 1; iRow <= m_Spread.GetMaxRows(); iRow++)
+	{
+		m_Spread.SetRow(iRow);
+		m_Spread.SetCol(1);
+		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_VCENTER | SSS_ALIGN_CENTER, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
+		m_Spread.SetCellType(SS_ALLCOLS, iRow, &stype);
+		//m_Spread.SetCellType(TYPE_DEFAULT,SSS_ALIGN_VCENTER |SSS_ALIGN_CENTER);
+		//m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER);
+		//m_Spread.SetTypeAlign(SSS_ALIGN_RIGHT);
+
+		//if (m_bMasterLocalFlag[0][iRow - 1] && pDoc->m_bDefaultSpecFlag)
+		//{
+			//m_Spread.SetForeColor(RGB(58,53,151));
+			m_Spread.SetColor(1, iRow, RGB(255, 255, 255), RGB(58, 53, 151));
+		//}
+		//else
+		//{
+		//	m_Spread.SetColor(1, iRow, RGB(255, 255, 255), RGB(60, 145, 103));
+		//	//m_Spread.SetForeColor(RGB(60,145,103));
+		//}
+		//m_Spread.SetEditMode(TRUE);
+		//m_Spread.SetBackColor(RGB(255,255,255));
+		m_Spread.SetLock(FALSE);
+
+		m_Spread.SetCol(2);
+		m_Spread.SetCellType(TYPE_STATIC, SSS_ALIGN_VCENTER | SSS_ALIGN_LEFT);
+
+		m_Spread.SetColor(1, iRow, RGB(255, 255, 255), RGB(0, 0, 0));
+
+		// Clear Cell Boarder
+		//m_Spread.SetCellBorder(0,iRow,2,iRow,8,0,-1); // Bottom Line - Default Style.
+	}
+
+	m_bEnableCheckBox = FALSE;
+
+	// Clear Spread Sheet
+	m_Spread.ClearRange(1, 1, m_Spread.GetMaxCols(), m_Spread.GetMaxRows());
+
+	// syd-091008
+	// Button in Cell
+	m_Spread.SetCol(1);
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	{
 //		if (AoiParam()->m_bUseMultilineSpecEx)
 //		{
 //
 //			//150611 hjc add
-//			if (pGlobalDoc->m_bUseCombo)
+//			if (pDoc->m_bUseCombo)
 //			{
 //				// ComboBox in Cell
 //				m_Spread.SetCol(1);
@@ -10169,34 +10210,35 @@ void CDlgSpec::InitSpreadTab0()
 //		}
 //		else
 //		{
-//			for (int i = 9; i <= 16; i++)
-//			{
-//				m_Spread.SetRow(i);
-//				//subbtn_co
-//				m_Spread.SetTypeButton(&stype, SBS_NOPOINTERFOCUS, _T(""), NULL, SUPERBTN_PICT_NONE, NULL, SUPERBTN_PICT_NONE, SUPERBTN_TYPE_NORMAL, 1, nullptr);
-//				m_Spread.SetCellType(1, i, &stype);
-//			}
-//		}
-//	}
-//	else
-//	{
-//		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_CENTER | SSS_ALIGN_VCENTER, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
-//		m_Spread.SetCellType(1, 15, &stype);
-//
-//		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_CENTER | SSS_ALIGN_VCENTER, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
-//		m_Spread.SetCellType(1, 16, &stype);
-//
-//		//150611 hjc add
-//		if (pGlobalDoc->m_bUseCombo)
-//		{
-//			// ComboBox in Cell
-//			m_Spread.SetCol(1);
-//			m_Spread.SetRow(9);
-//			//m_Spread.SetCellType(TYPE_COMBO);
-//
-//			//m_Spread.SetTypeComboBox(&stype,SSS_ALIGN_CENTER  | SS_CB_DROPDOWN,"Highest    (90%)\tVeryHigh   (80%)\tHigh        (70%)\tNormal     (60%)\tLow         (50%)\tVeryLow   (40%)\tLowest     (30%)\tMaxLimit     (10%)");
-//			//m_Spread.SetCellType(1, 9, &stype);
-//
+			for (int i = 9; i <= 16; i++)
+			{
+				m_Spread.SetRow(i);
+				//subbtn_co
+				m_Spread.SetTypeButton(&stype, SBS_NOPOINTERFOCUS, _T(""), NULL, SUPERBTN_PICT_NONE, NULL, SUPERBTN_PICT_NONE, SUPERBTN_TYPE_NORMAL, 1, nullptr);
+				m_Spread.SetCellType(1, i, &stype);
+			}
+		//}
+	}
+	else
+	{
+		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_CENTER | SSS_ALIGN_VCENTER, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
+		m_Spread.SetCellType(1, 15, &stype);
+
+		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_CENTER | SSS_ALIGN_VCENTER, 128, SS_CHRSET_CHR, SS_CASE_NOCASE);
+		m_Spread.SetCellType(1, 16, &stype);
+
+		//150611 hjc add
+		//if (pDoc->m_bUseCombo)
+		{
+			// ComboBox in Cell
+			m_Spread.SetCol(1);
+			m_Spread.SetRow(9);
+			//m_Spread.SetCellType(TYPE_COMBO);
+
+			//m_Spread.SetTypeComboBox(&stype,SSS_ALIGN_CENTER  | SS_CB_DROPDOWN,"Highest    (90%)\tVeryHigh   (80%)\tHigh        (70%)\tNormal     (60%)\tLow         (50%)\tVeryLow   (40%)\tLowest     (30%)\tMaxLimit     (10%)");
+			//m_Spread.SetCellType(1, 9, &stype);
+
+			m_Spread.SetTypeComboBoxList(_T("Highest    (90%)\tVeryHigh   (80%)\tHigh        (70%)\tNormal     (60%)\tLow         (50%)\tVeryLow   (40%)\tLowest     (30%)\tMaxLimit     (10%)"));//"90%\t80%\t70%\t60%\t50%\t40%\t30%"
 //#if LANGUAGE == ENGLISH
 //			m_Spread.SetTypeComboBoxList(_T("Highest    (90%)\tVeryHigh   (80%)\tHigh        (70%)\tNormal     (60%)\tLow         (50%)\tVeryLow   (40%)\tLowest     (30%)\tMaxLimit     (10%)"));//"90%\t80%\t70%\t60%\t50%\t40%\t30%"	//\tMaxLimit     (10%)
 //#elif LANGUAGE == KOREAN
@@ -10204,14 +10246,15 @@ void CDlgSpec::InitSpreadTab0()
 //#elif LANGUAGE == JAPANESE
 //			m_Spread.SetTypeComboBoxList(_T("Highest    (90%)\tVeryHigh   (80%)\tHigh        (70%)\tNormal     (60%)\tLow         (50%)\tVeryLow   (40%)\tLowest     (30%)\tMaxLimit     (10%)"));//"90%\t80%\t70%\t60%\t50%\t40%\t30%"
 //#endif	
-//			m_Spread.SetTypeComboBoxEditable(FALSE);
-//			m_Spread.SetTypeComboBoxMaxDrop(10);
-//			//m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER );
-//			//m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
-//
-//
-//			m_Spread.SetRow(10);
-//			//	m_Spread.SetCellType(TYPE_COMBO);
+			m_Spread.SetTypeComboBoxEditable(FALSE);
+			m_Spread.SetTypeComboBoxMaxDrop(10);
+			//m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER );
+			//m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
+
+
+			m_Spread.SetRow(10);
+			//	m_Spread.SetCellType(TYPE_COMBO);
+			m_Spread.SetTypeComboBoxList(_T("Highest    (110%)\tVeryHigh   (120%)\tHigh        (130%)\tNormal     (140%)\tLow         (150%)\tVeryLow   (160%)\tLowest     (170%)\tMaxLimit     (190%)"));
 //#if LANGUAGE == ENGLISH
 //			m_Spread.SetTypeComboBoxList(_T("Highest    (110%)\tVeryHigh   (120%)\tHigh        (130%)\tNormal     (140%)\tLow         (150%)\tVeryLow   (160%)\tLowest     (170%)\tMaxLimit     (190%)"));		//140126 hjc add \tMaxLimit     (190%)
 //#elif LANGUAGE == KOREAN
@@ -10219,268 +10262,255 @@ void CDlgSpec::InitSpreadTab0()
 //#elif LANGUAGE == JAPANESE
 //			m_Spread.SetTypeComboBoxList(_T("Highest    (110%)\tVeryHigh   (120%)\tHigh        (130%)\tNormal     (140%)\tLow         (150%)\tVeryLow   (160%)\tLowest     (170%)\tMaxLimit     (190%)"));
 //#endif
-//			m_Spread.SetTypeComboBoxEditable(FALSE);
-//			m_Spread.SetTypeComboBoxMaxDrop(10);
-//			//	m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER );
-//			//	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
-//		}
-//	}
-//
-//	// Static in Cell
-//	m_Spread.SetCol(2);
-//
-//	m_Spread.SetRow(1);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	m_Spread.SetText(_T("um"));
-//
-//	m_Spread.SetRow(2);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	m_Spread.SetText(_T("um"));
-//	//m_Spread.SetTypeTextWordWrap(TRUE);// Set the text to wrap to multiple lines
-//
-//	CString strData;
-//
-//	m_Spread.SetRow(3);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//	{   //20191224 add 251
-//		strData.Format(_T("DN[N72,75,251](%d~%d)"), pGlobalDoc->m_nSpecNickGrayLowerLimit, pGlobalDoc->m_nSpecNickGrayUpperLimit);	//170217 hjc mod
-//		m_Spread.SetText(strData);
-//	}
-//	else
-//	{
-//		strData.Format(_T("DN[N72,75,251](%d~%d)"), pGlobalDoc->m_nSpecNickGrayLowerLimit, pGlobalDoc->m_nSpecNickGrayUpperLimit);	//170217 hjc mod
-//		m_Spread.SetText(strData);
-//	}
-//
-//	//150413 hjc add
-//	m_Spread.SetRow(4);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//	{
-//		strData.Format(_T("DN[OP0,OP41,N44](%d~%d)"), pGlobalDoc->m_nSpecOpenGrayLowerLimit, pGlobalDoc->m_nSpecOpenGrayUpperLimit); //20200102 add N41,44
-//		m_Spread.SetText(strData);
-//	}
-//	else
-//	{
-//		strData.Format(_T("DN(%d~%d)"), pGlobalDoc->m_nSpecOpenGrayLowerLimit, pGlobalDoc->m_nSpecOpenGrayUpperLimit);
-//		m_Spread.SetText(strData);
-//	}
-//
-//	m_Spread.SetRow(5);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//	{
-//		strData.Format(_T("DN[P13,15,72,80,83~85,N26,S42,83]"));	//170217 hjc mod	//20200102 mod
-//		m_Spread.SetText(strData);
-//	}
-//	else
-//	{
-//		strData.Format(_T("DN"));
-//		m_Spread.SetText(strData);
-//	}
-//
-//	m_Spread.SetRow(6);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//	{
-//		strData.Format(_T("DN[N11,13,24~26,32,72,83~85,87,251,ES303]"));	//20200102 mod
-//		m_Spread.SetText(strData);
-//	}
-//	else
-//	{
-//		strData.Format(_T("DN"));
-//		m_Spread.SetText(strData);
-//	}
-//
-//
-//	m_Spread.SetRow(7);
-//	m_Spread.SetCellType(TYPE_STATIC);
+			m_Spread.SetTypeComboBoxEditable(FALSE);
+			m_Spread.SetTypeComboBoxMaxDrop(10);
+			//	m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER );
+			//	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
+		}
+	}
+
+	// Static in Cell
+	m_Spread.SetCol(2);
+
+	m_Spread.SetRow(1);
+	m_Spread.SetCellType(TYPE_STATIC);
+	m_Spread.SetText(_T("um"));
+
+	m_Spread.SetRow(2);
+	m_Spread.SetCellType(TYPE_STATIC);
+	m_Spread.SetText(_T("um"));
+	//m_Spread.SetTypeTextWordWrap(TRUE);// Set the text to wrap to multiple lines
+
+	CString strData;
+
+	m_Spread.SetRow(3);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//{   //20191224 add 251
+	//	strData.Format(_T("DN[N72,75,251](%d~%d)"), pDoc->m_nSpecNickGrayLowerLimit, pDoc->m_nSpecNickGrayUpperLimit);	//170217 hjc mod
+	//	m_Spread.SetText(strData);
+	//}
+	//else
+	//{
+		strData.Format(_T("DN[N72,75,251](%d~%d)"), pDoc->m_nSpecNickGrayLowerLimit, pDoc->m_nSpecNickGrayUpperLimit);	//170217 hjc mod
+		m_Spread.SetText(strData);
+	//}
+
+	//150413 hjc add
+	m_Spread.SetRow(4);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//{
+	//	strData.Format(_T("DN[OP0,OP41,N44](%d~%d)"), pDoc->m_nSpecOpenGrayLowerLimit, pDoc->m_nSpecOpenGrayUpperLimit); //20200102 add N41,44
+	//	m_Spread.SetText(strData);
+	//}
+	//else
+	//{
+		strData.Format(_T("DN(%d~%d)"), pDoc->m_nSpecOpenGrayLowerLimit, pDoc->m_nSpecOpenGrayUpperLimit);
+		m_Spread.SetText(strData);
+	//}
+
+	m_Spread.SetRow(5);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//{
+	//	strData.Format(_T("DN[P13,15,72,80,83~85,N26,S42,83]"));	//170217 hjc mod	//20200102 mod
+	//	m_Spread.SetText(strData);
+	//}
+	//else
+	//{
+		strData.Format(_T("DN"));
+		m_Spread.SetText(strData);
+	//}
+
+	m_Spread.SetRow(6);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//{
+	//	strData.Format(_T("DN[N11,13,24~26,32,72,83~85,87,251,ES303]"));	//20200102 mod
+	//	m_Spread.SetText(strData);
+	//}
+	//else
+	//{
+		strData.Format(_T("DN"));
+		m_Spread.SetText(strData);
+	//}
+
+
+	m_Spread.SetRow(7);
+	m_Spread.SetCellType(TYPE_STATIC);
 //#if MACHINE_MODEL == INSPRO2HR2R || MACHINE_MODEL == INSPRO2HR2R_GANTRY //20101026 add
 //	m_Spread.SetText(_T("DN[90,70~100]"));
 //#else
-//	m_Spread.SetText(_T("DN[OP]"));
+	m_Spread.SetText(_T("DN[OP]"));
 //#endif
-//
-//	m_Spread.SetRow(8);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um[N4]"));
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//		m_Spread.SetText(_T("um[N4]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um"));
-//	else
-//		m_Spread.SetText(_T("pxl"));
-//
-//
-//	m_Spread.SetRow(9);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//		m_Spread.SetText(_T("%[N1,2,43,70,78]"));	//170217 hjc mod  //20191224 add 43
-//	else
-//		m_Spread.SetText(_T("%"));
-//
-//	m_Spread.SetRow(10);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//		m_Spread.SetText(_T("%[P1]"));
-//	else
-//		m_Spread.SetText(_T("%"));
-//
-//
-//	m_Spread.SetRow(11);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//		m_Spread.SetText(_T("%[N3,8,31,43,71,77]"));	//20191224 add 43
-//	else
-//		m_Spread.SetText(_T("%"));
-//
-//	m_Spread.SetRow(12);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
-//		m_Spread.SetText(_T("%[P3,8,31,71,77]"));	//170217 hjc mod
-//	else
-//		m_Spread.SetText(_T("%"));
-//
-//	m_Spread.SetRow(13);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um[N6,7,10,14,18,22,30,31,33,45,62,63,69,70,72,74,76,218,P70,75]"));	//20200102 mod
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//		m_Spread.SetText(_T("pxl[N6,7,10,14,18,22,30,31,33,45,62,63,69,70,72,74,76,218,P70,75]"));   //20190724 add 72,
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um"));
-//	else
-//		m_Spread.SetText(_T("pxl"));
-//
-//	m_Spread.SetRow(14);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um[P6,7,10,14,18,28,30,62,70,72]"));	//20120522-ndy mod	//170217 hjc mod
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//		m_Spread.SetText(_T("pxl[P6,7,10,14,18,28,30,62,70,72]"));	//20120522-ndy mod  //170217 hjc mod
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um"));
-//	else
-//		m_Spread.SetText(_T("pxl"));
-//
-//	m_Spread.SetRow(15);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//	//if (SpecData.nLineWidthGroupNum >0 && AoiParam()->m_bUseMultilineSpecEx)
-//	//170607 lgh fix
-//	if (AoiParam()->m_bUseMultilineSpecEx == FALSE || SpecData.nLineWidthGroupNum == 0)
-//	{
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//			m_Spread.SetText(_T("um[N5]"));
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//			m_Spread.SetText(_T("pxl[N5]"));
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//			m_Spread.SetText(_T("um"));
-//		else
-//			m_Spread.SetText(_T("pxl"));
-//	}
-//	else
-//	{
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//			m_Spread.SetText(_T("um[N5,7,P5,7]"));	//170217 hjc mod
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//			m_Spread.SetText(_T("pxl[N5,7,P5,7]"));	//170217 hjc mod
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//			m_Spread.SetText(_T("um"));
-//		else
-//			m_Spread.SetText(_T("pxl"));
-//	}
-//
-//	//161123 lgh
-//	m_Spread.SetRow(16);
-//	m_Spread.SetCellType(TYPE_STATIC);
-//
-//	//	if(SpecData.nLineWidthGroupNum <=0)
-//	//170607 lgh fix
-//	if (AoiParam()->m_bUseMultilineSpecEx == FALSE || SpecData.nLineWidthGroupNum == 0)
-//	{
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//			m_Spread.SetText(_T("um[P5]"));	//170217 hjc mod
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//			m_Spread.SetText(_T("pxl[P5]"));	//170217 hjc mod
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//			m_Spread.SetText(_T("um"));
-//		else
-//			m_Spread.SetText(_T("pxl"));
-//	}
-//	else  //170217 hjc add
-//	{
-//		/*
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um[P5,7]"));	//170217 hjc mod
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
-//		m_Spread.SetText(_T("pxl[P5,7]"));	//170217 hjc mod
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
-//		m_Spread.SetText(_T("um"));
-//		else
-//		m_Spread.SetText(_T("pxl"));
-//		*/
-//	}
-//
-//	//m_Spread.SetCellBorder(-1,-1,-1,-1,SS_BORDERTYPE_NONE ,RGB(0,0,0),SS_BORDERSTYLE_SOLID ); // Bottom Line - Solid Style.
-//
-//	// Draw Cell Boarder
-//	m_Spread.SetCellBorder(0, 2, 2, 2, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//	m_Spread.SetCellBorder(0, 7, 2, 7, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//	m_Spread.SetCellBorder(0, 12, 2, 12, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//	m_Spread.SetCellBorder(0, 14, 2, 14, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//	m_Spread.SetCellBorder(0, 16, 2, 16, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//	m_Spread.SetCellBorder(0, -1, 0, -1, SS_BORDERTYPE_OUTLINE, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
-//
-//																									 //Set Color Group
-//	for (int iCol = 1; iCol <= 2; iCol++)
-//	{
-//		m_Spread.SetCol(iCol);
-//
-//		m_Spread.SetRow(1);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR);
-//		m_Spread.SetRow(2);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR);
-//
-//		m_Spread.SetRow(3);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
-//		m_Spread.SetRow(4);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
-//		m_Spread.SetRow(5);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
-//		m_Spread.SetRow(6);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
-//		m_Spread.SetRow(7);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
-//
-//		m_Spread.SetRow(8);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
-//		m_Spread.SetRow(9);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
-//		m_Spread.SetRow(10);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
-//		m_Spread.SetRow(11);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
-//		m_Spread.SetRow(12);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
-//
-//		m_Spread.SetRow(13);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR3);
-//		m_Spread.SetRow(14);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR3);
-//
-//		m_Spread.SetRow(15);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR4);
-//
-//		m_Spread.SetRow(16);
-//		m_Spread.SetBackColor(SPREAD_GROUP_COLOR4);
-//	}
+
+	m_Spread.SetRow(8);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
+	//	m_Spread.SetText(_T("um[N4]"));
+	//else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
+	//	m_Spread.SetText(_T("um[N4]"));
+	//else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
+	//	m_Spread.SetText(_T("um"));
+	//else
+		m_Spread.SetText(_T("pxl"));
+
+
+	m_Spread.SetRow(9);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//	m_Spread.SetText(_T("%[N1,2,43,70,78]"));	//170217 hjc mod  //20191224 add 43
+	//else
+		m_Spread.SetText(_T("%"));
+
+	m_Spread.SetRow(10);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//	m_Spread.SetText(_T("%[P1]"));
+	//else
+		m_Spread.SetText(_T("%"));
+
+
+	m_Spread.SetRow(11);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//	m_Spread.SetText(_T("%[N3,8,31,43,71,77]"));	//20191224 add 43
+	//else
+		m_Spread.SetText(_T("%"));
+
+	m_Spread.SetRow(12);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue)
+	//	m_Spread.SetText(_T("%[P3,8,31,71,77]"));	//170217 hjc mod
+	//else
+		m_Spread.SetText(_T("%"));
+
+	m_Spread.SetRow(13);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
+	//	m_Spread.SetText(_T("um[N6,7,10,14,18,22,30,31,33,45,62,63,69,70,72,74,76,218,P70,75]"));	//20200102 mod
+	//else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
+	//	m_Spread.SetText(_T("pxl[N6,7,10,14,18,22,30,31,33,45,62,63,69,70,72,74,76,218,P70,75]"));   //20190724 add 72,
+	//else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
+	//	m_Spread.SetText(_T("um"));
+	//else
+		m_Spread.SetText(_T("pxl"));
+
+	m_Spread.SetRow(14);
+	m_Spread.SetCellType(TYPE_STATIC);
+	//if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
+	//	m_Spread.SetText(_T("um[P6,7,10,14,18,28,30,62,70,72]"));	//20120522-ndy mod	//170217 hjc mod
+	//else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
+	//	m_Spread.SetText(_T("pxl[P6,7,10,14,18,28,30,62,70,72]"));	//20120522-ndy mod  //170217 hjc mod
+	//else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
+	//	m_Spread.SetText(_T("um"));
+	//else
+		m_Spread.SetText(_T("pxl"));
+
+	m_Spread.SetRow(15);
+	m_Spread.SetCellType(TYPE_STATIC);
+
+	//if (AoiParam()->m_bUseMultilineSpecEx == FALSE || pDoc->SpecData.nLineWidthGroupNum == 0)
+	//{
+	//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
+	//		m_Spread.SetText(_T("um[N5]"));
+	//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
+	//		m_Spread.SetText(_T("pxl[N5]"));
+	//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
+	//		m_Spread.SetText(_T("um"));
+	//	else
+	//		m_Spread.SetText(_T("pxl"));
+	//}
+	//else
+	//{
+	//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
+	//		m_Spread.SetText(_T("um[N5,7,P5,7]"));	//170217 hjc mod
+	//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
+	//		m_Spread.SetText(_T("pxl[N5,7,P5,7]"));	//170217 hjc mod
+	//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
+	//		m_Spread.SetText(_T("um"));
+	//	else
+			m_Spread.SetText(_T("pxl"));
+	//}
+
+	//161123 lgh
+	m_Spread.SetRow(16);
+	m_Spread.SetCellType(TYPE_STATIC);
+
+	//if (AoiParam()->m_bUseMultilineSpecEx == FALSE || pDoc->SpecData.nLineWidthGroupNum == 0)
+	//{
+	//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
+	//		m_Spread.SetText(_T("um[P5]"));	//170217 hjc mod
+	//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
+	//		m_Spread.SetText(_T("pxl[P5]"));	//170217 hjc mod
+	//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
+	//		m_Spread.SetText(_T("um"));
+	//	else
+			m_Spread.SetText(_T("pxl"));
+	//}
+
+	//m_Spread.SetCellBorder(-1,-1,-1,-1,SS_BORDERTYPE_NONE ,RGB(0,0,0),SS_BORDERSTYLE_SOLID ); // Bottom Line - Solid Style.
+
+	// Draw Cell Boarder
+	m_Spread.SetCellBorder(0, 2, 2, 2, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+	m_Spread.SetCellBorder(0, 7, 2, 7, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+	m_Spread.SetCellBorder(0, 12, 2, 12, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+	m_Spread.SetCellBorder(0, 14, 2, 14, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+	m_Spread.SetCellBorder(0, 16, 2, 16, SS_BORDERTYPE_OUTLINE | SS_BORDERTYPE_BOTTOM, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+	m_Spread.SetCellBorder(0, -1, 0, -1, SS_BORDERTYPE_OUTLINE, RGB(0, 0, 0), SS_BORDERSTYLE_SOLID); // Bottom Line - Solid Style.
+
+																									 //Set Color Group
+	for (int iCol = 1; iCol <= 2; iCol++)
+	{
+		m_Spread.SetCol(iCol);
+
+		m_Spread.SetRow(1);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR);
+		m_Spread.SetRow(2);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR);
+
+		m_Spread.SetRow(3);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
+		m_Spread.SetRow(4);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
+		m_Spread.SetRow(5);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
+		m_Spread.SetRow(6);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
+		m_Spread.SetRow(7);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR1);
+
+		m_Spread.SetRow(8);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
+		m_Spread.SetRow(9);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
+		m_Spread.SetRow(10);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
+		m_Spread.SetRow(11);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
+		m_Spread.SetRow(12);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
+
+		m_Spread.SetRow(13);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR3);
+		m_Spread.SetRow(14);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR3);
+
+		m_Spread.SetRow(15);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR4);
+
+		m_Spread.SetRow(16);
+		m_Spread.SetBackColor(SPREAD_GROUP_COLOR4);
+	}
 }
 
 void CDlgSpec::InitSpreadTab1()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -10492,47 +10522,47 @@ void CDlgSpec::InitSpreadTab1()
 //	InitSpread();
 //	//Column Width twip
 //	m_Spread.SetMaxCols(2);
-//	if (SpecData.nLineWidthGroupNum >0 && AoiParam()->m_bUseMultilineSpecEx)
+//	if (pDoc->SpecData.nLineWidthGroupNum >0 && AoiParam()->m_bUseMultilineSpecEx)
 //		m_Spread.SetMaxRows(15);
 //	else
 //		m_Spread.SetMaxRows(16);
 //
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -10614,7 +10644,7 @@ void CDlgSpec::InitSpreadTab1()
 //		m_Spread.SetTypeEdit(&stype, SSS_ALIGN_CENTER | SSS_ALIGN_VCENTER, 256, SS_CHRSET_CHR, SS_CASE_NOCASE);
 //		m_Spread.SetCellType(SS_ALLCOLS, iRow, &stype);
 //
-//		if (m_bMasterLocalFlag[1][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[1][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -10642,12 +10672,12 @@ void CDlgSpec::InitSpreadTab1()
 //	m_Spread.SetCol(1);
 //
 //	m_Spread.SetCol(1);
-//	if (SpecData.nLineWidthGroupNum > 0)
+//	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 //	{
 //		if (AoiParam()->m_bUseMultilineSpecEx)
 //		{
 //			//150611 hjc add
-//			if (pGlobalDoc->m_bUseCombo)
+//			if (pDoc->m_bUseCombo)
 //			{
 //				// ComboBox in Cell
 //				m_Spread.SetCol(1);
@@ -10715,7 +10745,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //
 //		//150611 hjc add
-//		if (pGlobalDoc->m_bUseCombo)
+//		if (pDoc->m_bUseCombo)
 //		{
 //			// ComboBox in Cell
 //			m_Spread.SetCol(1);
@@ -10768,7 +10798,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(3);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[N72,75]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -10778,7 +10808,7 @@ void CDlgSpec::InitSpreadTab1()
 //	//150413 hjc add
 //	m_Spread.SetRow(4);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[OP0,41,N44]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -10787,7 +10817,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[P13,15,83]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -10796,7 +10826,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(6);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[N16,25]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -10811,11 +10841,11 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(8);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[N104]"));
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("um[N104]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -10825,7 +10855,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(9);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[N101,102]"));
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -10835,7 +10865,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(10);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[P101]"));
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -10845,7 +10875,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(11);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[N103,108]"));
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -10855,7 +10885,7 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(12);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[P103,108]"));
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -10865,11 +10895,11 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(13);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[N102,106,107,110,114,122,161~163]"));
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[N102,106,107,110,114,122,161~163]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -10879,11 +10909,11 @@ void CDlgSpec::InitSpreadTab1()
 //
 //	m_Spread.SetRow(14);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[P106,107,110,114,162]"));	//20120522-ndy mod
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[P106,107,110,114,162]"));	//20120522-ndy mod
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -10892,15 +10922,15 @@ void CDlgSpec::InitSpreadTab1()
 //	m_Spread.SetCellType(2, 14, &stype);
 //
 //
-//	if (SpecData.nLineWidthGroupNum>0 && AoiParam()->m_bUseMultilineSpecEx)
+//	if (pDoc->SpecData.nLineWidthGroupNum>0 && AoiParam()->m_bUseMultilineSpecEx)
 //	{
 //		m_Spread.SetRow(15);
 //		m_Spread.SetCellType(TYPE_STATIC);
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//		if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //			m_Spread.SetText(_T("um[N105,P105]"));
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//		else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //			m_Spread.SetText(_T("pxl[N105,P105]"));
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//		else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //			m_Spread.SetText(_T("um"));
 //		else
 //			m_Spread.SetText(_T("pxl"));
@@ -10912,11 +10942,11 @@ void CDlgSpec::InitSpreadTab1()
 //	{
 //		m_Spread.SetRow(15);
 //		m_Spread.SetCellType(TYPE_STATIC);
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//		if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //			m_Spread.SetText(_T("um[N105]"));
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//		else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //			m_Spread.SetText(_T("pxl[N105]"));
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//		else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //			m_Spread.SetText(_T("um"));
 //		else
 //			m_Spread.SetText(_T("pxl"));
@@ -10926,11 +10956,11 @@ void CDlgSpec::InitSpreadTab1()
 //
 //		m_Spread.SetRow(16);
 //		m_Spread.SetCellType(TYPE_STATIC);
-//		if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//		if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //			m_Spread.SetText(_T("um[P105]"));
-//		else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//		else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //			m_Spread.SetText(_T("pxl[P105]"));
-//		else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//		else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //			m_Spread.SetText(_T("um"));
 //		else
 //			m_Spread.SetText(_T("pxl"));
@@ -11000,7 +11030,10 @@ void CDlgSpec::InitSpreadTab1()
 
 void CDlgSpec::InitSpreadTab2()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -11023,41 +11056,41 @@ void CDlgSpec::InitSpreadTab2()
 //	m_Spread.SetMaxRows(9);	//121226 hjc add
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -11135,7 +11168,7 @@ void CDlgSpec::InitSpreadTab2()
 //		m_Spread.SetCellType(SS_ALLCOLS, iRow, &stype);
 //		m_Spread.SetFontBold(TRUE);
 //		m_Spread.SetFontSize(m_fDataFontSize);
-//		if (m_bMasterLocalFlag[2][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[2][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -11161,7 +11194,7 @@ void CDlgSpec::InitSpreadTab2()
 //	m_Spread.ClearRange(1, 1, m_Spread.GetMaxCols(), m_Spread.GetMaxRows(), TRUE);
 //
 //	//150611 hjc add
-//	if (pGlobalDoc->m_bUseCombo)
+//	if (pDoc->m_bUseCombo)
 //	{
 //		// ComboBox in Cell
 //		m_Spread.SetCol(1);
@@ -11188,14 +11221,14 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(1);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)	//140314 hjc add
+//	if (pDoc->m_bDisplayKValue)	//140314 hjc add
 //	{
-//		strData.Format(_T("DN[ST,S44](%d~%d)"), pGlobalDoc->m_nSpecSpaceGrayLowerLimit, pGlobalDoc->m_nSpecSpaceGrayUpperLimit);  //20200102 mod
+//		strData.Format(_T("DN[ST,S44](%d~%d)"), pDoc->m_nSpecSpaceGrayLowerLimit, pDoc->m_nSpecSpaceGrayUpperLimit);  //20200102 mod
 //		m_Spread.SetText(strData);
 //	}
 //	else
 //	{
-//		strData.Format(_T("DN(%d~%d)"), pGlobalDoc->m_nSpecSpaceGrayLowerLimit, pGlobalDoc->m_nSpecSpaceGrayUpperLimit);
+//		strData.Format(_T("DN(%d~%d)"), pDoc->m_nSpecSpaceGrayLowerLimit, pDoc->m_nSpecSpaceGrayUpperLimit);
 //		m_Spread.SetText(strData);
 //	}
 //	m_Spread.SetTypeVAlign(SSS_ALIGN_VCENTER);
@@ -11203,7 +11236,7 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(2);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)	//20100210 hjc mod
+//	if (pDoc->m_bDisplayKValue)	//20100210 hjc mod
 //		m_Spread.SetText(_T("DN[S20~22,24,27,30,31,40,41]"));	//20200102 mod
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -11214,7 +11247,7 @@ void CDlgSpec::InitSpreadTab2()
 //	//150413 hjc add
 //	m_Spread.SetRow(3);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)	//20100210 hjc mod
+//	if (pDoc->m_bDisplayKValue)	//20100210 hjc mod
 //		m_Spread.SetText(_T("DN[S15,17,23,25,26]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -11224,11 +11257,11 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(4);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[S4,EP275,Hd25]"));		//20101013 hjc mod		//20230629 add ,EP275,Hd25
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("um[S4,EP275,Hd25]"));	//20101013 hjc mod
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -11238,7 +11271,7 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[S1,5,6,7]"));
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -11248,7 +11281,7 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(6);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[S3,8,58,71,570]"));	//20200102 mod
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -11258,11 +11291,11 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[S18,19,45,50,54,57,70,83,570]"));	//20200102 mod
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[S18,19,45,50,54,57,70,83,570]"));	// 20110715 ? check
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -11272,11 +11305,11 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(8);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[S52]"));
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[S52]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -11286,11 +11319,11 @@ void CDlgSpec::InitSpreadTab2()
 //
 //	m_Spread.SetRow(9);		//121226 hjc add
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[S104]"));		//20101013 hjc mod
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("um[S104]"));	//20101013 hjc mod
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -11343,7 +11376,10 @@ void CDlgSpec::InitSpreadTab2()
 
 void CDlgSpec::InitSpreadTab3()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -11357,7 +11393,7 @@ void CDlgSpec::InitSpreadTab3()
 //	m_Spread.SetMaxCols(2);
 //
 //	//2022 01 10 lgh ad
-//	if (SpecData.bEnableCharInspection)
+//	if (pDoc->SpecData.bEnableCharInspection)
 //		m_Spread.SetMaxRows(15);	//jun 20120903 for LG_CCL-Inspector
 //	else
 //		m_Spread.SetMaxRows(12);	//jun 20120903 for LG_CCL-Inspector
@@ -11366,41 +11402,41 @@ void CDlgSpec::InitSpreadTab3()
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -11477,7 +11513,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //		m_Spread.SetFontBold(TRUE);
 //		m_Spread.SetFontSize(m_fDataFontSize);
-//		if (m_bMasterLocalFlag[3][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[3][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -11503,7 +11539,7 @@ void CDlgSpec::InitSpreadTab3()
 //	m_Spread.ClearRange(1, 1, m_Spread.GetMaxCols(), m_Spread.GetMaxRows(), TRUE);
 //
 //	//jun 20120903 for LG_CCL-Inspector
-//	if (!pGlobalDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])
+//	if (!pDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])
 //	{
 //		//Disable Cells
 //		m_Spread.SetCol(1);
@@ -11529,7 +11565,7 @@ void CDlgSpec::InitSpreadTab3()
 //	m_Spread.SetRow(2);
 //	m_Spread.SetCellType(TYPE_COMBO);
 //
-//	DecisionPixelAdjust(m_strLP_Prec, SpecData.LPADRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	DecisionPixelAdjust(m_strLP_Prec, pDoc->SpecData.LPADRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod	//160314 hjc del
@@ -11544,8 +11580,8 @@ void CDlgSpec::InitSpreadTab3()
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_COMBO);
 //
-//	//170112 hjc mod m_strSP_Prec -> SpecData.szSPRLName
-//	DecisionPixelAdjust(m_strSP_Prec, SpecData.LSpaceRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	//170112 hjc mod m_strSP_Prec -> pDoc->SpecData.szSPRLName
+//	DecisionPixelAdjust(m_strSP_Prec, pDoc->SpecData.LSpaceRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod
@@ -11561,7 +11597,7 @@ void CDlgSpec::InitSpreadTab3()
 //	m_Spread.SetRow(8);
 //	m_Spread.SetCellType(TYPE_COMBO);
 //
-//	DecisionPixelAdjust(m_strSPExt_Prec, SpecData.SpaceExtRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	DecisionPixelAdjust(m_strSPExt_Prec, pDoc->SpecData.SpaceExtRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	m_Spread.SetTypeComboBoxList(strComboDisp);
 //
@@ -11578,7 +11614,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(1);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[PH1]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -11588,7 +11624,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(2);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[PH1]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -11598,7 +11634,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(3);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PH1]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -11608,7 +11644,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(4);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[IS1]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -11618,7 +11654,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[IS1]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -11628,7 +11664,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(6);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[IS1]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -11639,7 +11675,7 @@ void CDlgSpec::InitSpreadTab3()
 //	//20090412 hjc
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[IS2]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -11650,7 +11686,7 @@ void CDlgSpec::InitSpreadTab3()
 //	//170112 hjc add
 //	m_Spread.SetRow(8);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[IS2]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -11659,7 +11695,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(9);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[IS2]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -11669,7 +11705,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(10);		//CCL gray
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[PH10]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -11678,7 +11714,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(11);		//size, pixel
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("PH10"));
 //	else
 //		m_Spread.SetText(_T(""));
@@ -11687,7 +11723,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //	m_Spread.SetRow(12);		//Circularity
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[PH10]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -11696,11 +11732,11 @@ void CDlgSpec::InitSpreadTab3()
 //	//--------------
 //
 //	//2022 01 10 LGH ADD
-//	if (SpecData.bEnableCharInspection)
+//	if (pDoc->SpecData.bEnableCharInspection)
 //	{
 //		m_Spread.SetRow(13);		//Circularity
 //		m_Spread.SetCellType(TYPE_STATIC);
-//		if (pGlobalDoc->m_bDisplayKValue)
+//		if (pDoc->m_bDisplayKValue)
 //			m_Spread.SetText(_T("DN[PD61,62]"));
 //		else
 //			m_Spread.SetText(_T("DN"));
@@ -11709,7 +11745,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //		m_Spread.SetRow(14);		//Circularity
 //		m_Spread.SetCellType(TYPE_STATIC);
-//		if (pGlobalDoc->m_bDisplayKValue)
+//		if (pDoc->m_bDisplayKValue)
 //			m_Spread.SetText(_T("%[PD61]"));
 //		else
 //			m_Spread.SetText(_T("%"));
@@ -11718,7 +11754,7 @@ void CDlgSpec::InitSpreadTab3()
 //
 //		m_Spread.SetRow(15);		//Circularity
 //		m_Spread.SetCellType(TYPE_STATIC);
-//		if (pGlobalDoc->m_bDisplayKValue)
+//		if (pDoc->m_bDisplayKValue)
 //			m_Spread.SetText(_T("%[PD62]"));
 //		else
 //			m_Spread.SetText(_T("%"));
@@ -11773,7 +11809,7 @@ void CDlgSpec::InitSpreadTab3()
 //		m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
 //
 //		//2022 01 10 lgh 
-//		if (SpecData.bEnableCharInspection)
+//		if (pDoc->SpecData.bEnableCharInspection)
 //		{
 //			m_Spread.SetRow(13);	//jun 20120903 for LG_CCL-Inspector
 //			m_Spread.SetBackColor(SPREAD_GROUP_COLOR3);
@@ -11789,7 +11825,10 @@ void CDlgSpec::InitSpreadTab3()
 
 void CDlgSpec::InitSpreadTab4()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -11805,41 +11844,41 @@ void CDlgSpec::InitSpreadTab4()
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -11917,7 +11956,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //		m_Spread.SetFontBold(TRUE);
 //		m_Spread.SetFontSize(m_fDataFontSize);
-//		if (m_bMasterLocalFlag[4][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[4][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -11950,7 +11989,7 @@ void CDlgSpec::InitSpreadTab4()
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_COMBO);
 //
-//	DecisionPixelAdjust(m_strPadBallPrec, SpecData.PADRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	DecisionPixelAdjust(m_strPadBallPrec, pDoc->SpecData.PADRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod
@@ -11965,8 +12004,8 @@ void CDlgSpec::InitSpreadTab4()
 //	m_Spread.SetRow(9);
 //	m_Spread.SetCellType(TYPE_COMBO);
 //
-//	//170112 hjc mod SpecData.szPADTipPrecName -> m_strPadTip_Prec
-//	DecisionPixelAdjust(m_strPadTip_Prec, SpecData.PADTip_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	//170112 hjc mod pDoc->SpecData.szPADTipPrecName -> m_strPadTip_Prec
+//	DecisionPixelAdjust(m_strPadTip_Prec, pDoc->SpecData.PADTip_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod
@@ -11980,8 +12019,8 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(12);
 //	m_Spread.SetCellType(TYPE_COMBO);
-//	//170112 hjc mod m_strARLand_Prec -> SpecData.szARLandPrecName
-//	DecisionPixelAdjust(m_strARLand_Prec, SpecData.ARLand_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	//170112 hjc mod m_strARLand_Prec -> pDoc->SpecData.szARLandPrecName
+//	DecisionPixelAdjust(m_strARLand_Prec, pDoc->SpecData.ARLand_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod
@@ -11995,8 +12034,8 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(16);
 //	m_Spread.SetCellType(TYPE_COMBO);
-//	//170112 hjc mod m_strCO2Land_Prec -> SpecData.szCO2LandPrecName
-//	DecisionPixelAdjust(m_strCO2Land_Prec, SpecData.CO2Land_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	//170112 hjc mod m_strCO2Land_Prec -> pDoc->SpecData.szCO2LandPrecName
+//	DecisionPixelAdjust(m_strCO2Land_Prec, pDoc->SpecData.CO2Land_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod
@@ -12014,11 +12053,11 @@ void CDlgSpec::InitSpreadTab4()
 //	strComboDisp.Format(_T("Yes\tNo"));
 //	m_Spread.SetTypeComboBoxList(strComboDisp);
 //#elif LANGUAGE == KOREAN
-//	//	DecisionPixelAdjust(SpecData.szCO2LandAlignMode, SpecData.nCO2LandAlignMode, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	//	DecisionPixelAdjust(pDoc->SpecData.szCO2LandAlignMode, pDoc->SpecData.nCO2LandAlignMode, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	strComboDisp.Format(_T("Yes\tNo"));
 //	m_Spread.SetTypeComboBoxList(strComboDisp);
 //#elif LANGUAGE == JAPANESE
-//	//	DecisionPixelAdjust(SpecData.szCO2LandAlignMode, SpecData.nCO2LandAlignMode, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);	
+//	//	DecisionPixelAdjust(pDoc->SpecData.szCO2LandAlignMode, pDoc->SpecData.nCO2LandAlignMode, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);	
 //	strComboDisp.Format(_T("Yes\tNo"));
 //	m_Spread.SetTypeComboBoxList(strComboDisp);
 //#endif	
@@ -12030,8 +12069,8 @@ void CDlgSpec::InitSpreadTab4()
 //	m_Spread.SetRow(21);
 //	m_Spread.SetCellType(TYPE_COMBO);
 //
-//	//170112 hjc mod m_strFPad_Prec -> SpecData.szPADFine_PrecName
-//	DecisionPixelAdjust(m_strFPad_Prec, SpecData.PADFine_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+//	//170112 hjc mod m_strFPad_Prec -> pDoc->SpecData.szPADFine_PrecName
+//	DecisionPixelAdjust(m_strFPad_Prec, pDoc->SpecData.PADFine_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 //	//160314 hjc relive
 //	strComboDisp.Format(_T("Highest    (%d)\tVeryHigh   (%d)\tHigh        (%d)\tNormal     (%d)\tLow         (%d)\tVeryLow   (%d)\tLowest     (%d)"), nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest);
 //	//150624 hjc mod
@@ -12050,7 +12089,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(1);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[CD20,Vd31]"));	//20200903 add Vd31
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12060,7 +12099,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(2);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[CD10,Vd30]"));	//20200903 add Vd30
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12071,7 +12110,7 @@ void CDlgSpec::InitSpreadTab4()
 //	//20090419 hjc
 //	m_Spread.SetRow(3);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[CD10]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12081,7 +12120,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(4);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[CD10]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12091,7 +12130,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[CD10,20,Vd30,31]"));	//20200903 add Vd30,31
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12101,7 +12140,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(6);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[PD1,200,201]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12111,7 +12150,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[PD1]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12121,7 +12160,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(8);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PD1]"));	//110706 hjc mod
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12131,7 +12170,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(9);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[10,11,200,201]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12141,7 +12180,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(10);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[10,11,200,201]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12152,7 +12191,7 @@ void CDlgSpec::InitSpreadTab4()
 //	//20100322 hjc add
 //	m_Spread.SetRow(11);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[PD100]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12162,7 +12201,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(12);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[PD100]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12172,7 +12211,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(13);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PD100]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12182,7 +12221,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(14);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PD100]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12192,7 +12231,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(15);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[PD20]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12202,7 +12241,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(16);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[PD20]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12212,7 +12251,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(17);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PD20]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12222,7 +12261,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(19);	//20100323 hjc add
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PD20]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12232,7 +12271,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(20);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[PD10,11,40]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12242,7 +12281,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(21);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[PD40]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12252,7 +12291,7 @@ void CDlgSpec::InitSpreadTab4()
 //
 //	m_Spread.SetRow(22);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[PD40]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12334,7 +12373,10 @@ void CDlgSpec::InitSpreadTab4()
 
 void CDlgSpec::InitSpreadTab5()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -12349,41 +12391,41 @@ void CDlgSpec::InitSpreadTab5()
 //	m_Spread.SetMaxRows(18);
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -12460,7 +12502,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //		m_Spread.SetFontBold(TRUE);
 //		m_Spread.SetFontSize(m_fDataFontSize);
-//		if (m_bMasterLocalFlag[0][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[0][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -12515,7 +12557,7 @@ void CDlgSpec::InitSpreadTab5()
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //
 //	CString temp;
-//	temp.Format(_T("%s"), CharToString(SpecData.szVHMode));
+//	temp.Format(_T("%s"), CharToString(pDoc->SpecData.szVHMode));
 //
 //	//20090311 hjc add
 //	if (temp == "AreaMode")
@@ -12552,7 +12594,7 @@ void CDlgSpec::InitSpreadTab5()
 //	m_Spread.SetRow(1);
 //	m_Spread.SetCellType(TYPE_STATIC);
 //	//20090228 hjc modify
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[HL4,HM42,VL4]"));	//20230630 add VL4
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -12562,7 +12604,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(2);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[HD2,CD2]")); //[HM32,HL3]	//20230629 add ,CD2
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -12572,7 +12614,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(3);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[HD3,CD3]"));		//20230629 add ,CD3
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -12582,7 +12624,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(4);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[HM2,VO0,HD4]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12592,7 +12634,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[L3,5,M1,2,32,42,52]"));	//HM32,42,52
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12602,7 +12644,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(6);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[HD0]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12612,7 +12654,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[HD0]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12622,7 +12664,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(8);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[HD0]"));
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -12640,7 +12682,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(10);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[VM0,10,VL1,2]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12650,7 +12692,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(11);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("pxl[VM0]"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -12660,7 +12702,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(12);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[OP4]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12670,7 +12712,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(13);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[VM0,10,VL0,1]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12680,7 +12722,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(14);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("%[VL1, VL12]"));	//20230630 add
 //	else
 //		m_Spread.SetText(_T("%"));
@@ -12690,7 +12732,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(15);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[VM0,VL1,2]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12700,7 +12742,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(16);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[VL1,2]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12710,7 +12752,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(17);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[VL1,2]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -12720,7 +12762,7 @@ void CDlgSpec::InitSpreadTab5()
 //
 //	m_Spread.SetRow(18);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("EA[VL4]"));
 //	else
 //		m_Spread.SetText(_T("EA"));
@@ -12789,7 +12831,10 @@ void CDlgSpec::InitSpreadTab5()
 
 void CDlgSpec::InitSpreadTab6()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -12805,41 +12850,41 @@ void CDlgSpec::InitSpreadTab6()
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -12991,7 +13036,7 @@ void CDlgSpec::InitSpreadTab6()
 //		m_Spread.SetCellType(SS_ALLCOLS, iRow, &stype);
 //		m_Spread.SetFontBold(TRUE);
 //		m_Spread.SetFontSize(m_fDataFontSize);
-//		if (m_bMasterLocalFlag[0][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[0][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -13021,7 +13066,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(1);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)	//170217 hjc mod
+//	if (pDoc->m_bDisplayKValue)	//170217 hjc mod
 //		m_Spread.SetText(_T("DN[N205,231,255,256]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -13030,7 +13075,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(2);	//120105 hjc add
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[N211,213,225,226,236,255,256,261]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -13039,7 +13084,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(3);	//120105 hjc add
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[N212]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -13048,11 +13093,11 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(4);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[N201,202,205,206,208,225,226,232]"));	//170217 hjc mod  //20191223 add 225,226
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[N201,202,205,206,208,225,226,232]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -13062,11 +13107,11 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(5);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[P235,252~255,257,258]"));	//170217 hjc mod  //20191223 add 253,254,
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[P235,252~255,257,258]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -13077,7 +13122,7 @@ void CDlgSpec::InitSpreadTab6()
 //	//20090412 hjc
 //	m_Spread.SetRow(6);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[256]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -13087,11 +13132,11 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[203, 253]"));
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[203, 253]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -13108,7 +13153,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(9);	//120109 hjc add
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[HD8,9]"));
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -13117,7 +13162,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(10);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[HD5]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -13127,7 +13172,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(11);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("um[HD6]"));
 //	else
 //		m_Spread.SetText(_T("um"));
@@ -13144,7 +13189,7 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(13);	//120105 hjc add
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue)
+//	if (pDoc->m_bDisplayKValue)
 //		m_Spread.SetText(_T("DN[HD8,9,10,15,CD8,9]"));	//20200102 add 15
 //	else
 //		m_Spread.SetText(_T("DN"));
@@ -13154,11 +13199,11 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(14);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[HD5,7,CD5]"));
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[HD5,7,CD5]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -13168,11 +13213,11 @@ void CDlgSpec::InitSpreadTab6()
 //
 //	m_Spread.SetRow(15);
 //	m_Spread.SetCellType(TYPE_STATIC);
-//	if (pGlobalDoc->m_bDisplayKValue && pGlobalDoc->m_bUseMicron2Spec)
+//	if (pDoc->m_bDisplayKValue && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um[HD6,11,15,16,17,CD6]"));	//20191219 mod
-//	else if (pGlobalDoc->m_bDisplayKValue && (!pGlobalDoc->m_bUseMicron2Spec))
+//	else if (pDoc->m_bDisplayKValue && (!pDoc->m_bUseMicron2Spec))
 //		m_Spread.SetText(_T("pxl[HD6,11,15,16,17,CD6]"));
-//	else if ((!pGlobalDoc->m_bDisplayKValue) && pGlobalDoc->m_bUseMicron2Spec)
+//	else if ((!pDoc->m_bDisplayKValue) && pDoc->m_bUseMicron2Spec)
 //		m_Spread.SetText(_T("um"));
 //	else
 //		m_Spread.SetText(_T("pxl"));
@@ -13238,7 +13283,10 @@ void CDlgSpec::InitSpreadTab6()
 
 void CDlgSpec::InitSpreadTab7()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	// Initialize Tab ctrl for information viewer
 //	m_tabDlgInspection.HighlightItem(m_nTabNum, FALSE);
 //
@@ -13265,41 +13313,41 @@ void CDlgSpec::InitSpreadTab7()
 //	m_Spread.SetTypeAlign(SSS_ALIGN_CENTER);
 //
 //#if WIN_OS == WIN_10
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		//HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		//m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(1, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize + 2, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //
 //		m_Spread.SetFont(2, SS_ALLROWS, hfont, TRUE);
 //
-//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		hfont = CreateFont(m_fDataFontSize, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //
 //		m_Spread.SetFont(3, SS_ALLROWS, hfont, TRUE);
 //
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //
 //#else
-//	if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+//	if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 4, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //	else
 //	{
-//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, pGlobalView->m_strMainFont);
+//		HFONT hfont = CreateFont(m_fDataFontSize + 3, 0, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, m_strMainFont);
 //		m_Spread.SetFont(SS_ALLCOLS, SS_ALLROWS, hfont, TRUE);
 //	}
 //#endif
@@ -13376,7 +13424,7 @@ void CDlgSpec::InitSpreadTab7()
 //
 //		m_Spread.SetFontBold(TRUE);
 //		m_Spread.SetFontSize(m_fDataFontSize);
-//		if (m_bMasterLocalFlag[3][iRow - 1] && pGlobalDoc->m_bDefaultSpecFlag)
+//		if (m_bMasterLocalFlag[3][iRow - 1] && pDoc->m_bDefaultSpecFlag)
 //			m_Spread.SetForeColor(RGB(58, 53, 151));
 //		else
 //			m_Spread.SetForeColor(RGB(60, 145, 103));
@@ -13517,7 +13565,7 @@ void CDlgSpec::InitSpreadTab7()
 //
 //	m_Spread.SetRow(7);
 //	m_Spread.SetCellType(TYPE_COMBO);
-//	if (!pGlobalDoc->m_bUseMultiVaccumControl)	//20100210 hjc add		//130311 hjc mod
+//	if (!pDoc->m_bUseMultiVaccumControl)	//20100210 hjc add		//130311 hjc mod
 //	{
 //#if LANGUAGE == ENGLISH
 //		m_Spread.SetTypeComboBoxList(_T("Both    (1)"));
@@ -13551,9 +13599,9 @@ void CDlgSpec::InitSpreadTab7()
 //	{
 //		CString strData;
 //
-//		if (pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[i] > 0.0)
+//		if (pDoc->m_IRISAxisControl.m_dIRISPosName[i] > 0.0)
 //		{
-//			strData.Format(_T("%.3f"), pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[i]);
+//			strData.Format(_T("%.3f"), pDoc->m_IRISAxisControl.m_dIRISPosName[i]);
 //
 //			strDropPos += strData;
 //			if (i != 11)
@@ -13582,7 +13630,7 @@ void CDlgSpec::InitSpreadTab7()
 //	m_Spread.SetLock(TRUE);
 //	m_Spread.SetForeColor(RGB(152, 152, 152));
 //
-//	if (pGlobalDoc->m_bUseMultiVaccumControl)	//20100210 hjc add		//130311 hjc mod
+//	if (pDoc->m_bUseMultiVaccumControl)	//20100210 hjc add		//130311 hjc mod
 //	{
 //		m_Spread.SetRow(7);
 //		//m_Spread.SetCellType(TYPE_STATIC);
@@ -13655,7 +13703,7 @@ void CDlgSpec::SetSpecAccessItem(int nTab, int nRow)
 	//{
 	//	m_Spread.SetRow(nRow);
 
-	//	if (pGlobalDoc->m_LockTable.m_pLockTable[nTab][nRow].bAccessUser)
+	//	if (pDoc->m_LockTable.m_pLockTable[nTab][nRow].bAccessUser)
 	//	{
 	//		m_Spread.SetLock(0);
 	//	}
@@ -13671,6 +13719,9 @@ void CDlgSpec::SetSpecAccessItem(int nTab, int nRow)
 
 void CDlgSpec::LoadSpreadDataTab0()
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	//m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	//CString strTemp;
 
@@ -13729,9 +13780,9 @@ void CDlgSpec::LoadSpreadDataTab0()
 	//CString strVal;
 
 
-	//if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
+	//if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
 	//{
-	//	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	//	if (pDoc->m_bUseCombo)	//150611 hjc add
 	//	{
 	//		//170217 lgh
 	//		int nPos = m_strNick[0].Find(_T(" "), 0);
@@ -13845,7 +13896,7 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//	m_Spread.SetRow(15);
 	//	strTemp = "";
-	//	for (int idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+	//	for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 	//	{
 	//		if (idx < 4)
 	//		{
@@ -13865,9 +13916,9 @@ void CDlgSpec::LoadSpreadDataTab0()
 	//}
 	//else
 	//{
-	//	if (SpecData.nLineWidthGroupNum == 0)
+	//	if (pDoc->SpecData.nLineWidthGroupNum == 0)
 	//	{
-	//		if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	//		if (pDoc->m_bUseCombo)	//150611 hjc add
 	//		{
 	//			//170217 lgh
 	//			int nPos = m_strNick[0].Find(_T(" "), 0);
@@ -13994,13 +14045,13 @@ void CDlgSpec::LoadSpreadDataTab0()
 	//	}
 	//	else
 	//	{
-	//		if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	//		if (pDoc->m_bUseCombo)	//150611 hjc add
 	//		{
 	//			m_Spread.SetRow(9);
-	//			if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//			if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//			{
 	//				strTemp = "";
-	//				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//				{
 	//					if (idx < 4)
 	//					{
@@ -14021,10 +14072,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 	//			SetSpecAccessItem(0, 9);
 
 	//			m_Spread.SetRow(10);
-	//			if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//			if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//			{
 	//				strTemp = "";
-	//				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//				{
 	//					if (idx < 4)
 	//					{
@@ -14048,10 +14099,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 	//		{
 	//			m_Spread.SetRow(9);
 
-	//			if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//			if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//			{
 	//				strTemp = "";
-	//				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//				{
 	//					if (idx < 4)
 	//					{
@@ -14073,10 +14124,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//			m_Spread.SetRow(10);
 
-	//			if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//			if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//			{
 	//				strTemp = "";
-	//				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//				{
 	//					if (idx < 4)
 	//					{
@@ -14099,10 +14150,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//		m_Spread.SetRow(11);
 
-	//		if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//		if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//		{
 	//			strTemp = "";
-	//			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//			{
 	//				if (idx < 4)
 	//				{
@@ -14126,10 +14177,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//		m_Spread.SetRow(12);
 
-	//		if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//		if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//		{
 	//			strTemp = "";
-	//			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//			{
 	//				if (idx < 4)
 	//				{
@@ -14151,10 +14202,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//		m_Spread.SetRow(13);
 
-	//		if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//		if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//		{
 	//			strTemp = "";
-	//			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//			{
 	//				if (idx < 4)
 	//				{
@@ -14177,10 +14228,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//		m_Spread.SetRow(14);
 
-	//		if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//		if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//		{
 	//			strTemp = "";
-	//			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//			{
 	//				if (idx < 4)
 	//				{
@@ -14206,10 +14257,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 	//		m_Spread.SetRow(15);
 
-	//		if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//		if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//		{
 	//			strTemp = "";
-	//			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//			{
 	//				if (idx < 4)
 	//				{
@@ -14230,10 +14281,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 	//		SetSpecAccessItem(0, 15);
 
 	//		m_Spread.SetRow(16);
-	//		if (SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
+	//		if (pDoc->SpecData.nLineWidthGroupNum > 0)	//170526 hjc mod
 	//		{
 	//			strTemp = "";
-	//			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	//			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	//			{
 	//				if (idx < 4)
 	//				{
@@ -14261,7 +14312,10 @@ void CDlgSpec::LoadSpreadDataTab0()
 
 void CDlgSpec::LoadSpreadDataTab1()
 {
-/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 	CString strVal;
 
@@ -14318,10 +14372,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 	m_Spread.SetCellNote(_T("GigaVis _ Note 24 !!!"));
 	SetSpecAccessItem(1, 8);
 
-	if (SpecData.nLineWidthGroupNum == 0)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0)
 	{
 
-		if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+		if (pDoc->m_bUseCombo)	//150611 hjc add
 		{
 			//170217 lgh
 			int nPos = m_strFineNick[0].Find(_T(" "), 0);
@@ -14439,13 +14493,13 @@ void CDlgSpec::LoadSpreadDataTab1()
 	}
 	else
 	{
-		if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+		if (pDoc->m_bUseCombo)	//150611 hjc add
 		{
 			m_Spread.SetRow(9);
-			if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+			if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 			{
 				strTemp = "";
-				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 				{
 					if (idx < 4)
 					{
@@ -14497,10 +14551,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 			SetSpecAccessItem(1, 9);
 
 			m_Spread.SetRow(10);
-			if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+			if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 			{
 				strTemp = "";
-				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 				{
 					if (idx < 4)
 					{
@@ -14556,10 +14610,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 		{
 			m_Spread.SetRow(9);
 
-			if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+			if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 			{
 				strTemp = "";
-				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 				{
 					if (idx < 4)
 					{
@@ -14589,10 +14643,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 			SetSpecAccessItem(1, 9);
 
 			m_Spread.SetRow(10);
-			if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+			if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 			{
 				strTemp = "";
-				for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+				for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 				{
 					if (idx < 4)
 					{
@@ -14623,10 +14677,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 
 		m_Spread.SetRow(11);
 
-		if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+		if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 		{
 			strTemp = "";
-			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 			{
 				if (idx < 4)
 				{
@@ -14659,10 +14713,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 
 		m_Spread.SetRow(12);
 
-		if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+		if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 		{
 			strTemp = "";
-			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 			{
 				if (idx < 4)
 				{
@@ -14693,10 +14747,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 
 		m_Spread.SetRow(13);
 
-		if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+		if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 		{
 			strTemp = "";
-			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 			{
 				if (idx < 4)
 				{
@@ -14727,10 +14781,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 
 		m_Spread.SetRow(14);
 
-		if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
+		if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx == 0)
 		{
 			strTemp = "";
-			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 			{
 				if (idx < 4)
 				{
@@ -14762,10 +14816,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 
 		m_Spread.SetRow(15);
 
-		if (SpecData.nLineWidthGroupNum > 0)
+		if (pDoc->SpecData.nLineWidthGroupNum > 0)
 		{
 			strTemp = "";
-			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 			{
 				if (idx < 4)
 				{
@@ -14787,10 +14841,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 		SetSpecAccessItem(1, 15);
 
 		m_Spread.SetRow(16);
-		if (SpecData.nLineWidthGroupNum > 0)
+		if (pDoc->SpecData.nLineWidthGroupNum > 0)
 		{
 			strTemp = "";
-			for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+			for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 			{
 				if (idx < 4)
 				{
@@ -14817,7 +14871,10 @@ void CDlgSpec::LoadSpreadDataTab1()
 
 void CDlgSpec::LoadSpreadDataTab2()
 {
-/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 
 	m_Spread.SetCol(1);
@@ -14848,7 +14905,7 @@ void CDlgSpec::LoadSpreadDataTab2()
 	m_Spread.SetCellNote(_T("GigaVis _ Note 48 !!!"));
 	SetSpecAccessItem(2, 4);
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 		//170217 lgh
 		int nPos = m_strMinSP.Find(_T(" "), 0);
@@ -14924,7 +14981,10 @@ void CDlgSpec::LoadSpreadDataTab2()
 
 void CDlgSpec::LoadSpreadDataTab3()
 {
-/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 	int nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest;
 
@@ -14940,7 +15000,7 @@ void CDlgSpec::LoadSpreadDataTab3()
 	m_Spread.SetRow(2);
 	//strTemp.Format(_T("%.1f"), m_fRealNormLine);
 
-	DecisionPixelAdjust(m_strLP_Prec, SpecData.LPADRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strLP_Prec, pDoc->SpecData.LPADRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	//170217 lgh
 	int nPos = m_strLP_Prec.Find(_T(" "), 0);
@@ -14982,7 +15042,7 @@ void CDlgSpec::LoadSpreadDataTab3()
 	m_Spread.SetRow(5);
 
 	//170112 hjc mod
-	DecisionPixelAdjust(m_strSP_Prec, SpecData.LSpaceRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strSP_Prec, pDoc->SpecData.LSpaceRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	if (m_strSP_Prec == _T("Highest"))
 		strTemp.Format(_T("%s   (%d)"), (m_strSP_Prec), nHighest);
@@ -15018,7 +15078,7 @@ void CDlgSpec::LoadSpreadDataTab3()
 
 	//170112 hjc add
 	m_Spread.SetRow(8);
-	DecisionPixelAdjust(m_strSPExt_Prec, SpecData.SpaceExtRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strSPExt_Prec, pDoc->SpecData.SpaceExtRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	if (m_strSPExt_Prec == _T("Highest"))
 		strTemp.Format(_T("%s   (%d)"), (m_strSPExt_Prec), nHighest);
@@ -15066,7 +15126,7 @@ void CDlgSpec::LoadSpreadDataTab3()
 	SetSpecAccessItem(3, 12);
 
 
-	if (SpecData.bEnableCharInspection)
+	if (pDoc->SpecData.bEnableCharInspection)
 	{
 		m_Spread.SetRow(13);
 		strTemp.Format(_T("%d"), m_nCharInspectionGray);
@@ -15096,26 +15156,29 @@ void CDlgSpec::LoadSpreadDataTab3()
 
 void CDlgSpec::LoadSpreadDataTab4()
 {
-/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 	int nHighest, nVeryHigh, nHigh, nNormal, nLow, nVeryLow, nLowest;
 
 	m_Spread.SetCol(1);
 
 	m_Spread.SetRow(1);
-	strTemp.Format(_T("%d"), SpecData.nVDrillDiffBrightGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVDrillDiffBrightGray);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 57 !!!"));
 	SetSpecAccessItem(4, 1);
 
 	m_Spread.SetRow(2);
-	strTemp.Format(_T("%d"), SpecData.nVDrillDiffDarkGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVDrillDiffDarkGray);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 57 !!!"));
 	SetSpecAccessItem(4, 2);
 
 	m_Spread.SetRow(3);
-	strTemp.Format(_T("%.1f"), SpecData.fVDPadPrecName);
+	strTemp.Format(_T("%.1f"), pDoc->SpecData.fVDPadPrecName);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 58 !!!"));
 	SetSpecAccessItem(4, 3);
@@ -15142,7 +15205,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 
 	m_Spread.SetRow(7);
 
-	DecisionPixelAdjust(m_strPadBallPrec, SpecData.PADRL_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strPadBallPrec, pDoc->SpecData.PADRL_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 	//160314 hjc relive
 	if (m_strPadBallPrec == "Highest")
 		strTemp.Format(_T("%s   (%d)"), (m_strPadBallPrec), nHighest);
@@ -15172,7 +15235,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 	//strTemp.Format(_T("%.1f"), m_fRealNormLine);
 
 	//170112 hjc mod
-	DecisionPixelAdjust(m_strPadTip_Prec, SpecData.PADTip_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strPadTip_Prec, pDoc->SpecData.PADTip_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	if (m_strPadTip_Prec == "Highest")
 		strTemp.Format(_T("%s   (%d)"), (m_strPadTip_Prec), nHighest);
@@ -15209,7 +15272,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 	//strTemp.Format(_T("%.1f", m_fRealNormLine);
 
 	//170111 hjc mod
-	DecisionPixelAdjust(m_strARLand_Prec, SpecData.ARLand_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strARLand_Prec, pDoc->SpecData.ARLand_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	if (m_strARLand_Prec == "Highest")
 		strTemp.Format(_T("%s   (%d)"), (m_strARLand_Prec), nHighest);
@@ -15236,7 +15299,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 	SetSpecAccessItem(4, 13);
 
 	m_Spread.SetRow(14);
-	strTemp.Format(_T("%.1f"), SpecData.fHoleFillExt);
+	strTemp.Format(_T("%.1f"), pDoc->SpecData.fHoleFillExt);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 68 !!!"));
 	SetSpecAccessItem(4, 14);
@@ -15250,7 +15313,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 
 	m_Spread.SetRow(16);
 	//170111 hjc mod
-	DecisionPixelAdjust(m_strCO2Land_Prec, SpecData.CO2Land_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strCO2Land_Prec, pDoc->SpecData.CO2Land_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	if (m_strCO2Land_Prec == "Highest")
 		strTemp.Format(_T("%s   (%d)"), (m_strCO2Land_Prec), nHighest);
@@ -15280,15 +15343,15 @@ void CDlgSpec::LoadSpreadDataTab4()
 	SetSpecAccessItem(4, 17);
 
 	m_Spread.SetRow(18);
-	if (strcmp(SpecData.szCO2LandAlignMode, "Yes") == 0)
+	if (strcmp(pDoc->SpecData.szCO2LandAlignMode, "Yes") == 0)
 	{
-		SpecData.nCO2LandAlignMode = 1;
-		strTemp.Format(_T("%s"), CharToString(SpecData.szCO2LandAlignMode));
+		pDoc->SpecData.nCO2LandAlignMode = 1;
+		strTemp.Format(_T("%s"), CharToString(pDoc->SpecData.szCO2LandAlignMode));
 	}
 	else
 	{
-		SpecData.nCO2LandAlignMode = 0;
-		strTemp.Format(_T("%s"), CharToString(SpecData.szCO2LandAlignMode));
+		pDoc->SpecData.nCO2LandAlignMode = 0;
+		strTemp.Format(_T("%s"), CharToString(pDoc->SpecData.szCO2LandAlignMode));
 	}
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 73 !!!"));
@@ -15296,7 +15359,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 
 	//20100323 hjc add
 	m_Spread.SetRow(19);
-	strTemp.Format(_T("%.1f"), SpecData.fCO2HoleFillExt);
+	strTemp.Format(_T("%.1f"), pDoc->SpecData.fCO2HoleFillExt);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 68 !!!"));
 	SetSpecAccessItem(4, 19);
@@ -15310,7 +15373,7 @@ void CDlgSpec::LoadSpreadDataTab4()
 	m_Spread.SetRow(21);
 	//strTemp.Format(_T("%.1f"), m_fRealNormLine);
 	//170111 hjc mod
-	DecisionPixelAdjust(m_strFPad_Prec, SpecData.PADFine_Prec, SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
+	DecisionPixelAdjust(m_strFPad_Prec, pDoc->SpecData.PADFine_Prec, pDoc->SpecData.nRLEPrecisionStepSize, &nHighest, &nVeryHigh, &nHigh, &nNormal, &nLow, &nVeryLow, &nLowest);
 
 	if (m_strFPad_Prec == "Highest")
 		strTemp.Format(_T("%s   (%d)"), (m_strFPad_Prec), nHighest);
@@ -15344,7 +15407,10 @@ void CDlgSpec::LoadSpreadDataTab4()
 
 void CDlgSpec::LoadSpreadDataTab5()
 {
-/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 
 	m_Spread.SetCol(1);
@@ -15399,7 +15465,7 @@ void CDlgSpec::LoadSpreadDataTab5()
 	SetSpecAccessItem(5, 8);
 
 	m_Spread.SetRow(9);
-	strTemp.Format(_T("%s"), CharToString(SpecData.szVHMode));
+	strTemp.Format(_T("%s"), CharToString(pDoc->SpecData.szVHMode));
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 87 !!!"));
 	SetSpecAccessItem(5, 9);
@@ -15435,25 +15501,25 @@ void CDlgSpec::LoadSpreadDataTab5()
 	SetSpecAccessItem(5, 14);
 
 	m_Spread.SetRow(15);
-	strTemp.Format(_T("%d"), SpecData.nVHEdgeThrDiffGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHEdgeThrDiffGray);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 93 !!!"));
 	SetSpecAccessItem(5, 15);
 
 	m_Spread.SetRow(16);
-	strTemp.Format(_T("%d"), SpecData.nVHBreakOutGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHBreakOutGray);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 94 !!!"));
 	SetSpecAccessItem(5, 16);
 
 	m_Spread.SetRow(17);
-	strTemp.Format(_T("%d"), SpecData.nVHDissmearGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHDissmearGray);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 95 !!!"));
 	SetSpecAccessItem(5, 17);
 
 	m_Spread.SetRow(18);
-	strTemp.Format(_T("%d"), SpecData.nVHContiBreakOutNum);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHContiBreakOutNum);
 	m_Spread.SetText(strTemp);
 	m_Spread.SetCellNote(_T("GigaVis _ Note 96 !!!"));
 	SetSpecAccessItem(5, 18);
@@ -15464,7 +15530,10 @@ void CDlgSpec::LoadSpreadDataTab5()
 
 void CDlgSpec::LoadSpreadDataTab6()
 {
-/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	CString strTemp;
 
 	m_Spread.SetCol(1);
@@ -15573,13 +15642,16 @@ void CDlgSpec::LoadSpreadDataTab6()
 
 void CDlgSpec::LoadSpreadDataTab7()
 {
-//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	//	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 //	CString strTemp;
 //
 //	m_Spread.SetCol(1);
 //
 //	m_Spread.SetRow(1);
-//	strTemp.Format(_T("%d"), pGlobalDoc->m_nPtSrchRngExt);
+//	strTemp.Format(_T("%d"), pDoc->m_nPtSrchRngExt);
 //	m_Spread.SetText(strTemp);
 //	m_Spread.SetCellNote(_T("GigaVis _ Note 110!!"));
 //	SetSpecAccessItem(7, 1);
@@ -15614,7 +15686,7 @@ void CDlgSpec::LoadSpreadDataTab7()
 //
 //	//20100210 hjc add
 //	m_Spread.SetRow(7);
-//	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+//	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 //	{
 //		if (m_strSelectVaccum == "Both")
 //			strTemp = m_strSelectVaccum + "   (1)";
@@ -15640,7 +15712,7 @@ void CDlgSpec::LoadSpreadDataTab7()
 //		m_Spread.SetCellNote(_T("Panel Size Y"));
 //
 //#ifdef IRIS_AXIS
-//		strTemp.Format(_T("%.3f"), pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
+//		strTemp.Format(_T("%.3f"), pDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
 //		m_Spread.SetRow(10);
 //		m_Spread.SetText(strTemp);
 //		m_Spread.SetCellNote(_T("GigaVis _ Note 113!!"));
@@ -15651,7 +15723,7 @@ void CDlgSpec::LoadSpreadDataTab7()
 //	else
 //	{
 //#ifdef IRIS_AXIS
-//		strTemp.Format(_T("%.3f"), pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
+//		strTemp.Format(_T("%.3f"), pDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
 //		m_Spread.SetRow(8);
 //		m_Spread.SetText(strTemp);
 //		m_Spread.SetCellNote(_T("GigaVis _ Note 113!!"));
@@ -15665,7 +15737,10 @@ void CDlgSpec::LoadSpreadDataTab7()
 
 void CDlgSpec::CheckOriginDataTab0()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 	//	strTemp.Format("%.1f", m_fNominalLine);
 	//	m_strOriginData[0][1]=strTemp;
@@ -15673,11 +15748,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (fabs(_ttof(m_strOriginData[0][1]) - m_fNominalLine) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 1),
 			m_strOriginData[0][1],
 			m_fNominalLine);
@@ -15691,11 +15766,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (fabs(_ttof(m_strOriginData[0][2]) - m_fRealNormLine) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 2),
 			m_strOriginData[0][2],
 			m_fRealNormLine);
@@ -15708,11 +15783,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][3]) != m_nNickGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 3),
 			m_strOriginData[0][3],
 			m_nNickGray);
@@ -15726,11 +15801,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][4]) != m_nOpenGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 4),
 			m_strOriginData[0][4],
 			m_nOpenGray);
@@ -15743,11 +15818,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][5]) != m_nHalfSideNickDiffBrightGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 5),
 			m_strOriginData[0][5],
 			m_nHalfSideNickDiffBrightGray);
@@ -15761,11 +15836,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][6]) != m_nHalfSideNickDiffDarkGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 6),
 			m_strOriginData[0][6],
 			m_nHalfSideNickDiffDarkGray);
@@ -15778,11 +15853,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][7]) != m_nLeadOpenGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 7),
 			m_strOriginData[0][7],
 			m_nLeadOpenGray);
@@ -15795,11 +15870,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (fabs(_ttof(m_strOriginData[0][8]) - m_fMinCheckWidth) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 8),
 			m_strOriginData[0][8],
 			m_fMinCheckWidth);
@@ -15812,16 +15887,16 @@ void CDlgSpec::CheckOriginDataTab0()
 
 	//	m_strOriginData[0][10]=m_strProtrusion;	
 
-	if (pGlobalDoc->m_bUseCombo)
+	if (pDoc->m_bUseCombo)
 	{
 		if (m_strOriginData[0][9] != m_strNick[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(0, 9),
 				m_strOriginData[0][9],
 				m_strNick);
@@ -15831,11 +15906,11 @@ void CDlgSpec::CheckOriginDataTab0()
 		if (m_strOriginData[0][10] != m_strProtrusion[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(0, 10),
 				m_strOriginData[0][10],
 				m_strProtrusion[0]);
@@ -15847,11 +15922,11 @@ void CDlgSpec::CheckOriginDataTab0()
 		if (_ttoi(m_strOriginData[0][9]) != (m_nNickPercent[0]))
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(0, 9),
 				m_strOriginData[0][9],
 				m_nNickPercent[0]);
@@ -15861,11 +15936,11 @@ void CDlgSpec::CheckOriginDataTab0()
 		if (_ttoi(m_strOriginData[0][10]) != m_nProtrusionPercent[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(0, 10),
 				m_strOriginData[0][10],
 				m_nProtrusionPercent[0]);
@@ -15879,11 +15954,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][11]) != m_nNickNGFilterPercent[0])
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 11),
 			m_strOriginData[0][11],
 			m_nNickNGFilterPercent[0]);
@@ -15893,11 +15968,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (_ttoi(m_strOriginData[0][12]) != m_nExcsNGFilterPercent[0])
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 12),
 			m_strOriginData[0][12],
 			m_nExcsNGFilterPercent[0]);
@@ -15908,11 +15983,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (fabs(_ttof(m_strOriginData[0][13]) - m_fLineWdDeltaGradViolation[0]) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 13),
 			m_strOriginData[0][13],
 			m_fLineWdDeltaGradViolation[0]);
@@ -15922,11 +15997,11 @@ void CDlgSpec::CheckOriginDataTab0()
 	if (fabs(_ttof(m_strOriginData[0][14]) - m_fExcsWdDeltaGradViolation[0]) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(0, 15),
 			m_strOriginData[0][14],
 			m_fExcsWdDeltaGradViolation[0]);
@@ -15934,16 +16009,16 @@ void CDlgSpec::CheckOriginDataTab0()
 	}
 
 	int idx;
-	if (SpecData.nLineWidthGroupNum == 0)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0)
 	{
 		if (fabs(_ttof(m_strOriginData[0][15]) - m_fNarrowTraceViolation[0]) > 0.01)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(0, 15),
 				m_strOriginData[0][15],
 				m_fNarrowTraceViolation[0]);
@@ -15951,16 +16026,16 @@ void CDlgSpec::CheckOriginDataTab0()
 		}
 	}
 
-	if (SpecData.nLineWidthGroupNum == 0)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0)
 	{
 		if (fabs(_ttof(m_strOriginData[0][16]) - m_fWideTraceViolation[0]) > 0.01)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(0, 16),
 				m_strOriginData[0][16],
 				m_fWideTraceViolation[0]);
@@ -15972,7 +16047,10 @@ void CDlgSpec::CheckOriginDataTab0()
 
 void CDlgSpec::CheckOriginDataTab1()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
 
@@ -15989,11 +16067,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (_ttoi(m_strOriginData[1][3]) != m_nFineNickGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 3),
 			m_strOriginData[1][3],
 			m_nFineNickGray);
@@ -16007,11 +16085,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (_ttoi(m_strOriginData[1][4]) != m_nFineOpenGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 4),
 			m_strOriginData[1][4],
 			m_nFineOpenGray);
@@ -16024,11 +16102,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (_ttoi(m_strOriginData[1][5]) != m_nFineHalfSideNickDiffBrightGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 5),
 			m_strOriginData[1][5],
 			m_nFineHalfSideNickDiffBrightGray);
@@ -16042,11 +16120,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (_ttoi(m_strOriginData[1][6]) != m_nFineHalfSideNickDiffDarkGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 6),
 			m_strOriginData[1][6],
 			m_nFineHalfSideNickDiffDarkGray);
@@ -16056,11 +16134,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (fabs(_ttof(m_strOriginData[1][8]) - m_fFineMinCheckWidth) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 8),
 			m_strOriginData[1][8],
 			m_fFineMinCheckWidth);
@@ -16069,16 +16147,16 @@ void CDlgSpec::CheckOriginDataTab1()
 
 
 
-	if (pGlobalDoc->m_bUseCombo)
+	if (pDoc->m_bUseCombo)
 	{
 		if (m_strOriginData[1][9] != m_strFineNick[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(1, 9),
 				m_strOriginData[1][9],
 				m_strFineNick[0]);
@@ -16088,11 +16166,11 @@ void CDlgSpec::CheckOriginDataTab1()
 		if (m_strOriginData[1][10] != m_strFineProtrusion[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(1, 10),
 				m_strOriginData[1][10],
 				m_strFineProtrusion[0]);
@@ -16104,11 +16182,11 @@ void CDlgSpec::CheckOriginDataTab1()
 		if (_ttoi(m_strOriginData[1][9]) != m_nFineNickPercent[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(1, 9),
 				m_strOriginData[1][9],
 				m_nFineNickPercent[0]);
@@ -16118,11 +16196,11 @@ void CDlgSpec::CheckOriginDataTab1()
 		if (_ttoi(m_strOriginData[1][10]) != m_nFineProtrusionPercent[0])
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(1, 10),
 				m_strOriginData[1][10],
 				m_nFineProtrusionPercent[0]);
@@ -16134,11 +16212,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (_ttoi(m_strOriginData[1][11]) != m_nFineNickNGFilterPercent[0])
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 11),
 			m_strOriginData[1][11],
 			m_nFineNickNGFilterPercent[0]);
@@ -16149,11 +16227,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (_ttoi(m_strOriginData[1][12]) != m_nFineExcsNGFilterPercent[0])
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 12),
 			m_strOriginData[1][12],
 			m_nFineExcsNGFilterPercent[0]);
@@ -16163,11 +16241,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (fabs(_ttof(m_strOriginData[1][13]) - m_fFineLineWdDeltaGradViolation[0]) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 13),
 			m_strOriginData[1][13],
 			m_fFineLineWdDeltaGradViolation[0]);
@@ -16177,11 +16255,11 @@ void CDlgSpec::CheckOriginDataTab1()
 	if (fabs(_ttof(m_strOriginData[1][14]) - m_fFineExcsWdDeltaGradViolation[0]) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(1, 14),
 			m_strOriginData[1][14],
 			m_fFineExcsWdDeltaGradViolation[0]);
@@ -16190,17 +16268,17 @@ void CDlgSpec::CheckOriginDataTab1()
 
 	CString strVal;
 	int idx;
-	if (SpecData.nLineWidthGroupNum == 0)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0)
 	{
 
 		if (fabs(_ttof(m_strOriginData[1][15]) - m_fFineNarrowTraceViolation[0]) > 0.01)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(1, 15),
 				m_strOriginData[1][15],
 				m_fFineNarrowTraceViolation[0]);
@@ -16208,17 +16286,17 @@ void CDlgSpec::CheckOriginDataTab1()
 		}
 	}
 
-	if (SpecData.nLineWidthGroupNum == 0)
+	if (pDoc->SpecData.nLineWidthGroupNum == 0)
 	{
 
 		if (fabs(_ttof(m_strOriginData[1][16]) - m_fFineWideTraceViolation[0]) > 0.01)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(1, 16),
 				m_strOriginData[1][16],
 				m_fFineWideTraceViolation[0]);
@@ -16231,17 +16309,20 @@ void CDlgSpec::CheckOriginDataTab1()
 
 void CDlgSpec::CheckOriginDataTab2()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
 	if (_ttoi(m_strOriginData[2][1]) != m_MinSpGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 1),
 			m_strOriginData[2][1],
 			m_MinSpGray);
@@ -16251,11 +16332,11 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (_ttoi(m_strOriginData[2][2]) != m_nNeibSpGrayDiff)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 2),
 			m_strOriginData[2][2],
 			m_nNeibSpGrayDiff);
@@ -16266,11 +16347,11 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (_ttoi(m_strOriginData[2][3]) != m_nUSDarkGrayMinus)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 3),
 			m_strOriginData[2][3],
 			m_nUSDarkGrayMinus);
@@ -16280,27 +16361,27 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (fabs(_ttof(m_strOriginData[2][4]) - m_fMinSpWidth) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 4),
 			m_strOriginData[2][4],
 			m_fMinSpWidth);
 		SaveSpecLog(strLog);
 	}
 
-	if (pGlobalDoc->m_bUseCombo)
+	if (pDoc->m_bUseCombo)
 	{
 		if (m_strOriginData[2][5] != m_strMinSP)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(2, 6),
 				m_strOriginData[2][6],
 				m_strMinSP);
@@ -16312,11 +16393,11 @@ void CDlgSpec::CheckOriginDataTab2()
 		if (_ttoi(m_strOriginData[2][5]) != m_nMinSPPercent)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(2, 6),
 				m_strOriginData[2][6],
 				m_nMinSPPercent);
@@ -16327,11 +16408,11 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (_ttoi(m_strOriginData[2][6]) != m_nSpaceNGFilterPercent)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 6),
 			m_strOriginData[2][6],
 			m_nSpaceNGFilterPercent);
@@ -16341,11 +16422,11 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (_ttoi(m_strOriginData[2][7]) != m_fSpWdDeltaGradViolation)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 7),
 			m_strOriginData[2][7],
 			m_fSpWdDeltaGradViolation);
@@ -16355,11 +16436,11 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (fabs(_ttof(m_strOriginData[2][8]) - m_fSpWdDeltaOuterGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 8),
 			m_strOriginData[2][8],
 			m_fSpWdDeltaOuterGradViolation);
@@ -16369,11 +16450,11 @@ void CDlgSpec::CheckOriginDataTab2()
 	if (fabs(_ttof(m_strOriginData[2][9]) - m_fFineMinSpWidth) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(2, 9),
 			m_strOriginData[2][9],
 			m_fFineMinSpWidth);
@@ -16384,17 +16465,20 @@ void CDlgSpec::CheckOriginDataTab2()
 
 void CDlgSpec::CheckOriginDataTab3()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
 	if (_ttoi(m_strOriginData[3][1]) != m_nPinHoleGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 1),
 			m_strOriginData[3][1],
 			m_nPinHoleGray);
@@ -16405,11 +16489,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (m_strOriginData[3][2] != m_strLP_Prec)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 2),
 			m_strOriginData[3][2],
 			m_strLP_Prec);
@@ -16419,11 +16503,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (fabs(_ttof(m_strOriginData[3][3]) - m_fPinHoleMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 3),
 			m_strOriginData[3][3],
 			m_fPinHoleMin);
@@ -16433,11 +16517,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (_ttoi(m_strOriginData[3][4]) != m_nIsLandGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 4),
 			m_strOriginData[3][4],
 			m_nIsLandGray);
@@ -16449,11 +16533,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (m_strOriginData[3][5] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 5),
 			m_strOriginData[3][5],
 			m_strSP_Prec);
@@ -16463,11 +16547,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (fabs(_ttof(m_strOriginData[3][6]) - m_fIsLandMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 6),
 			m_strOriginData[3][6],
 			m_fIsLandMin);
@@ -16477,11 +16561,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (_ttoi(m_strOriginData[3][7]) != m_nIsLandExtGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 7),
 			m_strOriginData[3][7],
 			m_nIsLandExtGray);
@@ -16494,11 +16578,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (m_strOriginData[3][8] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 8),
 			m_strOriginData[3][8],
 			m_strSPExt_Prec);
@@ -16509,11 +16593,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (fabs(_ttof(m_strOriginData[3][9]) - m_fIsLandExtMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 9),
 			m_strOriginData[3][9],
 			m_fIsLandExtMin);
@@ -16523,11 +16607,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (_ttoi(m_strOriginData[3][10]) != m_nCCLGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 10),
 			m_strOriginData[3][10],
 			m_nCCLGray);
@@ -16537,11 +16621,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (fabs(_ttof(m_strOriginData[3][11]) - m_fCCLCircularity) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 11),
 			m_strOriginData[3][11],
 			m_fCCLCircularity);
@@ -16551,11 +16635,11 @@ void CDlgSpec::CheckOriginDataTab3()
 	if (fabs(_ttof(m_strOriginData[3][12]) - m_fCCLDefSize) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(3, 12),
 			m_strOriginData[3][12],
 			m_fCCLDefSize);
@@ -16563,17 +16647,17 @@ void CDlgSpec::CheckOriginDataTab3()
 	}
 
 	//2022 01 10 lgh add
-	if (SpecData.bEnableCharInspection)
+	if (pDoc->SpecData.bEnableCharInspection)
 	{
 
 		if (fabs(_ttoi(m_strOriginData[3][13]) - m_nCharInspectionGray) > 0)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(3, 13),
 				m_strOriginData[3][13],
 				m_nCharInspectionGray);
@@ -16583,11 +16667,11 @@ void CDlgSpec::CheckOriginDataTab3()
 		if (fabs(_ttoi(m_strOriginData[3][14]) - m_dCharRegionUpperPercent) > 0.01)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(3, 14),
 				m_strOriginData[3][14],
 				m_dCharRegionUpperPercent);
@@ -16597,11 +16681,11 @@ void CDlgSpec::CheckOriginDataTab3()
 		if (fabs(_ttoi(m_strOriginData[3][15]) - m_dCharRegionLowerPercent) > 0.01)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(3, 15),
 				m_strOriginData[3][15],
 				m_dCharRegionLowerPercent);
@@ -16613,60 +16697,63 @@ void CDlgSpec::CheckOriginDataTab3()
 
 void CDlgSpec::CheckOriginDataTab4()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
-	if (_ttoi(m_strOriginData[4][1]) != SpecData.nVDrillDiffBrightGray)
+	if (_ttoi(m_strOriginData[4][1]) != pDoc->SpecData.nVDrillDiffBrightGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 1),
 			m_strOriginData[4][1],
-			SpecData.nVDrillDiffBrightGray);
+			pDoc->SpecData.nVDrillDiffBrightGray);
 		SaveSpecLog(strLog);
 	}
 
-	if (_ttoi(m_strOriginData[4][2]) != SpecData.nVDrillDiffDarkGray)
+	if (_ttoi(m_strOriginData[4][2]) != pDoc->SpecData.nVDrillDiffDarkGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 2),
 			m_strOriginData[4][2],
-			SpecData.nVDrillDiffDarkGray);
+			pDoc->SpecData.nVDrillDiffDarkGray);
 		SaveSpecLog(strLog);
 	}
 
 
-	if (fabs(_ttof(m_strOriginData[4][3]) - SpecData.fVDPadPrecName) > 0.01)
+	if (fabs(_ttof(m_strOriginData[4][3]) - pDoc->SpecData.fVDPadPrecName) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 3),
 			m_strOriginData[4][3],
-			SpecData.fVDPadPrecName);
+			pDoc->SpecData.fVDPadPrecName);
 		SaveSpecLog(strLog);
 	}
 
 	if (fabs(_ttof(m_strOriginData[4][4]) - m_fVDLocationTolerance) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 4),
 			m_strOriginData[4][4],
 			m_fVDLocationTolerance);
@@ -16676,11 +16763,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (fabs(_ttof(m_strOriginData[4][5]) - m_fVDPadMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 5),
 			m_strOriginData[4][5],
 			m_fVDPadMin);
@@ -16690,11 +16777,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (_ttoi(m_strOriginData[4][6]) != m_nPADVoidGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 6),
 			m_strOriginData[4][6],
 			m_nPADVoidGray);
@@ -16704,11 +16791,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (m_strOriginData[4][7] != m_strPadBallPrec)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 7),
 			m_strOriginData[4][7],
 			m_strPadBallPrec);
@@ -16718,11 +16805,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (fabs(_ttof(m_strOriginData[4][8]) - m_fPADVoidMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 8),
 			m_strOriginData[4][8],
 			m_fPADVoidMin);
@@ -16734,11 +16821,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (m_strOriginData[4][9] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 9),
 			m_strOriginData[4][9],
 			m_strPadTip_Prec);
@@ -16748,11 +16835,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (fabs(_ttof(m_strOriginData[4][10]) - m_fPADTipMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 10),
 			m_strOriginData[4][10],
 			m_fPADTipMin);
@@ -16762,11 +16849,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (_ttoi(m_strOriginData[4][11]) != m_nHoleLandVoidGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 11),
 			m_strOriginData[4][11],
 			m_nHoleLandVoidGray);
@@ -16778,42 +16865,42 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (m_strOriginData[4][12] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 12),
 			m_strOriginData[4][12],
-			SpecData.szARLandPrecName);
+			pDoc->SpecData.szARLandPrecName);
 		SaveSpecLog(strLog);
 	}
 
 	if (fabs(_ttof(m_strOriginData[4][13]) - m_fARLandMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 13),
 			m_strOriginData[4][13],
 			m_fARLandMin);
 		SaveSpecLog(strLog);
 	}
 
-	if (fabs(_ttof(m_strOriginData[4][14]) - SpecData.fHoleFillExt) > 0.01)
+	if (fabs(_ttof(m_strOriginData[4][14]) - pDoc->SpecData.fHoleFillExt) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 14),
 			m_strOriginData[4][14],
-			SpecData.fHoleFillExt);
+			pDoc->SpecData.fHoleFillExt);
 		SaveSpecLog(strLog);
 	}
 
@@ -16821,11 +16908,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (_ttoi(m_strOriginData[4][15]) != m_nCO2LandVoidGraySpec)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 15),
 			m_strOriginData[4][15],
 			m_nCO2LandVoidGraySpec);
@@ -16838,11 +16925,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (m_strOriginData[4][16] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 16),
 			m_strOriginData[4][16],
 			m_strCO2Land_Prec);
@@ -16852,11 +16939,11 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (fabs(_ttof(m_strOriginData[4][17]) - m_fCO2LandMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 17),
 			m_strOriginData[4][17],
 			m_fCO2LandMin);
@@ -16864,44 +16951,44 @@ void CDlgSpec::CheckOriginDataTab4()
 	}
 
 
-	strTemp = SpecData.szCO2LandAlignMode;
+	strTemp = pDoc->SpecData.szCO2LandAlignMode;
 
 	if (m_strOriginData[4][18] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 18),
 			m_strOriginData[4][18],
-			SpecData.szCO2LandAlignMode);
+			pDoc->SpecData.szCO2LandAlignMode);
 		SaveSpecLog(strLog);
 	}
 
-	if (fabs(_ttof(m_strOriginData[4][19]) - SpecData.fCO2HoleFillExt) > 0.01)
+	if (fabs(_ttof(m_strOriginData[4][19]) - pDoc->SpecData.fCO2HoleFillExt) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 19),
 			m_strOriginData[4][19],
-			SpecData.fCO2HoleFillExt);
+			pDoc->SpecData.fCO2HoleFillExt);
 		SaveSpecLog(strLog);
 	}
 
 	if (_ttoi(m_strOriginData[4][20]) != m_nFinePADVoidGraySpec)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 20),
 			m_strOriginData[4][20],
 			m_nFinePADVoidGraySpec);
@@ -16914,25 +17001,25 @@ void CDlgSpec::CheckOriginDataTab4()
 	if (m_strOriginData[4][21] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 21),
 			m_strOriginData[4][21],
-			SpecData.szPADFine_PrecName);
+			pDoc->SpecData.szPADFine_PrecName);
 		SaveSpecLog(strLog);
 	}
 
 	if (fabs(_ttof(m_strOriginData[4][22]) - m_fFineVDPadMin) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(4, 22),
 			m_strOriginData[4][22],
 			m_fFineVDPadMin);
@@ -16943,17 +17030,20 @@ void CDlgSpec::CheckOriginDataTab4()
 
 void CDlgSpec::CheckOriginDataTab5()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
 	if (fabs(_ttof(m_strOriginData[5][1]) - m_fHoleTolerance) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 1),
 			m_strOriginData[5][1],
 			m_fHoleTolerance);
@@ -16963,11 +17053,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (fabs(_ttof(m_strOriginData[5][2]) - m_fHoleDiaUpper) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 2),
 			m_strOriginData[5][2],
 			m_fHoleDiaUpper);
@@ -16977,11 +17067,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (fabs(_ttof(m_strOriginData[5][3]) - m_fHoleDiaLower) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 3),
 			m_strOriginData[5][3],
 			m_fHoleDiaLower);
@@ -16991,11 +17081,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][4]) != m_nHoleOpenGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 4),
 			m_strOriginData[5][4],
 			m_nHoleOpenGray);
@@ -17006,11 +17096,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][5]) != m_nHoleMissingGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 5),
 			m_strOriginData[5][5],
 			m_nHoleMissingGray);
@@ -17020,11 +17110,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][6]) != m_nHoleInnerGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 6),
 			m_strOriginData[5][6],
 			m_nHoleInnerGray);
@@ -17036,11 +17126,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (m_strOriginData[5][7] != m_strHolePrec)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 7),
 			m_strOriginData[5][7],
 			m_strHolePrec);
@@ -17050,11 +17140,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][8]) != m_nHoleDefSize)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 8),
 			m_strOriginData[5][8],
 			m_nHoleDefSize);
@@ -17062,19 +17152,19 @@ void CDlgSpec::CheckOriginDataTab5()
 	}
 
 
-	strTemp = CharToString(SpecData.szVHMode);
+	strTemp = CharToString(pDoc->SpecData.szVHMode);
 
 	if (m_strOriginData[5][9] != strTemp)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 9),
 			m_strOriginData[5][9],
-			CharToString(SpecData.szVHMode));
+			CharToString(pDoc->SpecData.szVHMode));
 		SaveSpecLog(strLog);
 	}
 
@@ -17082,11 +17172,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][10]) != m_nCO2MissingGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 10),
 			m_strOriginData[5][10],
 			m_nCO2MissingGray);
@@ -17096,11 +17186,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][11]) != m_nCO2HoleNum)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 11),
 			m_strOriginData[5][11],
 			m_nCO2HoleNum);
@@ -17110,11 +17200,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][12]) != m_nCO2OpenGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 12),
 			m_strOriginData[5][12],
 			m_nCO2OpenGray);
@@ -17124,11 +17214,11 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][13]) != m_nCO2MisAgnGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 13),
 			m_strOriginData[5][13],
 			m_nCO2MisAgnGray);
@@ -17138,71 +17228,71 @@ void CDlgSpec::CheckOriginDataTab5()
 	if (_ttoi(m_strOriginData[5][14]) != m_nCO2MisAgnDefPercent)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 14),
 			m_strOriginData[5][14],
 			m_nCO2MisAgnDefPercent);
 		SaveSpecLog(strLog);
 	}
 
-	if (_ttoi(m_strOriginData[5][15]) != SpecData.nVHEdgeThrDiffGray)
+	if (_ttoi(m_strOriginData[5][15]) != pDoc->SpecData.nVHEdgeThrDiffGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 15),
 			m_strOriginData[5][15],
-			SpecData.nVHEdgeThrDiffGray);
+			pDoc->SpecData.nVHEdgeThrDiffGray);
 		SaveSpecLog(strLog);
 	}
 
-	if (_ttoi(m_strOriginData[5][16]) != SpecData.nVHBreakOutGray)
+	if (_ttoi(m_strOriginData[5][16]) != pDoc->SpecData.nVHBreakOutGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 16),
 			m_strOriginData[5][16],
-			SpecData.nVHBreakOutGray);
+			pDoc->SpecData.nVHBreakOutGray);
 		SaveSpecLog(strLog);
 	}
 
-	if (_ttoi(m_strOriginData[5][17]) != SpecData.nVHDissmearGray)
+	if (_ttoi(m_strOriginData[5][17]) != pDoc->SpecData.nVHDissmearGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 17),
 			m_strOriginData[5][17],
-			SpecData.nVHDissmearGray);
+			pDoc->SpecData.nVHDissmearGray);
 		SaveSpecLog(strLog);
 	}
 
 
-	if (_ttoi(m_strOriginData[5][18]) != SpecData.nVHContiBreakOutNum)
+	if (_ttoi(m_strOriginData[5][18]) != pDoc->SpecData.nVHContiBreakOutNum)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(5, 18),
 			m_strOriginData[5][18],
-			SpecData.nVHContiBreakOutNum);
+			pDoc->SpecData.nVHContiBreakOutNum);
 		SaveSpecLog(strLog);
 	}
 	*/
@@ -17210,17 +17300,20 @@ void CDlgSpec::CheckOriginDataTab5()
 
 void CDlgSpec::CheckOriginDataTab6()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
 	if (_ttoi(m_strOriginData[6][1]) != m_nPadEdgeNickGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 1),
 			m_strOriginData[6][1],
 			m_nPadEdgeNickGray);
@@ -17230,11 +17323,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (_ttoi(m_strOriginData[6][2]) != m_nPadEdgeNeibGrayDiff)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 2),
 			m_strOriginData[6][2],
 			m_nPadEdgeNeibGrayDiff);
@@ -17244,11 +17337,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][3]) - m_nPadEdgeBADiffDarkGray) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 3),
 			m_strOriginData[6][3],
 			m_nPadEdgeBADiffDarkGray);
@@ -17259,11 +17352,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][4]) - m_fPadEdgeNickWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 4),
 			m_strOriginData[6][4],
 			m_fPadEdgeNickWdDeltaGradViolation);
@@ -17273,11 +17366,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][5]) - m_fPadEdgeExcsWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 5),
 			m_strOriginData[6][5],
 			m_fPadEdgeExcsWdDeltaGradViolation);
@@ -17287,11 +17380,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (_ttoi(m_strOriginData[6][6]) != m_nPadVDEdgeGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 6),
 			m_strOriginData[6][6],
 			m_nPadVDEdgeGray);
@@ -17301,11 +17394,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][7]) - m_fPadVDEdgeWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 7),
 			m_strOriginData[6][7],
 			m_fPadVDEdgeWdDeltaGradViolation);
@@ -17315,11 +17408,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (_ttoi(m_strOriginData[6][8]) != m_nHoleEdgeNickGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 8),
 			m_strOriginData[6][8],
 			m_nHoleEdgeNickGray);
@@ -17330,11 +17423,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (_ttoi(m_strOriginData[6][9]) != m_nHoleEdgeNeibGrayDiff)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 9),
 			m_strOriginData[6][9],
 			m_nHoleEdgeNeibGrayDiff);
@@ -17344,11 +17437,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][10]) - m_fHoleEdgeNickWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 10),
 			m_strOriginData[6][10],
 			m_fHoleEdgeNickWdDeltaGradViolation);
@@ -17359,11 +17452,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][11]) - m_fHoleEdgeExcsWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 11),
 			m_strOriginData[6][11],
 			m_fHoleEdgeExcsWdDeltaGradViolation);
@@ -17373,11 +17466,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (_ttoi(m_strOriginData[6][12]) != m_nViaEdgeNickGray)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 12),
 			m_strOriginData[6][12],
 			m_nViaEdgeNickGray);
@@ -17387,11 +17480,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (_ttoi(m_strOriginData[6][13]) != m_nViaEdgeNeibGrayDiff)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 13),
 			m_strOriginData[6][13],
 			m_nViaEdgeNeibGrayDiff);
@@ -17401,11 +17494,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][14]) - m_fViaEdgeNickWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 14),
 			m_strOriginData[6][14],
 			m_fViaEdgeNickWdDeltaGradViolation);
@@ -17415,11 +17508,11 @@ void CDlgSpec::CheckOriginDataTab6()
 	if (fabs(_ttof(m_strOriginData[6][15]) - m_fViaEdgeExcsWdDeltaGradViolation) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(6, 15),
 			m_strOriginData[6][15],
 			m_fViaEdgeExcsWdDeltaGradViolation);
@@ -17429,31 +17522,34 @@ void CDlgSpec::CheckOriginDataTab6()
 
 void CDlgSpec::CheckOriginDataTab7()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 	CString strLog;
 
-	if (_ttoi(m_strOriginData[7][1]) != pGlobalDoc->m_nPtSrchRngExt)
+	if (_ttoi(m_strOriginData[7][1]) != pDoc->m_nPtSrchRngExt)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(7, 1),
 			m_strOriginData[7][1],
-			pGlobalDoc->m_nPtSrchRngExt);
+			pDoc->m_nPtSrchRngExt);
 		SaveSpecLog(strLog);
 	}
 
 	if (m_strOriginData[7][2] != m_cboPTMOD_SIZE)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(7, 2),
 			m_strOriginData[7][2],
 			m_cboPTMOD_SIZE);
@@ -17463,11 +17559,11 @@ void CDlgSpec::CheckOriginDataTab7()
 	if (_ttoi(m_strOriginData[7][3]) != m_nAlignTolerance)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%d]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(7, 3),
 			m_strOriginData[7][3],
 			m_nAlignTolerance);
@@ -17477,11 +17573,11 @@ void CDlgSpec::CheckOriginDataTab7()
 	if (m_strOriginData[7][4] != m_strThetaAlign)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(7, 4),
 			m_strOriginData[7][4],
 			m_strThetaAlign);
@@ -17491,11 +17587,11 @@ void CDlgSpec::CheckOriginDataTab7()
 	if (fabs(_ttof(m_strOriginData[7][5]) - m_fDefMaskSize) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(7, 5),
 			m_strOriginData[7][5],
 			m_fDefMaskSize);
@@ -17506,27 +17602,27 @@ void CDlgSpec::CheckOriginDataTab7()
 	if (fabs(_ttof(m_strOriginData[7][6]) - m_fNearDefLen) > 0.01)
 	{
 		strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%.1f]"),
-			pGlobalDoc->m_strUserID,
-			pGlobalDoc->m_strModel,
-			pGlobalDoc->m_strLayer,
-			pGlobalDoc->m_strLotNum,
-			pGlobalDoc->m_nSerialNum,
+			pDoc->m_strUserID,
+			pDoc->m_strModel,
+			pDoc->m_strLayer,
+			pDoc->m_strLotNum,
+			pDoc->m_nSerialNum,
 			GetSpecName(7, 6),
 			m_strOriginData[7][6],
 			m_fNearDefLen);
 		SaveSpecLog(strLog);
 	}
 
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 	{
 		if (m_strOriginData[7][7] != m_strSelectVaccum)
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(7, 7),
 				m_strOriginData[7][7],
 				m_strSelectVaccum);
@@ -17538,11 +17634,11 @@ void CDlgSpec::CheckOriginDataTab7()
 		if (m_strOriginData[7][7] != "Both")
 		{
 			strLog.Format(_T("[Spec] [User:%s] Model:%s Layer:%s Lot:%s Sn:%d Change [%s] Spec [%s]->[%s]"),
-				pGlobalDoc->m_strUserID,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer,
-				pGlobalDoc->m_strLotNum,
-				pGlobalDoc->m_nSerialNum,
+				pDoc->m_strUserID,
+				pDoc->m_strModel,
+				pDoc->m_strLayer,
+				pDoc->m_strLotNum,
+				pDoc->m_nSerialNum,
 				GetSpecName(7, 7),
 				m_strOriginData[7][7],
 				"Both");
@@ -17554,11 +17650,76 @@ void CDlgSpec::CheckOriginDataTab7()
 }
 
 
+void CDlgSpec::InitTabCtrl()
+{
+	// Tab Control
+	CRect rect;
+	LOGFONT lf;
+	memset(&lf, 0, sizeof(LOGFONT));
+
+	lf.lfHeight = 11; // 16 point
+	lf.lfWeight = FW_MEDIUM;	//20100322hjc add
+								//	lf.lfWeight = FW_EXTRABOLD;
+	_tcscpy(lf.lfFaceName, m_strMainFont); // 궁서체로 font setting
+	m_FontOfTabCtrl.CreateFontIndirect(&lf);
+	CTabCtrl* pCtlTab = (CTabCtrl*)GetDlgItem(IDC_TAB1); // 탭 콘트롤을 얻엉拜
+	pCtlTab->SetFont((CFont*)&m_FontOfTabCtrl, TRUE);
+
+	// Initialize Tab ctrl
+	m_tabDlgInspection.GetWindowRect(&rect);
+	TC_ITEM item;
+	//20090322 hjc   Ext/Ph -> _T("Extra"),_T("Pinhole")
+	//TCHAR tabName[10][256] = {_T("Line"),_T("F.Line"),_T("Space"),_T("Ext/Ph"),_T("PAD"),_T("Hole/VH"),_T("Edge"),_T("Info."),_T("SRO"),_T("Multi Line")};
+
+	CStringArray arr;
+
+	arr.Add(_T("Line"));
+	arr.Add(_T("F.Line"));
+	arr.Add(_T("Space"));
+	arr.Add(_T("Ext/Ph"));
+	arr.Add(_T("PAD"));
+	arr.Add(_T("Hole/VH"));
+	arr.Add(_T("Edge"));
+	arr.Add(_T("Info."));
+
+	//if (g_bSRMode)
+	//	arr.Add(_T("SRO"));
+	//if (AoiParam()->m_bUseMultilineSpecEx)
+	//	arr.Add(_T("Multi Line"));
+
+	//161203 lgh for dd multiline spec
+	int nTapNum = 8;
+
+	//if (g_bSRMode)
+	//	nTapNum++;
+	//if (AoiParam()->m_bUseMultilineSpecEx)
+	//	nTapNum++;
+	for (int nTabIndex = 0; nTabIndex < nTapNum; nTabIndex++)	//20100322 hjc mod 7 -> 8
+	{
+		CString buffer = arr.GetAt(nTabIndex);
+		item.mask = TCIF_TEXT;
+		item.pszText = buffer.GetBuffer();
+		buffer.ReleaseBuffer();
+		m_tabDlgInspection.InsertItem(nTabIndex, &item);
+	}
+
+	//20090213 end	
+	// Initialize Tab ctrl for information viewer
+	//if (!pDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])		//jun 20120903 for LG_CCL-Inspector
+	//	m_nTabNum = 0;
+	//else
+	//	m_nTabNum = 3;
+
+	m_tabDlgInspection.HighlightItem(m_nTabNum, TRUE);
+}
 
 
 void CDlgSpec::TabChange(int nTap)
 {
-/*	ULONGLONG nTick = GetTickCount64();
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	ULONGLONG nTick = GetTickCount64();
 
 	if (g_bSRMode)
 		m_tabDlgInspection.HighlightItem(8, 0);
@@ -17593,7 +17754,7 @@ void CDlgSpec::TabChange(int nTap)
 			m_DlgSroSpec.m_nStartPosY = RT.bottom;
 
 			for (int i = 0; i < MAX_HOLE_TYPE; i++)
-				memcpy(&m_DlgSroSpec.m_SRSpec[i], &SpecData.SRSpec[i], sizeof(SROSpec));
+				memcpy(&m_DlgSroSpec.m_SRSpec[i], &pDoc->SpecData.SRSpec[i], sizeof(SROSpec));
 
 			CSROInspectionData* pSROData = CSROInspectionData::GetInstance(g_nCurrentLayerSide);
 			if (!m_DlgSroSpec.GetSafeHwnd())
@@ -17612,7 +17773,7 @@ void CDlgSpec::TabChange(int nTap)
 			GetDlgItem(IDC_TAB1)->GetWindowRect(RT);
 
 			DlgMultiLineNew dlg;
-			dlg.LoadFractionData(pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+			dlg.LoadFractionData(pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 			dlg.m_nStartPosX = RT.left;
 			dlg.m_nStartPosY = RT.bottom;
 
@@ -17631,7 +17792,7 @@ void CDlgSpec::TabChange(int nTap)
 						dlg.m_SpecGroup[i].dGroupUpperWidthUm = m_fLineWidthGroup[i];
 						dlg.m_SpecGroup[i].dSpecLower = m_fNarrowTraceViolation[i];
 						dlg.m_SpecGroup[i].dSpecUpper = m_fWideTraceViolation[i];
-						dlg.m_SpecGroup[i].dAdjustWidthDiffPercent = SpecData.fLineWidthGroupAdjusted[i];
+						dlg.m_SpecGroup[i].dAdjustWidthDiffPercent = pDoc->SpecData.fLineWidthGroupAdjusted[i];
 					}
 					else
 					{
@@ -17639,7 +17800,7 @@ void CDlgSpec::TabChange(int nTap)
 						dlg.m_SpecGroup[i].dGroupUpperWidthUm = m_fLineWidthGroup[i];
 						dlg.m_SpecGroup[i].dSpecLower = m_fNarrowTraceViolation[i];
 						dlg.m_SpecGroup[i].dSpecUpper = m_fWideTraceViolation[i];
-						dlg.m_SpecGroup[i].dAdjustWidthDiffPercent = SpecData.fLineWidthGroupAdjusted[i];
+						dlg.m_SpecGroup[i].dAdjustWidthDiffPercent = pDoc->SpecData.fLineWidthGroupAdjusted[i];
 					}
 
 					dlg.m_SpecGroup[i].dSpecLowerFine = m_fFineNarrowTraceViolation[i];
@@ -17652,7 +17813,7 @@ void CDlgSpec::TabChange(int nTap)
 					dlg.m_SpecGroup[i].dGroupUpperWidthUm = 999999;
 					dlg.m_SpecGroup[i].dSpecLower = m_fNarrowTraceViolation[dlg.m_nNum - 1];
 					dlg.m_SpecGroup[i].dSpecUpper = m_fWideTraceViolation[dlg.m_nNum - 1];
-					dlg.m_SpecGroup[i].dAdjustWidthDiffPercent = SpecData.fLineWidthGroupAdjusted[dlg.m_nNum - 1];
+					dlg.m_SpecGroup[i].dAdjustWidthDiffPercent = pDoc->SpecData.fLineWidthGroupAdjusted[dlg.m_nNum - 1];
 					dlg.m_SpecGroup[i].dSpecLowerFine = m_fFineNarrowTraceViolation[dlg.m_nNum - 1];
 					dlg.m_SpecGroup[i].dSpecUpperFine = m_fFineWideTraceViolation[dlg.m_nNum - 1];
 				}
@@ -17667,64 +17828,64 @@ void CDlgSpec::TabChange(int nTap)
 			if (dlg.m_bSave)
 			{
 				m_bMultilineSaved = TRUE;
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 
 				if (dlg.m_nNum > 0)
-					SpecData.nLineWidthGroupNum = dlg.m_nNum;
+					pDoc->SpecData.nLineWidthGroupNum = dlg.m_nNum;
 				else
-					SpecData.nLineWidthGroupNum = 0;
+					pDoc->SpecData.nLineWidthGroupNum = 0;
 
-				m_nLineWidthGroupNum = SpecData.nLineWidthGroupNum;
+				m_nLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum;
 				int i = 0;
 				for (i = 0; i < dlg.m_nNum; i++)
 				{
 					if (i != 0)
 					{
-						SpecData.fLineWidthGroupLower[i] = dlg.m_SpecGroup[i].dGroupLowerWidthUm;
-						SpecData.fLineWidthGroup[i] = dlg.m_SpecGroup[i].dGroupUpperWidthUm;
-						SpecData.fNarrowTraceViolation[i] = dlg.m_SpecGroup[i].dSpecLower;
-						SpecData.fWideTraceViolation[i] = dlg.m_SpecGroup[i].dSpecUpper;
-						SpecData.fLineWidthGroupAdjusted[i] = dlg.m_SpecGroup[i].dAdjustWidthDiffPercent;
+						pDoc->SpecData.fLineWidthGroupLower[i] = dlg.m_SpecGroup[i].dGroupLowerWidthUm;
+						pDoc->SpecData.fLineWidthGroup[i] = dlg.m_SpecGroup[i].dGroupUpperWidthUm;
+						pDoc->SpecData.fNarrowTraceViolation[i] = dlg.m_SpecGroup[i].dSpecLower;
+						pDoc->SpecData.fWideTraceViolation[i] = dlg.m_SpecGroup[i].dSpecUpper;
+						pDoc->SpecData.fLineWidthGroupAdjusted[i] = dlg.m_SpecGroup[i].dAdjustWidthDiffPercent;
 					}
 					else
 					{
-						SpecData.fLineWidthGroupLower[i] = 0;
-						SpecData.fLineWidthGroup[i] = dlg.m_SpecGroup[i].dGroupUpperWidthUm;
-						SpecData.fNarrowTraceViolation[i] = dlg.m_SpecGroup[i].dSpecLower;
-						SpecData.fWideTraceViolation[i] = dlg.m_SpecGroup[i].dSpecUpper;
-						SpecData.fLineWidthGroupAdjusted[i] = dlg.m_SpecGroup[i].dAdjustWidthDiffPercent;
+						pDoc->SpecData.fLineWidthGroupLower[i] = 0;
+						pDoc->SpecData.fLineWidthGroup[i] = dlg.m_SpecGroup[i].dGroupUpperWidthUm;
+						pDoc->SpecData.fNarrowTraceViolation[i] = dlg.m_SpecGroup[i].dSpecLower;
+						pDoc->SpecData.fWideTraceViolation[i] = dlg.m_SpecGroup[i].dSpecUpper;
+						pDoc->SpecData.fLineWidthGroupAdjusted[i] = dlg.m_SpecGroup[i].dAdjustWidthDiffPercent;
 					}
 
-					m_fNarrowTraceViolation[i] = SpecData.fNarrowTraceViolation[i];
-					m_fWideTraceViolation[i] = SpecData.fWideTraceViolation[i];
+					m_fNarrowTraceViolation[i] = pDoc->SpecData.fNarrowTraceViolation[i];
+					m_fWideTraceViolation[i] = pDoc->SpecData.fWideTraceViolation[i];
 
-					SpecData.fFineLineWidthGroup[i] = SpecData.fLineWidthGroup[i];
-					m_fFineNarrowTraceViolation[i] = SpecData.fFineNarrowTraceViolation[i] = dlg.m_SpecGroup[i].dSpecLowerFine;
-					m_fFineWideTraceViolation[i] = SpecData.fFineWideTraceViolation[i] = dlg.m_SpecGroup[i].dSpecUpperFine;
+					pDoc->SpecData.fFineLineWidthGroup[i] = pDoc->SpecData.fLineWidthGroup[i];
+					m_fFineNarrowTraceViolation[i] = pDoc->SpecData.fFineNarrowTraceViolation[i] = dlg.m_SpecGroup[i].dSpecLowerFine;
+					m_fFineWideTraceViolation[i] = pDoc->SpecData.fFineWideTraceViolation[i] = dlg.m_SpecGroup[i].dSpecUpperFine;
 				}
 
 				for (i = dlg.m_nNum; i < 15; i++)
 				{
-					SpecData.fLineWidthGroupLower[i] = SpecData.fLineWidthGroupLower[dlg.m_nNum - 1];
-					m_fNarrowTraceViolation[i] = SpecData.fNarrowTraceViolation[i] = SpecData.fNarrowTraceViolation[dlg.m_nNum - 1];
-					m_fWideTraceViolation[i] = SpecData.fWideTraceViolation[i] = SpecData.fWideTraceViolation[dlg.m_nNum - 1];
+					pDoc->SpecData.fLineWidthGroupLower[i] = pDoc->SpecData.fLineWidthGroupLower[dlg.m_nNum - 1];
+					m_fNarrowTraceViolation[i] = pDoc->SpecData.fNarrowTraceViolation[i] = pDoc->SpecData.fNarrowTraceViolation[dlg.m_nNum - 1];
+					m_fWideTraceViolation[i] = pDoc->SpecData.fWideTraceViolation[i] = pDoc->SpecData.fWideTraceViolation[dlg.m_nNum - 1];
 
-					m_fFineNarrowTraceViolation[i] = SpecData.fFineNarrowTraceViolation[i] = SpecData.fFineNarrowTraceViolation[dlg.m_nNum - 1];
-					m_fFineWideTraceViolation[i] = SpecData.fFineWideTraceViolation[i] = SpecData.fFineWideTraceViolation[dlg.m_nNum - 1];
+					m_fFineNarrowTraceViolation[i] = pDoc->SpecData.fFineNarrowTraceViolation[i] = pDoc->SpecData.fFineNarrowTraceViolation[dlg.m_nNum - 1];
+					m_fFineWideTraceViolation[i] = pDoc->SpecData.fFineWideTraceViolation[i] = pDoc->SpecData.fFineWideTraceViolation[dlg.m_nNum - 1];
 
-					//	SpecData.fLineWidthGroupAdjusted[i] = 0;
-					SpecData.fLineWidthGroup[i] = 9999999;
+					//	pDoc->SpecData.fLineWidthGroupAdjusted[i] = 0;
+					pDoc->SpecData.fLineWidthGroup[i] = 9999999;
 				}
 
 				for (i = 0; i < 15; i++)
 				{
-					m_fLineWidthGroupLower[i] = SpecData.fLineWidthGroupLower[i];
-					m_fLineWidthGroup[i] = SpecData.fLineWidthGroup[i];
-					m_fFineLineWidthGroup[i] = SpecData.fLineWidthGroup[i];
-					m_fNarrowTraceViolation[i] = SpecData.fNarrowTraceViolation[i];
-					m_fWideTraceViolation[i] = SpecData.fWideTraceViolation[i];
-					m_fFineNarrowTraceViolation[i] = SpecData.fFineNarrowTraceViolation[i];
-					m_fFineWideTraceViolation[i] = SpecData.fFineWideTraceViolation[i];
+					m_fLineWidthGroupLower[i] = pDoc->SpecData.fLineWidthGroupLower[i];
+					m_fLineWidthGroup[i] = pDoc->SpecData.fLineWidthGroup[i];
+					m_fFineLineWidthGroup[i] = pDoc->SpecData.fLineWidthGroup[i];
+					m_fNarrowTraceViolation[i] = pDoc->SpecData.fNarrowTraceViolation[i];
+					m_fWideTraceViolation[i] = pDoc->SpecData.fWideTraceViolation[i];
+					m_fFineNarrowTraceViolation[i] = pDoc->SpecData.fFineNarrowTraceViolation[i];
+					m_fFineWideTraceViolation[i] = pDoc->SpecData.fFineWideTraceViolation[i];
 
 				}
 			}
@@ -17768,14 +17929,14 @@ void CDlgSpec::TabRestore()
 CString CDlgSpec::CheckLock(int tab, int Row, CString strVal)
 {
 /*	CString strTemp;
-	if (pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].bUse)
+	if (pDoc->m_LockTable.m_pLockTable[tab][Row].bUse)
 	{
-		if (pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].type == LOCK_INT)
+		if (pDoc->m_LockTable.m_pLockTable[tab][Row].type == LOCK_INT)
 		{
 
 			int nTemp;
-			int nLow = _ttoi(pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].szLSL);
-			int nHigh = _ttoi(pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].szUSL);
+			int nLow = _ttoi(pDoc->m_LockTable.m_pLockTable[tab][Row].szLSL);
+			int nHigh = _ttoi(pDoc->m_LockTable.m_pLockTable[tab][Row].szUSL);
 
 			if (nLow == 0 && nHigh == 0)
 				return strVal;
@@ -17787,11 +17948,11 @@ CString CDlgSpec::CheckLock(int tab, int Row, CString strVal)
 			m_Spread.SetText(strTemp);
 			return strTemp;
 		}
-		else if (pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].type == LOCK_FLOAT)
+		else if (pDoc->m_LockTable.m_pLockTable[tab][Row].type == LOCK_FLOAT)
 		{
 			float nTemp;
-			float nLow = _ttof(pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].szLSL);
-			float nHigh = _ttof(pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].szUSL);
+			float nLow = _ttof(pDoc->m_LockTable.m_pLockTable[tab][Row].szLSL);
+			float nHigh = _ttof(pDoc->m_LockTable.m_pLockTable[tab][Row].szUSL);
 
 			if (nLow == 0.0 && nHigh == 0.0)
 				return strVal;
@@ -17818,10 +17979,10 @@ CString CDlgSpec::CheckLock(int tab, int Row, CString strVal)
 			m_Spread.SetText(strTemp);
 			return strTemp;
 		}
-		else if (pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].type == LOCK_LEVEL)
+		else if (pDoc->m_LockTable.m_pLockTable[tab][Row].type == LOCK_LEVEL)
 		{
-			int nHigh = abs(Level2NumberForLock(pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].szUSL));
-			int nLow = abs(Level2NumberForLock(pGlobalDoc->m_LockTable.m_pLockTable[tab][Row].szLSL));
+			int nHigh = abs(Level2NumberForLock(pDoc->m_LockTable.m_pLockTable[tab][Row].szUSL));
+			int nLow = abs(Level2NumberForLock(pDoc->m_LockTable.m_pLockTable[tab][Row].szLSL));
 			int nLevel = abs(Level2NumberForLock(strVal));
 
 
@@ -17866,6 +18027,9 @@ CString CDlgSpec::CheckLock(int tab, int Row, CString strVal)
 
 void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 {
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
 	// Verify Normal Cell Value.
 
 /*	CString strMsg, strTemp;
@@ -17895,7 +18059,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -17904,7 +18068,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 		}
 		if (Col == 1 && Row == 2)
 		{
-			if (!pGlobalDoc->m_bUseExternalRLWInputParam)	//20120416-ndy add
+			if (!pDoc->m_bUseExternalRLWInputParam)	//20120416-ndy add
 			{
 				DisplaySpread(0);
 				return;
@@ -17927,7 +18091,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[0][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (Row - 1)); // Bit Flag.
@@ -17962,7 +18126,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -17998,7 +18162,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -18035,7 +18199,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -18070,7 +18234,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -18105,7 +18269,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -18133,7 +18297,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[0][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -18143,9 +18307,9 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 		}
 
 
-		if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+		if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 		{
-			if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+			if (pDoc->m_bUseCombo)	//150611 hjc add
 			{
 				if (Col == 1 && Row == 9)
 				{
@@ -18169,7 +18333,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[0][9] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -18199,7 +18363,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[0][10] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -18230,7 +18394,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[0][9] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -18259,7 +18423,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[0][10] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -18301,7 +18465,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[0][11] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -18344,7 +18508,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[0][12] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -18373,7 +18537,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[0][13] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -18401,7 +18565,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[0][14] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -18430,7 +18594,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[0][15] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -18458,7 +18622,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[0][16] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[0] |= (0x00000001 << (16 - 1)); // Bit Flag.
@@ -18498,7 +18662,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[1][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -18526,7 +18690,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[1][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -18552,7 +18716,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[1][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -18588,7 +18752,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[1][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -18623,7 +18787,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[1][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -18656,7 +18820,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[1][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -18682,7 +18846,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[1][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -18710,7 +18874,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[1][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -18719,9 +18883,9 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 		}
 
-		if (SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
+		if (pDoc->SpecData.nLineWidthGroupNum == 0 || AoiParam()->m_bUseMultilineSpecEx)
 		{
-			if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+			if (pDoc->m_bUseCombo)	//150611 hjc add
 			{
 				if (Col == 1 && Row == 9)
 				{
@@ -18745,7 +18909,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[1][9] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -18775,7 +18939,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[1][10] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -18806,7 +18970,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[1][9] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -18835,7 +18999,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[1][10] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -18876,7 +19040,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[1][11] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -18918,7 +19082,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 					if (m_strOriginData[1][12] != strTemp)
 					{
-						m_bSpecDataChanged = TRUE;
+						m_bpDoc->SpecDataChanged = TRUE;
 						m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 						m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -18947,7 +19111,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[1][13] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -18976,7 +19140,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[1][14] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -19003,7 +19167,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[1][15] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -19029,7 +19193,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[1][16] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[1] |= (0x00000001 << (16 - 1)); // Bit Flag.
@@ -19076,7 +19240,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[2][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -19112,7 +19276,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[2][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -19148,7 +19312,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[2][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -19177,7 +19341,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 			if (m_strOriginData[2][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -19213,7 +19377,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[2][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -19253,7 +19417,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 				if (m_strOriginData[2][6] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -19280,7 +19444,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[2][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -19308,7 +19472,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[2][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -19337,7 +19501,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[2][9] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[2] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -19381,7 +19545,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -19408,7 +19572,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -19435,13 +19599,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (3 - 1)); // Bit Flag.
 			}
 
-			if (pGlobalDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])
+			if (pDoc->m_bInspCCL[AoiParam()->m_nCurrentInspectionMode])
 			{
 				m_fPinHoleMin = _ttof(strTemp);
 
@@ -19491,7 +19655,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -19518,13 +19682,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (5 - 1)); // Bit Flag.
 			}
 			m_strLP_Prec = strTemp;	//170112 hjc mod
-									//	StringToChar(strTemp,SpecData.szSPRLName);
+									//	StringToChar(strTemp,pDoc->SpecData.szSPRLName);
 		}
 		if (Col == 1 && Row == 6)
 		{
@@ -19545,7 +19709,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -19572,7 +19736,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -19599,7 +19763,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[3][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[3] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -19644,12 +19808,12 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (1 - 1)); // Bit Flag.
 			}
-			SpecData.nVDrillDiffBrightGray = _ttoi(strTemp);		//150606 hjc mod
+			pDoc->SpecData.nVDrillDiffBrightGray = _ttoi(strTemp);		//150606 hjc mod
 		}
 
 
@@ -19679,12 +19843,12 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (2 - 1)); // Bit Flag.
 			}
-			SpecData.nVDrillDiffDarkGray = _ttoi(strTemp);
+			pDoc->SpecData.nVDrillDiffDarkGray = _ttoi(strTemp);
 		}
 
 		if (Col == 1 && Row == 3)
@@ -19706,12 +19870,12 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (3 - 1)); // Bit Flag.
 			}
-			SpecData.fVDPadPrecName = _ttof(strTemp);
+			pDoc->SpecData.fVDPadPrecName = _ttof(strTemp);
 		}
 		//20090419 hjc
 		if (Col == 1 && Row == 4)
@@ -19733,7 +19897,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -19760,7 +19924,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -19795,7 +19959,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -19822,7 +19986,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -19849,7 +20013,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			//111214 hjc add
 			if (m_strOriginData[4][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -19876,13 +20040,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][9] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (9 - 1)); // Bit Flag.
 			}
 			m_strPadTip_Prec = strTemp;	//170112 hjc mod
-										//	StringToChar(strTemp,SpecData.szPADTipPrecName);
+										//	StringToChar(strTemp,pDoc->SpecData.szPADTipPrecName);
 		}
 		if (Col == 1 && Row == 10)
 		{
@@ -19903,7 +20067,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][10] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -19930,7 +20094,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][11] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -19957,13 +20121,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][12] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (12 - 1)); // Bit Flag.
 			}
 			m_strARLand_Prec = strTemp;	//170112 hjc mod
-										//	StringToChar(strTemp,SpecData.szARLandPrecName);
+										//	StringToChar(strTemp,pDoc->SpecData.szARLandPrecName);
 		}
 		if (Col == 1 && Row == 13)
 		{
@@ -19984,7 +20148,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][13] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -20011,12 +20175,12 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][14] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (14 - 1)); // Bit Flag.
 			}
-			SpecData.fHoleFillExt = _ttof(strTemp);
+			pDoc->SpecData.fHoleFillExt = _ttof(strTemp);
 		}
 
 		if (Col == 1 && Row == 15)
@@ -20038,7 +20202,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][15] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -20065,13 +20229,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][16] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (16 - 1)); // Bit Flag.
 			}
 			m_strCO2Land_Prec = strTemp;	//170112 hjc mod
-											//	StringToChar(strTemp,SpecData.szCO2LandPrecName);
+											//	StringToChar(strTemp,pDoc->SpecData.szCO2LandPrecName);
 
 		}
 		if (Col == 1 && Row == 17)
@@ -20093,7 +20257,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][17] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (17 - 1)); // Bit Flag.
@@ -20120,12 +20284,12 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][19] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (19 - 1)); // Bit Flag.
 			}
-			SpecData.fCO2HoleFillExt = _ttof(strTemp);
+			pDoc->SpecData.fCO2HoleFillExt = _ttof(strTemp);
 		}
 
 		if (Col == 1 && Row == 20)
@@ -20154,7 +20318,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][20] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (20 - 1)); // Bit Flag.
@@ -20181,13 +20345,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][21] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (21 - 1)); // Bit Flag.
 			}
 			m_strFPad_Prec = strTemp;	//170112 hjc mod
-										//	StringToChar(strTemp,SpecData.szPADFine_PrecName);
+										//	StringToChar(strTemp,pDoc->SpecData.szPADFine_PrecName);
 		}
 		if (Col == 1 && Row == 22)
 		{
@@ -20208,7 +20372,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[4][22] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[4] |= (0x00000001 << (22 - 1)); // Bit Flag.
@@ -20247,7 +20411,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -20285,7 +20449,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -20321,7 +20485,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -20356,7 +20520,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -20390,7 +20554,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -20427,7 +20591,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -20455,7 +20619,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -20482,7 +20646,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -20517,7 +20681,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][10] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -20544,7 +20708,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][11] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -20578,7 +20742,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][12] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -20613,7 +20777,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][13] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -20639,7 +20803,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[5][14] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -20677,14 +20841,14 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[5][15] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (15 - 1)); // Bit Flag.
 				}
 			}
 
-			SpecData.nVHEdgeThrDiffGray = _ttoi(strTemp);
+			pDoc->SpecData.nVHEdgeThrDiffGray = _ttoi(strTemp);
 		}
 
 		if (Col == 1 && Row == 16)
@@ -20717,14 +20881,14 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[5][16] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (16 - 1)); // Bit Flag.
 				}
 			}
 
-			SpecData.nVHBreakOutGray = _ttoi(strTemp);
+			pDoc->SpecData.nVHBreakOutGray = _ttoi(strTemp);
 
 		}
 
@@ -20758,14 +20922,14 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[5][17] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (17 - 1)); // Bit Flag.
 				}
 			}
 
-			SpecData.nVHDissmearGray = _ttoi(strTemp);
+			pDoc->SpecData.nVHDissmearGray = _ttoi(strTemp);
 		}
 
 		if (Col == 1 && Row == 18)
@@ -20798,14 +20962,14 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[5][18] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[5] |= (0x00000001 << (18 - 1)); // Bit Flag.
 				}
 			}
 
-			SpecData.nVHContiBreakOutNum = _ttoi(strTemp);
+			pDoc->SpecData.nVHContiBreakOutNum = _ttoi(strTemp);
 		}
 
 		if (m_bKeyDown)
@@ -20844,7 +21008,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (1 - 1)); // Bit Flag.
@@ -20879,7 +21043,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][2] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (2 - 1)); // Bit Flag.
@@ -20913,7 +21077,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][3] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -20940,7 +21104,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -20967,7 +21131,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -20996,7 +21160,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -21023,7 +21187,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][7] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (7 - 1)); // Bit Flag.
@@ -21051,7 +21215,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][8] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (8 - 1)); // Bit Flag.
@@ -21078,7 +21242,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][9] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (9 - 1)); // Bit Flag.
@@ -21105,7 +21269,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][10] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (10 - 1)); // Bit Flag.
@@ -21132,7 +21296,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][11] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (11 - 1)); // Bit Flag.
@@ -21159,7 +21323,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][12] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (12 - 1)); // Bit Flag.
@@ -21186,7 +21350,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][13] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (13 - 1)); // Bit Flag.
@@ -21213,7 +21377,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][14] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (14 - 1)); // Bit Flag.
@@ -21240,7 +21404,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[6][15] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[6] |= (0x00000001 << (15 - 1)); // Bit Flag.
@@ -21277,12 +21441,12 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[7][1] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[7] |= (0x00000001); // Bit Flag.
 			}
-			pGlobalDoc->m_nPtSrchRngExt = _ttoi(strTemp);
+			pDoc->m_nPtSrchRngExt = _ttoi(strTemp);
 		}
 
 		if (Col == 1 && Row == 3)
@@ -21315,7 +21479,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 				}
 				if (m_strOriginData[7][3] != strTemp)
 				{
-					m_bSpecDataChanged = TRUE;
+					m_bpDoc->SpecDataChanged = TRUE;
 					m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 					m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (3 - 1)); // Bit Flag.
@@ -21337,7 +21501,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[7][4] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (4 - 1)); // Bit Flag.
@@ -21372,13 +21536,13 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 					SizeData[COMMON_PARAMETER].fPixelSizeX,
 					pGlobalView->GetLanguageString("MENU", "MUST_OVER"));
 				MessageBox(strMsg);
-				m_fDefMaskSize = max(SizeData[COMMON_PARAMETER].fPixelSizeX, SpecData.fDefMaskSize);
+				m_fDefMaskSize = max(SizeData[COMMON_PARAMETER].fPixelSizeX, pDoc->SpecData.fDefMaskSize);
 				DisplaySpread(7);
 				return;
 			}
 			else if (m_strOriginData[7][5] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (5 - 1)); // Bit Flag.
@@ -21404,7 +21568,7 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 			}
 			if (m_strOriginData[7][6] != strTemp)
 			{
-				m_bSpecDataChanged = TRUE;
+				m_bpDoc->SpecDataChanged = TRUE;
 				m_Spread.SetForeColor(RGB(255, 0, 0)); //Red
 
 				m_lChangedDataSpreadCellPos[7] |= (0x00000001 << (6 - 1)); // Bit Flag.
@@ -21427,176 +21591,179 @@ void CDlgSpec::ChangeSpecFromEasy(int Col, int Row)
 
 void CDlgSpec::DisplaySpec(void)
 {
-/*	int i = 0;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	int i = 0;
 
 	//20090216 Spec Fines
-	m_fNominalLine = SpecData.fNominalLineWidth;
-	m_fRealNormLine = SpecData.fRealNominalLineWidth;
+	m_fNominalLine = pDoc->SpecData.fNominalLineWidth;
+	m_fRealNormLine = pDoc->SpecData.fRealNominalLineWidth;
 
-	m_nNickGray = SpecData.nNickGraySpec;
-	m_nOpenGray = SpecData.nOpenGraySpec;	//150410 hjc add
-	m_nHalfSideNickDiffBrightGray = SpecData.nHalfSideNickDiffBrightGray;
-	m_nHalfSideNickDiffDarkGray = SpecData.nHalfSideNickDiffDarkGray;
+	m_nNickGray = pDoc->SpecData.nNickGraySpec;
+	m_nOpenGray = pDoc->SpecData.nOpenGraySpec;	//150410 hjc add
+	m_nHalfSideNickDiffBrightGray = pDoc->SpecData.nHalfSideNickDiffBrightGray;
+	m_nHalfSideNickDiffDarkGray = pDoc->SpecData.nHalfSideNickDiffDarkGray;
 
-	m_nIRISPosID = pGlobalDoc->m_nIRISPosID;
+	m_nIRISPosID = pDoc->m_nIRISPosID;
 
 	//170403 hjc add
-	m_nFineNickGray = SpecData.nFineNickGraySpec;
-	m_nFineOpenGray = SpecData.nFineOpenGraySpec;
-	m_nFineHalfSideNickDiffBrightGray = SpecData.nFineHalfSideNickDiffBrightGray;
-	m_nFineHalfSideNickDiffDarkGray = SpecData.nFineHalfSideNickDiffDarkGray;
+	m_nFineNickGray = pDoc->SpecData.nFineNickGraySpec;
+	m_nFineOpenGray = pDoc->SpecData.nFineOpenGraySpec;
+	m_nFineHalfSideNickDiffBrightGray = pDoc->SpecData.nFineHalfSideNickDiffBrightGray;
+	m_nFineHalfSideNickDiffDarkGray = pDoc->SpecData.nFineHalfSideNickDiffDarkGray;
 	//170403 hjc add end
 
 
 	//------------------------------------------------
 
-	m_nHoleMissingGray = SpecData.nHoleMissingGray;
+	m_nHoleMissingGray = pDoc->SpecData.nHoleMissingGray;
 
-	m_nHoleDefSize = max(min(SpecData.nHoleDefNum, 90), 1);
+	m_nHoleDefSize = max(min(pDoc->SpecData.nHoleDefNum, 90), 1);
 
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
-		m_strMinSP = CString(SpecData.szMinSPSize);
+		m_strMinSP = CString(pDoc->SpecData.szMinSPSize);
 	}
 	else
 	{
-		m_nMinSPPercent = SpecData.nMinSPPercent;
+		m_nMinSPPercent = pDoc->SpecData.nMinSPPercent;
 	}
 
 	for (i = 0; i < 15; i++)
 	{
-		if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+		if (pDoc->m_bUseCombo)	//150611 hjc add
 		{
-			m_strNick[i] = CString(SpecData.szNickSize[i]);
-			m_strProtrusion[i] = CString(SpecData.szProtrusionSize[i]);
-			m_strFineNick[i] = CString(SpecData.szFineNickSize[i]);
-			m_strFineProtrusion[i] = CString(SpecData.szFineProtrusionSize[i]);
-			m_nNickPercent[i] = SpecData.nNickPercent[i];
-			m_nProtrusionPercent[i] = SpecData.nProtrusionPercent[i];
-			m_nFineNickPercent[i] = SpecData.nFineNickPercent[i];
-			m_nFineProtrusionPercent[i] = SpecData.nFineProtrusionPercent[i];
+			m_strNick[i] = CString(pDoc->SpecData.szNickSize[i]);
+			m_strProtrusion[i] = CString(pDoc->SpecData.szProtrusionSize[i]);
+			m_strFineNick[i] = CString(pDoc->SpecData.szFineNickSize[i]);
+			m_strFineProtrusion[i] = CString(pDoc->SpecData.szFineProtrusionSize[i]);
+			m_nNickPercent[i] = pDoc->SpecData.nNickPercent[i];
+			m_nProtrusionPercent[i] = pDoc->SpecData.nProtrusionPercent[i];
+			m_nFineNickPercent[i] = pDoc->SpecData.nFineNickPercent[i];
+			m_nFineProtrusionPercent[i] = pDoc->SpecData.nFineProtrusionPercent[i];
 		}
 		else
 		{
-			m_nNickPercent[i] = SpecData.nNickPercent[i];
-			m_nProtrusionPercent[i] = SpecData.nProtrusionPercent[i];
-			m_nFineNickPercent[i] = SpecData.nFineNickPercent[i];
-			m_nFineProtrusionPercent[i] = SpecData.nFineProtrusionPercent[i];
+			m_nNickPercent[i] = pDoc->SpecData.nNickPercent[i];
+			m_nProtrusionPercent[i] = pDoc->SpecData.nProtrusionPercent[i];
+			m_nFineNickPercent[i] = pDoc->SpecData.nFineNickPercent[i];
+			m_nFineProtrusionPercent[i] = pDoc->SpecData.nFineProtrusionPercent[i];
 		}
 
-		m_fLineWdDeltaGradViolation[i] = SpecData.fLineWdDeltaGradViolation[i];
-		m_fExcsWdDeltaGradViolation[i] = SpecData.fExcsWdDeltaGradViolation[i];
-		m_nNickNGFilterPercent[i] = SpecData.nNickNGFilterPercent[i];
-		m_nExcsNGFilterPercent[i] = SpecData.nExcsNGFilterPercent[i];
-		m_nFineNickNGFilterPercent[i] = SpecData.nFineNickNGFilterPercent[i];
-		m_nFineExcsNGFilterPercent[i] = SpecData.nFineExcsNGFilterPercent[i];
-		m_fFineLineWdDeltaGradViolation[i] = SpecData.fFineLineWdDeltaGradViolation[i];
-		m_fFineExcsWdDeltaGradViolation[i] = SpecData.fFineExcsWdDeltaGradViolation[i];
+		m_fLineWdDeltaGradViolation[i] = pDoc->SpecData.fLineWdDeltaGradViolation[i];
+		m_fExcsWdDeltaGradViolation[i] = pDoc->SpecData.fExcsWdDeltaGradViolation[i];
+		m_nNickNGFilterPercent[i] = pDoc->SpecData.nNickNGFilterPercent[i];
+		m_nExcsNGFilterPercent[i] = pDoc->SpecData.nExcsNGFilterPercent[i];
+		m_nFineNickNGFilterPercent[i] = pDoc->SpecData.nFineNickNGFilterPercent[i];
+		m_nFineExcsNGFilterPercent[i] = pDoc->SpecData.nFineExcsNGFilterPercent[i];
+		m_fFineLineWdDeltaGradViolation[i] = pDoc->SpecData.fFineLineWdDeltaGradViolation[i];
+		m_fFineExcsWdDeltaGradViolation[i] = pDoc->SpecData.fFineExcsWdDeltaGradViolation[i];
 	}
 
 
-	m_strThetaAlign = pGlobalDoc->m_strThetaAlign;
+	m_strThetaAlign = pDoc->m_strThetaAlign;
 
-	m_MinSpGray = SpecData.nMinSpaceGraySpec;
+	m_MinSpGray = pDoc->SpecData.nMinSpaceGraySpec;
 
-	m_nSpaceNGFilterPercent = SpecData.nSpaceNGFilterPercent;
+	m_nSpaceNGFilterPercent = pDoc->SpecData.nSpaceNGFilterPercent;
 	//20090228 hjc
-	m_fMinSpWidth = SpecData.fMinSpWidth;
-	m_fSpWdDeltaGradViolation = SpecData.fSpWdDeltaGradViolation;
-	m_fSpWdDeltaOuterGradViolation = SpecData.fSpWdDeltaOuterGradViolation;   //20090405 hjc
-	m_fFineMinSpWidth = SpecData.fFineMinSpWidth;		//121226 hjc add
+	m_fMinSpWidth = pDoc->SpecData.fMinSpWidth;
+	m_fSpWdDeltaGradViolation = pDoc->SpecData.fSpWdDeltaGradViolation;
+	m_fSpWdDeltaOuterGradViolation = pDoc->SpecData.fSpWdDeltaOuterGradViolation;   //20090405 hjc
+	m_fFineMinSpWidth = pDoc->SpecData.fFineMinSpWidth;		//121226 hjc add
 														//-----------------
 
-	m_fDefMaskSize = max(SizeData[COMMON_PARAMETER].fPixelSizeX, SpecData.fDefMaskSize);
-	m_fNearDefLen = SpecData.fNearDefLen;
+	m_fDefMaskSize = max(SizeData[COMMON_PARAMETER].fPixelSizeX, pDoc->SpecData.fDefMaskSize);
+	m_fNearDefLen = pDoc->SpecData.fNearDefLen;
 
-	m_nLeadOpenGray = SpecData.nLeadOpenGray;
+	m_nLeadOpenGray = pDoc->SpecData.nLeadOpenGray;
 
-	if (SpecData.nAlignTolerance == 0)
+	if (pDoc->SpecData.nAlignTolerance == 0)
 	{
 		m_nAlignTolerance = 25;
 	}
 
-	m_nAlignTolerance = SpecData.nAlignTolerance;
+	m_nAlignTolerance = pDoc->SpecData.nAlignTolerance;
 
 	//170112 hjc mod RLE
-	m_strPadBallPrec = CString(SpecData.szPADRLPrecName);
-	m_strLP_Prec = CString(SpecData.szLPADRLName);
-	m_strSP_Prec = CString(SpecData.szSPRLName);
-	m_strSPExt_Prec = CString(SpecData.szSPACEEXTRLName);
-	m_strFPad_Prec = CString(SpecData.szPADFine_PrecName);
-	m_strARLand_Prec = CString(SpecData.szARLandPrecName);
-	m_strCO2Land_Prec = CString(SpecData.szCO2LandPrecName);
-	m_strPadTip_Prec = CString(SpecData.szPADTipPrecName);
+	m_strPadBallPrec = CString(pDoc->SpecData.szPADRLPrecName);
+	m_strLP_Prec = CString(pDoc->SpecData.szLPADRLName);
+	m_strSP_Prec = CString(pDoc->SpecData.szSPRLName);
+	m_strSPExt_Prec = CString(pDoc->SpecData.szSPACEEXTRLName);
+	m_strFPad_Prec = CString(pDoc->SpecData.szPADFine_PrecName);
+	m_strARLand_Prec = CString(pDoc->SpecData.szARLandPrecName);
+	m_strCO2Land_Prec = CString(pDoc->SpecData.szCO2LandPrecName);
+	m_strPadTip_Prec = CString(pDoc->SpecData.szPADTipPrecName);
 	//170112 hjc mod end
 
-	m_fHoleTolerance = SpecData.fHoleTolerance;
+	m_fHoleTolerance = pDoc->SpecData.fHoleTolerance;
 
 	//20090311 hjc add
-	m_fHoleDiaLower = SpecData.fHoleDiaLower;
-	m_fHoleDiaUpper = SpecData.fHoleDiaUpper;
-	m_nHoleInnerGray = SpecData.nHoleInnerGray;
+	m_fHoleDiaLower = pDoc->SpecData.fHoleDiaLower;
+	m_fHoleDiaUpper = pDoc->SpecData.fHoleDiaUpper;
+	m_nHoleInnerGray = pDoc->SpecData.nHoleInnerGray;
 	//-----------
 
-	m_strHolePrec = CString(SpecData.szHoleRLPrecName);
+	m_strHolePrec = CString(pDoc->SpecData.szHoleRLPrecName);
 	m_nHoleOpenGray = min(max(m_nHoleOpenGray, 1), 130);
 
-	m_fARLandMin = SpecData.fARLandMin;
-	m_fPADTipMin = SpecData.fPADTipMin;
-	m_fIsLandMin = SpecData.fIsLandMin;
+	m_fARLandMin = pDoc->SpecData.fARLandMin;
+	m_fPADTipMin = pDoc->SpecData.fPADTipMin;
+	m_fIsLandMin = pDoc->SpecData.fIsLandMin;
 	//20090412 hjc
-	m_nIsLandExtGray = SpecData.nIsLandExtGray;
-	m_fIsLandExtMin = SpecData.fIsLandExtMin;
+	m_nIsLandExtGray = pDoc->SpecData.nIsLandExtGray;
+	m_fIsLandExtMin = pDoc->SpecData.fIsLandExtMin;
 	//jun 20120903 for LG_CCL-Inspector
-	m_nCCLGray = SpecData.nCCLGray;
-	m_fCCLCircularity = SpecData.fCCLCircularity;
-	m_fCCLDefSize = SpecData.fCCLDefSize;
+	m_nCCLGray = pDoc->SpecData.nCCLGray;
+	m_fCCLCircularity = pDoc->SpecData.fCCLCircularity;
+	m_fCCLDefSize = pDoc->SpecData.fCCLDefSize;
 
 	//2022 01 10 lgh add
-	m_nCharInspectionGray = SpecData.nCharInspectionGray;
-	m_dCharRegionUpperPercent = SpecData.dCharRegionUpperPercent;
-	m_dCharRegionLowerPercent = SpecData.dCharRegionLowerPercent;
+	m_nCharInspectionGray = pDoc->SpecData.nCharInspectionGray;
+	m_dCharRegionUpperPercent = pDoc->SpecData.dCharRegionUpperPercent;
+	m_dCharRegionLowerPercent = pDoc->SpecData.dCharRegionLowerPercent;
 
 
 
 	//------------
-	m_fVDPadMin = SpecData.fVDPadMin;
+	m_fVDPadMin = pDoc->SpecData.fVDPadMin;
 	//20090419 hjc
-	m_fVDLocationTolerance = SpecData.fVDLocationTolerance;
-	m_fFineVDPadMin = SpecData.fFinePADVoidMin;
-	m_nFinePADVoidGraySpec = SpecData.nFinePADVoidGraySpec;
+	m_fVDLocationTolerance = pDoc->SpecData.fVDLocationTolerance;
+	m_fFineVDPadMin = pDoc->SpecData.fFinePADVoidMin;
+	m_nFinePADVoidGraySpec = pDoc->SpecData.nFinePADVoidGraySpec;
 	//-------
 
-	m_fPinHoleMin = SpecData.fPinHoleMin;
-	m_fPADVoidMin = SpecData.fPADVoidMin;
+	m_fPinHoleMin = pDoc->SpecData.fPinHoleMin;
+	m_fPADVoidMin = pDoc->SpecData.fPADVoidMin;
 
-	m_nIsLandGray = SpecData.nIsLandGraySpec;
-	m_nPinHoleGray = SpecData.nPinHoleGraySpec;
-	m_nPADVoidGray = SpecData.nPADVoidGraySpec;
+	m_nIsLandGray = pDoc->SpecData.nIsLandGraySpec;
+	m_nPinHoleGray = pDoc->SpecData.nPinHoleGraySpec;
+	m_nPADVoidGray = pDoc->SpecData.nPADVoidGraySpec;
 
 
-	m_nCO2MissingGray = SpecData.nCO2MissingGray;
-	m_nCO2HoleNum = SpecData.nCO2HoleNum;
-	m_nCO2MisAgnGray = SpecData.nCO2MisAgnGray;
-	m_nCO2MisAgnDefPercent = SpecData.nCO2MisAgnDefPercent;
-	m_nCO2OpenGray = SpecData.nCO2OpenGray;
+	m_nCO2MissingGray = pDoc->SpecData.nCO2MissingGray;
+	m_nCO2HoleNum = pDoc->SpecData.nCO2HoleNum;
+	m_nCO2MisAgnGray = pDoc->SpecData.nCO2MisAgnGray;
+	m_nCO2MisAgnDefPercent = pDoc->SpecData.nCO2MisAgnDefPercent;
+	m_nCO2OpenGray = pDoc->SpecData.nCO2OpenGray;
 
 	//20090412 hjc
-	m_nNeibSpGrayDiff = SpecData.nNeibSpGrayDiff;
-	m_nUSDarkGrayMinus = SpecData.nUSDarkGrayMinus;	//150413 hjc add
+	m_nNeibSpGrayDiff = pDoc->SpecData.nNeibSpGrayDiff;
+	m_nUSDarkGrayMinus = pDoc->SpecData.nUSDarkGrayMinus;	//150413 hjc add
 													//20100210 hjc add
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
-		m_strSelectVaccum = CString(SpecData.strSelectVaccum);
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+		m_strSelectVaccum = CString(pDoc->SpecData.strSelectVaccum);
 	else
 		m_strSelectVaccum = "Both";
 
 	//20100322 hjc add
-	m_nHoleLandVoidGray = SpecData.nHoleLandVoidGray;
-	m_nCO2LandVoidGraySpec = SpecData.nCO2LandVoidGraySpec;
-	m_strCO2Land_Prec = CString(SpecData.szCO2LandPrecName);
-	m_fCO2LandMin = SpecData.fCO2LandMin;
-	m_strCO2LandAlignMode = CString(SpecData.szCO2LandAlignMode);
+	m_nHoleLandVoidGray = pDoc->SpecData.nHoleLandVoidGray;
+	m_nCO2LandVoidGraySpec = pDoc->SpecData.nCO2LandVoidGraySpec;
+	m_strCO2Land_Prec = CString(pDoc->SpecData.szCO2LandPrecName);
+	m_fCO2LandMin = pDoc->SpecData.fCO2LandMin;
+	m_strCO2LandAlignMode = CString(pDoc->SpecData.szCO2LandAlignMode);
 	//----------------------
 	*/
 }
@@ -21667,7 +21834,7 @@ void CDlgSpec::DisplayChangedData()
 		break;
 
 	case 3:
-		if (SpecData.bEnableCharInspection)
+		if (pDoc->SpecData.bEnableCharInspection)
 		{
 			for (i = 1; i <= 15; i++)	//jun 20120903 for LG_CCL-Inspector
 			{
@@ -21896,7 +22063,7 @@ void CDlgSpec::SetGroupBackColor()
 		break;
 	case 3:		//20100322 hjc add
 				//Set Color Group
-		if (SpecData.bEnableCharInspection)
+		if (pDoc->SpecData.bEnableCharInspection)
 		{
 			for (i = 1; i <= 15; i++)
 				for (j = 1; j <= 2; j++)
@@ -21949,7 +22116,7 @@ void CDlgSpec::SetGroupBackColor()
 			m_Spread.SetBackColor(SPREAD_GROUP_COLOR2);
 			//--------------------------------------------------------
 
-			if (SpecData.bEnableCharInspection)
+			if (pDoc->SpecData.bEnableCharInspection)
 			{
 				m_Spread.SetRow(13);		//jun 20120903 for LG_CCL-Inspector
 				m_Spread.SetBackColor(SPREAD_GROUP_COLOR3);
@@ -22246,7 +22413,10 @@ void CDlgSpec::LoadOriginDataTab(int nTabNum)
 
 void CDlgSpec::LoadOriginDataTab0()
 {
-/*
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*
 	CString strTemp;
 
 	strTemp.Format(_T("%.1f"), m_fNominalLine);
@@ -22274,7 +22444,7 @@ void CDlgSpec::LoadOriginDataTab0()
 	strTemp.Format(_T("%.1f"), m_fMinCheckWidth);
 	m_strOriginData[0][8] = strTemp;
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 		m_strOriginData[0][9] = m_strNick[0];
 		m_strOriginData[0][10] = m_strProtrusion[0];
@@ -22302,10 +22472,10 @@ void CDlgSpec::LoadOriginDataTab0()
 
 	CString strVal;
 	int idx;
-	if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
+	if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
 	{
 		strTemp = _T("");
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 		{
 			if (idx)
 				strTemp += _T("/");
@@ -22319,10 +22489,10 @@ void CDlgSpec::LoadOriginDataTab0()
 	}
 	m_strOriginData[0][15] = strTemp;
 
-	if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
+	if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod
 	{
 		strTemp = "";
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 		{
 			if (idx)
 				strTemp += _T("/");
@@ -22339,7 +22509,10 @@ void CDlgSpec::LoadOriginDataTab0()
 
 void CDlgSpec::LoadOriginDataTab1()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 
 	strTemp.Format(_T("%.1f"), m_fNominalLine);
 	m_strOriginData[1][1] = strTemp;
@@ -22366,7 +22539,7 @@ void CDlgSpec::LoadOriginDataTab1()
 	strTemp.Format(_T("%.1f"), m_fFineMinCheckWidth);
 	m_strOriginData[1][8] = strTemp;
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 		m_strOriginData[1][9] = m_strFineNick[0];
 		m_strOriginData[1][10] = m_strFineProtrusion[0];
@@ -22394,10 +22567,10 @@ void CDlgSpec::LoadOriginDataTab1()
 
 	CString strVal;
 	int idx;
-	if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
 	{
 		strTemp = "";
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 		{
 			if (idx)
 				strTemp += _T("/");
@@ -22409,10 +22582,10 @@ void CDlgSpec::LoadOriginDataTab1()
 		strTemp.Format(_T("%.1f"), m_fFineNarrowTraceViolation[0]);
 	m_strOriginData[1][15] = strTemp;
 
-	if (SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)
 	{
 		strTemp = "";
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum; idx++)
 		{
 			if (idx)
 				strTemp += _T("/");
@@ -22427,7 +22600,10 @@ void CDlgSpec::LoadOriginDataTab1()
 
 void CDlgSpec::LoadOriginDataTab2()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 
 	strTemp.Format(_T("%d"), m_MinSpGray);
 	m_strOriginData[2][1] = strTemp;
@@ -22442,7 +22618,7 @@ void CDlgSpec::LoadOriginDataTab2()
 	strTemp.Format(_T("%.1f"), m_fMinSpWidth);
 	m_strOriginData[2][4] = strTemp;
 
-	//if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	//if (pDoc->m_bUseCombo)	//150611 hjc add
 	//{
 	//m_Spread.SetRow(5);
 	//if(m_strMinSP == "Highest")
@@ -22470,7 +22646,7 @@ void CDlgSpec::LoadOriginDataTab2()
 	//m_Spread.SetCellNote(_T("GigaVis _ Note 48 !!!"));
 	//}
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 		int nPos = m_strMinSP.Find(_T(" "), 0);
 		if (nPos >= 0)
@@ -22503,7 +22679,10 @@ void CDlgSpec::LoadOriginDataTab2()
 
 void CDlgSpec::LoadOriginDataTab3()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 
 	strTemp.Format(_T("%d"), m_nPinHoleGray);
 	m_strOriginData[3][1] = strTemp;
@@ -22516,7 +22695,7 @@ void CDlgSpec::LoadOriginDataTab3()
 	strTemp.Format(_T("%d"), m_nIsLandGray);
 	m_strOriginData[3][4] = strTemp;
 
-	m_strOriginData[3][5] = m_strSP_Prec;		//170112 hjc mod SpecData.szSPRLName
+	m_strOriginData[3][5] = m_strSP_Prec;		//170112 hjc mod pDoc->SpecData.szSPRLName
 
 	strTemp.Format(_T("%.1f"), m_fIsLandMin);
 	m_strOriginData[3][6] = strTemp;
@@ -22542,7 +22721,7 @@ void CDlgSpec::LoadOriginDataTab3()
 	//---------------
 
 	//2022 01 10 lgh add
-	if (SpecData.bEnableCharInspection)
+	if (pDoc->SpecData.bEnableCharInspection)
 	{
 		strTemp.Format(_T("%d"), m_nCharInspectionGray);
 		m_strOriginData[3][13] = strTemp;
@@ -22556,18 +22735,20 @@ void CDlgSpec::LoadOriginDataTab3()
 */
 }
 
-//20100322 hjc add
 void CDlgSpec::LoadOriginDataTab4()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
 
-	strTemp.Format(_T("%d"), SpecData.nVDrillDiffBrightGray);
+	/*	CString strTemp;
+
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVDrillDiffBrightGray);
 	m_strOriginData[4][1] = strTemp;
 
-	strTemp.Format(_T("%d"), SpecData.nVDrillDiffDarkGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVDrillDiffDarkGray);
 	m_strOriginData[4][2] = strTemp;
 
-	strTemp.Format(_T("%.1f"), SpecData.fVDPadPrecName);
+	strTemp.Format(_T("%.1f"), pDoc->SpecData.fVDPadPrecName);
 	m_strOriginData[4][3] = strTemp;
 
 	//20090419 hjc
@@ -22586,7 +22767,7 @@ void CDlgSpec::LoadOriginDataTab4()
 	strTemp.Format(_T("%.1f"), m_fPADVoidMin);
 	m_strOriginData[4][8] = strTemp;
 
-	m_strOriginData[4][9] = m_strPadTip_Prec;		//170112 hjc mod SpecData.szPADTipPrecName	
+	m_strOriginData[4][9] = m_strPadTip_Prec;		//170112 hjc mod pDoc->SpecData.szPADTipPrecName	
 
 	strTemp.Format(_T("%.1f"), m_fPADTipMin);
 	m_strOriginData[4][10] = strTemp;
@@ -22595,33 +22776,33 @@ void CDlgSpec::LoadOriginDataTab4()
 	strTemp.Format(_T("%d"), m_nHoleLandVoidGray);
 	m_strOriginData[4][11] = strTemp;
 
-	m_strOriginData[4][12] = m_strARLand_Prec;	//170112 hjc mod SpecData.szARLandPrecName
+	m_strOriginData[4][12] = m_strARLand_Prec;	//170112 hjc mod pDoc->SpecData.szARLandPrecName
 
 	strTemp.Format(_T("%.1f"), m_fARLandMin);
 	m_strOriginData[4][13] = strTemp;
 
-	strTemp.Format(_T("%.1f"), SpecData.fHoleFillExt);
+	strTemp.Format(_T("%.1f"), pDoc->SpecData.fHoleFillExt);
 	m_strOriginData[4][14] = strTemp;
 
 	//20100322 hjc add
 	strTemp.Format(_T("%d"), m_nCO2LandVoidGraySpec);
 	m_strOriginData[4][15] = strTemp;
 
-	m_strOriginData[4][16] = m_strCO2Land_Prec;	//170112 hjc mod SpecData.szCO2LandPrecName
+	m_strOriginData[4][16] = m_strCO2Land_Prec;	//170112 hjc mod pDoc->SpecData.szCO2LandPrecName
 
 	strTemp.Format(_T("%.1f"), m_fCO2LandMin);
 	m_strOriginData[4][17] = strTemp;
 
-	m_strOriginData[4][18] = SpecData.szCO2LandAlignMode;
+	m_strOriginData[4][18] = pDoc->SpecData.szCO2LandAlignMode;
 
 	//20100323 hjc add
-	strTemp.Format(_T("%.1f"), SpecData.fCO2HoleFillExt);
+	strTemp.Format(_T("%.1f"), pDoc->SpecData.fCO2HoleFillExt);
 	m_strOriginData[4][19] = strTemp;
 
 	strTemp.Format(_T("%d"), m_nFinePADVoidGraySpec);	//090324-ndy
 	m_strOriginData[4][20] = strTemp;
 
-	m_strOriginData[4][21] = m_strFPad_Prec;		//170112 hjc mod SpecData.szPADFine_PrecName
+	m_strOriginData[4][21] = m_strFPad_Prec;		//170112 hjc mod pDoc->SpecData.szPADFine_PrecName
 
 	strTemp.Format(_T("%.1f"), m_fFineVDPadMin);	//090324-ndy
 	m_strOriginData[4][22] = strTemp;
@@ -22632,7 +22813,10 @@ void CDlgSpec::LoadOriginDataTab4()
 
 void CDlgSpec::LoadOriginDataTab5()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 
 	//20090311 hjc modify
 	strTemp.Format(_T("%.1f"), m_fHoleTolerance);
@@ -22658,7 +22842,7 @@ void CDlgSpec::LoadOriginDataTab5()
 	strTemp.Format(_T("%d"), m_nHoleDefSize);
 	m_strOriginData[5][8] = strTemp;
 
-	strTemp.Format(_T("%s"), CharToString(SpecData.szVHMode));
+	strTemp.Format(_T("%s"), CharToString(pDoc->SpecData.szVHMode));
 	m_strOriginData[5][9] = strTemp;
 
 	strTemp.Format(_T("%d"), m_nCO2MissingGray);
@@ -22676,22 +22860,25 @@ void CDlgSpec::LoadOriginDataTab5()
 	strTemp.Format(_T("%d"), m_nCO2MisAgnDefPercent);
 	m_strOriginData[5][14] = strTemp;
 
-	strTemp.Format(_T("%d"), SpecData.nVHEdgeThrDiffGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHEdgeThrDiffGray);
 	m_strOriginData[5][15] = strTemp;
 
-	strTemp.Format(_T("%d"), SpecData.nVHBreakOutGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHBreakOutGray);
 	m_strOriginData[5][16] = strTemp;
 
-	strTemp.Format(_T("%d"), SpecData.nVHDissmearGray);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHDissmearGray);
 	m_strOriginData[5][17] = strTemp;
 
-	strTemp.Format(_T("%d"), SpecData.nVHContiBreakOutNum);
+	strTemp.Format(_T("%d"), pDoc->SpecData.nVHContiBreakOutNum);
 	m_strOriginData[5][18] = strTemp;*/
 }
 
 void CDlgSpec::LoadOriginDataTab6()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	CString strTemp;
 
 	//20090228 modify hjc
 	strTemp.Format(_T("%d"), m_nPadEdgeNickGray);
@@ -22746,9 +22933,12 @@ void CDlgSpec::LoadOriginDataTab6()
 
 void CDlgSpec::LoadOriginDataTab7()
 {
-/*	CString strTemp;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
 
-	strTemp.Format(_T("%d"), pGlobalDoc->m_nPtSrchRngExt);
+	/*	CString strTemp;
+
+	strTemp.Format(_T("%d"), pDoc->m_nPtSrchRngExt);
 	m_strOriginData[7][1] = strTemp;
 
 	m_strOriginData[7][2] = m_cboPTMOD_SIZE;
@@ -22764,7 +22954,7 @@ void CDlgSpec::LoadOriginDataTab7()
 	strTemp.Format(_T("%.1f"), m_fNearDefLen);
 	m_strOriginData[7][6] = strTemp;
 
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 		m_strOriginData[7][7] = m_strSelectVaccum;	//20100210 hjc add
 	else
 		m_strOriginData[7][7] = "Both";
@@ -22778,14 +22968,14 @@ void CDlgSpec::LoadOriginDataTab7()
 		m_strOriginData[7][9] = strTemp;
 
 #ifdef IRIS_AXIS
-		m_strOriginData[7][10].Format(_T("%.3f"), pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
+		m_strOriginData[7][10].Format(_T("%.3f"), pDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
 #endif
 
 	}
 	else
 	{
 #ifdef IRIS_AXIS
-		m_strOriginData[7][8].Format(_T("%.3f"), pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
+		m_strOriginData[7][8].Format(_T("%.3f"), pDoc->m_IRISAxisControl.m_dIRISPosName[m_nIRISPosID]);
 #endif
 	}*/
 }
@@ -22811,14 +23001,14 @@ CString CDlgSpec::GetSpecName(int tab, int row)
 		strTemp.Format(_T("SPEC_TAB_%d"), tab);
 		strVal.Format(_T("ROW_%d"), row);
 
-		return (pGlobalView->GetMultiLangStringW(pGlobalDoc->m_nSelectedLanguage, strTemp, strVal));
+		return (pGlobalView->GetMultiLangStringW(pDoc->m_nSelectedLanguage, strTemp, strVal));
 		break;
 	case 7:
 
 		strTemp.Format(_T("SPEC_TAB_%d"), tab);
 		strVal.Format(_T("ROW_%d"), row + 2);
 
-		return (pGlobalView->GetMultiLangStringW(pGlobalDoc->m_nSelectedLanguage, strTemp, strVal));
+		return (pGlobalView->GetMultiLangStringW(pDoc->m_nSelectedLanguage, strTemp, strVal));
 		break;
 	}
 	*/
@@ -22828,7 +23018,10 @@ CString CDlgSpec::GetSpecName(int tab, int row)
 
 void CDlgSpec::RecoverOriginData()
 {
-/*	m_fNominalLine = (float)_ttof(m_strOriginData[0][1]);
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_fNominalLine = (float)_ttof(m_strOriginData[0][1]);
 	m_fRealNormLine = (float)_ttof(m_strOriginData[0][2]);
 	m_nNickGray = _ttoi(m_strOriginData[0][3]);
 	//150410 hjc add
@@ -22840,70 +23033,70 @@ void CDlgSpec::RecoverOriginData()
 	m_fMinCheckWidth = (float)_ttof(m_strOriginData[0][8]);
 	int idx;
 
-	m_nLineWidthGroupNum = SpecData.nLineWidthGroupNum;
+	m_nLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum;
 
 
 	//20091019 hjc mod
-	if (SpecData.nLineWidthGroupNum > 0)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 	{
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 		{
 
-			if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+			if (pDoc->m_bUseCombo)	//150611 hjc add
 			{
-				m_strNick[idx] = CString(SpecData.szNickSize[idx]);
-				m_strProtrusion[idx] = CString(SpecData.szProtrusionSize[idx]);
+				m_strNick[idx] = CString(pDoc->SpecData.szNickSize[idx]);
+				m_strProtrusion[idx] = CString(pDoc->SpecData.szProtrusionSize[idx]);
 			}
 			else
 			{
-				m_nNickPercent[idx] = SpecData.nNickPercent[idx];
-				m_nProtrusionPercent[idx] = SpecData.nProtrusionPercent[idx];
+				m_nNickPercent[idx] = pDoc->SpecData.nNickPercent[idx];
+				m_nProtrusionPercent[idx] = pDoc->SpecData.nProtrusionPercent[idx];
 			}
 
-			m_nNickNGFilterPercent[idx] = SpecData.nNickNGFilterPercent[idx];
-			m_nExcsNGFilterPercent[idx] = SpecData.nExcsNGFilterPercent[idx];
+			m_nNickNGFilterPercent[idx] = pDoc->SpecData.nNickNGFilterPercent[idx];
+			m_nExcsNGFilterPercent[idx] = pDoc->SpecData.nExcsNGFilterPercent[idx];
 
 			//20090228 hjc
-			m_fLineWdDeltaGradViolation[idx] = SpecData.fLineWdDeltaGradViolation[idx];
-			m_fExcsWdDeltaGradViolation[idx] = SpecData.fExcsWdDeltaGradViolation[idx];
+			m_fLineWdDeltaGradViolation[idx] = pDoc->SpecData.fLineWdDeltaGradViolation[idx];
+			m_fExcsWdDeltaGradViolation[idx] = pDoc->SpecData.fExcsWdDeltaGradViolation[idx];
 
-			m_fLineWidthGroupLower[idx] = SpecData.fLineWidthGroupLower[idx]; //170524 lgh
-			m_fLineWidthGroup[idx] = SpecData.fLineWidthGroup[idx];
-			m_fNarrowTraceViolation[idx] = SpecData.fNarrowTraceViolation[idx];
-			m_fWideTraceViolation[idx] = SpecData.fWideTraceViolation[idx];
+			m_fLineWidthGroupLower[idx] = pDoc->SpecData.fLineWidthGroupLower[idx]; //170524 lgh
+			m_fLineWidthGroup[idx] = pDoc->SpecData.fLineWidthGroup[idx];
+			m_fNarrowTraceViolation[idx] = pDoc->SpecData.fNarrowTraceViolation[idx];
+			m_fWideTraceViolation[idx] = pDoc->SpecData.fWideTraceViolation[idx];
 		}
 
-		int nLastID = SpecData.nLineWidthGroupNum;
+		int nLastID = pDoc->SpecData.nLineWidthGroupNum;
 
-		for (idx = SpecData.nLineWidthGroupNum + 1; idx < 15; idx++)
+		for (idx = pDoc->SpecData.nLineWidthGroupNum + 1; idx < 15; idx++)
 		{
-			if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+			if (pDoc->m_bUseCombo)	//150611 hjc add
 			{
-				m_strNick[idx] = CString(SpecData.szNickSize[nLastID]);
-				m_strProtrusion[idx] = CString(SpecData.szProtrusionSize[nLastID]);
+				m_strNick[idx] = CString(pDoc->SpecData.szNickSize[nLastID]);
+				m_strProtrusion[idx] = CString(pDoc->SpecData.szProtrusionSize[nLastID]);
 			}
 			else
 			{
-				m_nNickPercent[idx] = SpecData.nNickPercent[nLastID];
-				m_nProtrusionPercent[idx] = SpecData.nProtrusionPercent[nLastID];
+				m_nNickPercent[idx] = pDoc->SpecData.nNickPercent[nLastID];
+				m_nProtrusionPercent[idx] = pDoc->SpecData.nProtrusionPercent[nLastID];
 			}
 
-			m_nNickNGFilterPercent[idx] = SpecData.nNickNGFilterPercent[nLastID];
-			m_nExcsNGFilterPercent[idx] = SpecData.nExcsNGFilterPercent[nLastID];
+			m_nNickNGFilterPercent[idx] = pDoc->SpecData.nNickNGFilterPercent[nLastID];
+			m_nExcsNGFilterPercent[idx] = pDoc->SpecData.nExcsNGFilterPercent[nLastID];
 
-			m_fLineWdDeltaGradViolation[idx] = SpecData.fLineWdDeltaGradViolation[nLastID];
-			m_fExcsWdDeltaGradViolation[idx] = SpecData.fExcsWdDeltaGradViolation[nLastID];
+			m_fLineWdDeltaGradViolation[idx] = pDoc->SpecData.fLineWdDeltaGradViolation[nLastID];
+			m_fExcsWdDeltaGradViolation[idx] = pDoc->SpecData.fExcsWdDeltaGradViolation[nLastID];
 
-			m_fNarrowTraceViolation[idx] = SpecData.fNarrowTraceViolation[nLastID];
-			m_fWideTraceViolation[idx] = SpecData.fWideTraceViolation[nLastID];
+			m_fNarrowTraceViolation[idx] = pDoc->SpecData.fNarrowTraceViolation[nLastID];
+			m_fWideTraceViolation[idx] = pDoc->SpecData.fWideTraceViolation[nLastID];
 		}
 
 
 	}
 	else
 	{
-		m_fLineWidthGroupLower[0] = SpecData.fLineWidthGroupLower[0]; //170524 lgh
-		m_fLineWidthGroup[0] = SpecData.fLineWidthGroup[0];
+		m_fLineWidthGroupLower[0] = pDoc->SpecData.fLineWidthGroupLower[0]; //170524 lgh
+		m_fLineWidthGroup[0] = pDoc->SpecData.fLineWidthGroup[0];
 		m_fNarrowTraceViolation[0] = (float)_ttof(m_strOriginData[0][15]);
 		m_fWideTraceViolation[0] = (float)_ttof(m_strOriginData[0][16]);
 
@@ -22911,27 +23104,27 @@ void CDlgSpec::RecoverOriginData()
 
 		for (idx = 1; idx < 15; idx++)
 		{
-			if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+			if (pDoc->m_bUseCombo)	//150611 hjc add
 			{
-				m_strNick[idx] = CString(SpecData.szNickSize[nLastID]);
-				m_strProtrusion[idx] = CString(SpecData.szProtrusionSize[nLastID]);
+				m_strNick[idx] = CString(pDoc->SpecData.szNickSize[nLastID]);
+				m_strProtrusion[idx] = CString(pDoc->SpecData.szProtrusionSize[nLastID]);
 			}
 			else
 			{
-				m_nNickPercent[idx] = SpecData.nNickPercent[nLastID];
-				m_nProtrusionPercent[idx] = SpecData.nProtrusionPercent[nLastID];
+				m_nNickPercent[idx] = pDoc->SpecData.nNickPercent[nLastID];
+				m_nProtrusionPercent[idx] = pDoc->SpecData.nProtrusionPercent[nLastID];
 			}
 
-			m_nNickNGFilterPercent[idx] = SpecData.nNickNGFilterPercent[nLastID];
-			m_nExcsNGFilterPercent[idx] = SpecData.nExcsNGFilterPercent[nLastID];
+			m_nNickNGFilterPercent[idx] = pDoc->SpecData.nNickNGFilterPercent[nLastID];
+			m_nExcsNGFilterPercent[idx] = pDoc->SpecData.nExcsNGFilterPercent[nLastID];
 
 			//20090228 hjc
-			m_fLineWdDeltaGradViolation[idx] = SpecData.fLineWdDeltaGradViolation[nLastID];
-			m_fExcsWdDeltaGradViolation[idx] = SpecData.fExcsWdDeltaGradViolation[nLastID];
+			m_fLineWdDeltaGradViolation[idx] = pDoc->SpecData.fLineWdDeltaGradViolation[nLastID];
+			m_fExcsWdDeltaGradViolation[idx] = pDoc->SpecData.fExcsWdDeltaGradViolation[nLastID];
 		}
 	}
 
-	m_nFineLineWidthGroupNum = SpecData.nLineWidthGroupNum;
+	m_nFineLineWidthGroupNum = pDoc->SpecData.nLineWidthGroupNum;
 
 	m_fNominalLine = (float)_ttof(m_strOriginData[1][1]);
 	m_fRealNormLine = (float)_ttof(m_strOriginData[1][2]);
@@ -22943,30 +23136,30 @@ void CDlgSpec::RecoverOriginData()
 	m_nLeadOpenGray = _ttoi(m_strOriginData[1][7]);
 	m_fFineMinCheckWidth = (float)_ttof(m_strOriginData[1][8]);
 
-	if (SpecData.nLineWidthGroupNum > 0)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 	{
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 		{
-			if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+			if (pDoc->m_bUseCombo)	//150611 hjc add
 			{
 				m_strFineNick[idx] = m_strOriginData[1][9];
 				m_strFineProtrusion[idx] = m_strOriginData[1][10];
 			}
 			else
 			{
-				m_nFineNickPercent[idx] = SpecData.nFineNickPercent[idx];
-				m_nFineProtrusionPercent[idx] = SpecData.nFineProtrusionPercent[idx];
+				m_nFineNickPercent[idx] = pDoc->SpecData.nFineNickPercent[idx];
+				m_nFineProtrusionPercent[idx] = pDoc->SpecData.nFineProtrusionPercent[idx];
 			}
 
-			m_nFineNickNGFilterPercent[idx] = SpecData.nFineExcsNGFilterPercent[idx];
-			m_nFineExcsNGFilterPercent[idx] = SpecData.nFineExcsNGFilterPercent[idx];
-			m_fFineLineWdDeltaGradViolation[idx] = SpecData.fFineLineWdDeltaGradViolation[idx];
-			m_fFineExcsWdDeltaGradViolation[idx] = SpecData.fFineExcsWdDeltaGradViolation[idx];
+			m_nFineNickNGFilterPercent[idx] = pDoc->SpecData.nFineExcsNGFilterPercent[idx];
+			m_nFineExcsNGFilterPercent[idx] = pDoc->SpecData.nFineExcsNGFilterPercent[idx];
+			m_fFineLineWdDeltaGradViolation[idx] = pDoc->SpecData.fFineLineWdDeltaGradViolation[idx];
+			m_fFineExcsWdDeltaGradViolation[idx] = pDoc->SpecData.fFineExcsWdDeltaGradViolation[idx];
 		}
 	}
 	else
 	{
-		if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+		if (pDoc->m_bUseCombo)	//150611 hjc add
 		{
 			m_strFineNick[0] = m_strOriginData[1][9];
 			m_strFineProtrusion[0] = m_strOriginData[1][10];
@@ -22984,18 +23177,18 @@ void CDlgSpec::RecoverOriginData()
 	}
 
 	//20091019 hjc mod
-	if (SpecData.nLineWidthGroupNum > 0)
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)
 	{
-		for (idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+		for (idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 		{
-			m_fFineLineWidthGroup[idx] = SpecData.fFineLineWidthGroup[idx];
-			m_fFineNarrowTraceViolation[idx] = SpecData.fFineNarrowTraceViolation[idx];
-			m_fFineWideTraceViolation[idx] = SpecData.fFineWideTraceViolation[idx];
+			m_fFineLineWidthGroup[idx] = pDoc->SpecData.fFineLineWidthGroup[idx];
+			m_fFineNarrowTraceViolation[idx] = pDoc->SpecData.fFineNarrowTraceViolation[idx];
+			m_fFineWideTraceViolation[idx] = pDoc->SpecData.fFineWideTraceViolation[idx];
 		}
 	}
 	else
 	{
-		m_fFineLineWidthGroup[0] = SpecData.fFineLineWidthGroup[0];
+		m_fFineLineWidthGroup[0] = pDoc->SpecData.fFineLineWidthGroup[0];
 		m_fFineNarrowTraceViolation[0] = (float)_ttof(m_strOriginData[1][15]);
 		m_fFineWideTraceViolation[0] = (float)_ttof(m_strOriginData[1][16]);
 	}
@@ -23007,7 +23200,7 @@ void CDlgSpec::RecoverOriginData()
 	//-----------------
 	m_fMinSpWidth = (float)_ttof(m_strOriginData[2][4]);
 
-	if (pGlobalDoc->m_bUseCombo)	//150611 hjc add
+	if (pDoc->m_bUseCombo)	//150611 hjc add
 	{
 		//170217 lgh
 		int nPos = m_strMinSP.Find(_T(" "), 0);
@@ -23046,9 +23239,9 @@ void CDlgSpec::RecoverOriginData()
 	m_dCharRegionUpperPercent = (float)_ttof(m_strOriginData[3][14]);
 	m_dCharRegionLowerPercent = (float)_ttof(m_strOriginData[3][15]);
 
-	SpecData.nVDrillDiffBrightGray = _ttoi(m_strOriginData[4][1]);
-	SpecData.nVDrillDiffDarkGray = _ttoi(m_strOriginData[4][2]);		//150823 hjc add
-	SpecData.fVDPadPrecName = (float)_ttof(m_strOriginData[4][3]);
+	pDoc->SpecData.nVDrillDiffBrightGray = _ttoi(m_strOriginData[4][1]);
+	pDoc->SpecData.nVDrillDiffDarkGray = _ttoi(m_strOriginData[4][2]);		//150823 hjc add
+	pDoc->SpecData.fVDPadPrecName = (float)_ttof(m_strOriginData[4][3]);
 	m_fVDLocationTolerance = (float)_ttof(m_strOriginData[4][4]);
 	m_fVDPadMin = (float)_ttof(m_strOriginData[4][5]);
 	m_nPADVoidGray = _ttoi(m_strOriginData[4][6]);
@@ -23059,13 +23252,13 @@ void CDlgSpec::RecoverOriginData()
 	m_nHoleLandVoidGray = _ttoi(m_strOriginData[4][11]);	//20100322 hjc add
 	m_strARLand_Prec = m_strOriginData[4][12];		//170112 hjc mod
 	m_fARLandMin = (float)_ttof(m_strOriginData[4][13]);
-	SpecData.fHoleFillExt = (float)_ttof(m_strOriginData[4][14]);
+	pDoc->SpecData.fHoleFillExt = (float)_ttof(m_strOriginData[4][14]);
 	m_nCO2LandVoidGraySpec = _ttoi(m_strOriginData[4][15]);	//20100322 hjc add
 	m_strCO2Land_Prec = m_strOriginData[4][16];		//170112 hjc mod
-	SpecData.fCO2LandMin = (float)_ttof(m_strOriginData[4][17]);
-	StringToChar(m_strOriginData[4][18], SpecData.szCO2LandAlignMode);
-	//	strcpy(SpecData.szCO2LandAlignMode, m_strOriginData[4][18]);
-	SpecData.fCO2HoleFillExt = (float)_ttof(m_strOriginData[4][19]);	//20100323 hjc add
+	pDoc->SpecData.fCO2LandMin = (float)_ttof(m_strOriginData[4][17]);
+	StringToChar(m_strOriginData[4][18], pDoc->SpecData.szCO2LandAlignMode);
+	//	strcpy(pDoc->SpecData.szCO2LandAlignMode, m_strOriginData[4][18]);
+	pDoc->SpecData.fCO2HoleFillExt = (float)_ttof(m_strOriginData[4][19]);	//20100323 hjc add
 	m_nFinePADVoidGraySpec = _ttoi(m_strOriginData[4][20]);
 	m_strFPad_Prec = m_strOriginData[4][21];	//170112 hjc mod	
 	m_fFineVDPadMin = (float)_ttof(m_strOriginData[4][22]);	//090324-ndy
@@ -23078,17 +23271,17 @@ void CDlgSpec::RecoverOriginData()
 	m_nHoleInnerGray = _ttoi(m_strOriginData[5][6]);
 	m_strHolePrec = m_strOriginData[5][7];
 	m_nHoleDefSize = _ttoi(m_strOriginData[5][8]);
-	StringToChar(m_strOriginData[5][9], SpecData.szVHMode);
-	//	strcpy(SpecData.szVHMode, m_strOriginData[5][9]);
+	StringToChar(m_strOriginData[5][9], pDoc->SpecData.szVHMode);
+	//	strcpy(pDoc->SpecData.szVHMode, m_strOriginData[5][9]);
 	m_nCO2MissingGray = _ttoi(m_strOriginData[5][10]);
 	m_nCO2HoleNum = _ttoi(m_strOriginData[5][11]);
 	m_nCO2OpenGray = _ttoi(m_strOriginData[5][12]);
 	m_nCO2MisAgnGray = _ttoi(m_strOriginData[5][13]);
 	m_nCO2MisAgnDefPercent = _ttoi(m_strOriginData[5][14]);
-	SpecData.nVHEdgeThrDiffGray = _ttoi(m_strOriginData[5][15]);
-	SpecData.nVHBreakOutGray = _ttoi(m_strOriginData[5][16]);
-	SpecData.nVHDissmearGray = _ttoi(m_strOriginData[5][17]);
-	SpecData.nVHContiBreakOutNum = _ttoi(m_strOriginData[5][18]);
+	pDoc->SpecData.nVHEdgeThrDiffGray = _ttoi(m_strOriginData[5][15]);
+	pDoc->SpecData.nVHBreakOutGray = _ttoi(m_strOriginData[5][16]);
+	pDoc->SpecData.nVHDissmearGray = _ttoi(m_strOriginData[5][17]);
+	pDoc->SpecData.nVHContiBreakOutNum = _ttoi(m_strOriginData[5][18]);
 
 	m_nPadEdgeNickGray = _ttoi(m_strOriginData[6][1]);
 	m_nPadEdgeNeibGrayDiff = _ttoi(m_strOriginData[6][2]);	//120105 hjc add
@@ -23106,7 +23299,7 @@ void CDlgSpec::RecoverOriginData()
 	m_fViaEdgeNickWdDeltaGradViolation = (float)_ttof(m_strOriginData[6][14]);
 	m_fViaEdgeExcsWdDeltaGradViolation = (float)_ttof(m_strOriginData[6][15]);
 
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 		m_strSelectVaccum = m_strOriginData[7][7];	//20100210 hjc add
 	else
 		m_strSelectVaccum = "Both";
@@ -23120,7 +23313,7 @@ void CDlgSpec::RecoverOriginData()
 
 	for (int i = 0; i < 12; i++)
 	{
-		double dDiff = fabs(_ttof(m_strOriginData[7][8]) - pGlobalDoc->m_IRISAxisControl.m_dIRISPosName[i]);
+		double dDiff = fabs(_ttof(m_strOriginData[7][8]) - pDoc->m_IRISAxisControl.m_dIRISPosName[i]);
 
 		if (dDiff < 0.01)
 		{
@@ -23240,14 +23433,14 @@ BOOL CDlgSpec::GetDefaultSpecData()
 	CString strPath, strFileName;
 
 	//20120629-ndy
-	if (pGlobalDoc->m_bUseLocalSpecPreset)
-		strPath.Format(_T("%sSpecPreset\\%d\\*.MSP"), pGlobalDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
+	if (pDoc->m_bUseLocalSpecPreset)
+		strPath.Format(_T("%sSpecPreset\\%d\\*.MSP"), pDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
 	else
 	{
-		if (!pGlobalDoc->m_bUseMultiPreset)	//130128 hjc add
-			strPath.Format(_T("%sSpecPreset\\%d\\*.MSP"), pGlobalDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
+		if (!pDoc->m_bUseMultiPreset)	//130128 hjc add
+			strPath.Format(_T("%sSpecPreset\\%d\\*.MSP"), pDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
 		else
-			strPath.Format(_T("%sSpecPreset%02d\\%d\\*.MSP"), pGlobalDoc->m_strIniSpecDir, pGlobalDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
+			strPath.Format(_T("%sSpecPreset%02d\\%d\\*.MSP"), pDoc->m_strIniSpecDir, pDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
 	}
 
 	// 100707 jsy
@@ -23292,7 +23485,10 @@ BOOL CDlgSpec::GetDefaultSpecData()
 
 void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 {
-/*	m_Spread.AutoAttach();
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	m_Spread.AutoAttach();
 	m_Spread.SetEditMode(FALSE);
 	m_Spread.SetFocus();
 	m_Spread.SetActiveCell(0, 0);
@@ -23319,7 +23515,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	{
 		if (!pMainFrame->CheckLogin())
 		{
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 				strMsg.Format(_T("로그인에 실패하였습니다. 사용자 로그인 후 다시 시도하십시오."));
 			else
 				strMsg.Format(_T("Access denied. before delete the lot, you must loggined."));
@@ -23330,7 +23526,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 		if (pGlobalView->m_nUserID == OPERATOR)
 		{
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 			{
 				AfxMessageBox(_T("권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 				SaveLog(strMsg);
@@ -23346,9 +23542,9 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 		}
 		else if (pGlobalView->m_nUserID == ENGINEER)
 		{
-			if (pGlobalDoc->m_nOperatorID == 11)
+			if (pDoc->m_nOperatorID == 11)
 			{
-				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+				if (pDoc->m_nSelectedLanguage == KOREA)
 				{
 					AfxMessageBox(_T("권한이 없습니다. 관리자만 / 엔지니어2~3만 저장이 가능합니다."), MB_ICONSTOP);
 					SaveLog(strMsg);
@@ -23370,7 +23566,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	{
 		if (pGlobalView->m_nUserID != ADMINISTRATOR && pGlobalView->m_nUserID != ENGINEER)
 		{
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 			{
 				AfxMessageBox(_T("권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 				SaveLog(strMsg);
@@ -23390,7 +23586,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 #if CUSTOMER_COMPANY == LG
 		if (!pMainFrame->CheckLogin())
 		{
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 				strMsg.Format(_T("로그인에 실패하였습니다. 사용자 로그인 후 다시 시도하십시오."));
 			else
 				strMsg.Format(_T("Access denied. before delete the lot, you must loggined."));
@@ -23401,7 +23597,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 		if (pGlobalView->m_nUserID == OPERATOR)
 		{
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 			{
 				AfxMessageBox(_T("권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 				SaveLog(strMsg);
@@ -23417,9 +23613,9 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 		}
 		else if (pGlobalView->m_nUserID == ENGINEER)
 		{
-			if (pGlobalDoc->m_nOperatorID == 11)
+			if (pDoc->m_nOperatorID == 11)
 			{
-				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+				if (pDoc->m_nSelectedLanguage == KOREA)
 				{
 					AfxMessageBox(_T("권한이 없습니다. 관리자만 / 엔지니어2~3만 저장이 가능합니다."), MB_ICONSTOP);
 					SaveLog(strMsg);
@@ -23441,7 +23637,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 			if (!pMainFrame->CheckLogin())
 			{
-				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+				if (pDoc->m_nSelectedLanguage == KOREA)
 					strMsg.Format(_T("로그인에 실패하였습니다. 사용자 로그인 후 다시 시도하십시오."));
 				else
 					strMsg.Format(_T("Access denied. before delete the lot, you must loggined."));
@@ -23452,7 +23648,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 			if (pGlobalView->m_nUserID == OPERATOR)
 			{
-				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+				if (pDoc->m_nSelectedLanguage == KOREA)
 				{
 					AfxMessageBox(_T("권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 					SaveLog(strMsg);
@@ -23479,10 +23675,10 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	}
 #endif
 
-	pGlobalDoc->SaveAccessLog(_T("Spec Preset Save"));
+	pDoc->SaveAccessLog(_T("Spec Preset Save"));
 
 	CDlgPresetName pDlg;
-	pGlobalDoc->m_nPresetNameType = 2;
+	pDoc->m_nPresetNameType = 2;
 	if (pDlg.DoModal() == IDOK)
 	{
 		strPresetName = pDlg.m_strPresetName;
@@ -23490,12 +23686,12 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	else
 		return;
 
-	if (m_bSpecDataChanged)
+	if (m_bpDoc->SpecDataChanged)
 	{
 		if (MessageBox(_T("Data was changed.\nDo you want to save ?"), NULL, MB_ICONQUESTION | MB_YESNO) == IDYES)
 		{
 			pGlobalView->m_pDlgSpecSub->SaveSpec();
-			m_bClientSpecDataUpdate = TRUE;
+			m_bClientpDoc->SpecDataUpdate = TRUE;
 		}
 		else
 		{
@@ -23519,7 +23715,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 		InitSpreadInfoVariables();
 	}
 
-	if (m_bClientSpecDataUpdate && pGlobalView->CheckAllClientsReady())
+	if (m_bClientpDoc->SpecDataUpdate && pGlobalView->CheckAllClientsReady())
 	{
 		// Send Spec to Client
 		strTitleMsg.Format(_T("%s"), pGlobalView->GetLanguageString("SYSTEM", "NOTIFY"));
@@ -23527,14 +23723,14 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 		//		pGlobalView->ResultDisplayStaticEX(strMsg,RGB_BLACK,RGB_LTGREEN);
 		pGlobalView->DispMessage(strTitleMsg, strMsg, RGB_LTGREEN);
 
-		if (pGlobalView->SendSpecDataToAllClient() != SUCCESS || pGlobalView->SendSystemParamToAllClient() != SUCCESS)
+		if (pGlobalView->SendpDoc->SpecDataToAllClient() != SUCCESS || pGlobalView->SendSystemParamToAllClient() != SUCCESS)
 		{
 #if CUSTOMER_COMPANY == UMTC || CUSTOMER_COMPANY == ZDT || CUSTOMER_COMPANY == SAMSUNG_VIETNAM  //NTH Add for GEM
-			if (pGlobalDoc->m_bUseGemComm)
+			if (pDoc->m_bUseGemComm)
 			{
-				if (!pGlobalDoc->m_bCheckAlarm)
+				if (!pDoc->m_bCheckAlarm)
 				{
-					pGlobalDoc->m_bCheckAlarm = TRUE;
+					pDoc->m_bCheckAlarm = TRUE;
 					pMainFrame->SetEESAlarm(ALARM_NETWORK_SEND_SPEC, EES_ACTIVATE_ALARM);
 				}
 			}
@@ -23556,13 +23752,13 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 			pIO->BuzzerOnOff(0);
 			pGlobalView->TowerLampControl(TOWER_LAMP_GREEN, 1);
 #endif
-			pGlobalDoc->DispRunStopCondition();
+			pDoc->DispRunStopCondition();
 #if CUSTOMER_COMPANY == UMTC || CUSTOMER_COMPANY == ZDT || CUSTOMER_COMPANY == SAMSUNG_VIETNAM  //NTH Add for GEM
-			if (pGlobalDoc->m_bUseGemComm)
+			if (pDoc->m_bUseGemComm)
 			{
-				if (pGlobalDoc->m_bCheckAlarm)
+				if (pDoc->m_bCheckAlarm)
 				{
-					pGlobalDoc->m_bCheckAlarm = FALSE;
+					pDoc->m_bCheckAlarm = FALSE;
 					pMainFrame->SetEESAlarm(ALARM_NETWORK_SEND_SPEC, EES_DEACTIVATE_ALARM);
 				}
 			}
@@ -23575,37 +23771,37 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 		pGlobalView->ClearDispMessage();
 	}
 
-	m_bClientSpecDataUpdate = FALSE;
+	m_bClientpDoc->SpecDataUpdate = FALSE;
 
 	//20120629-ndy
-	if (pGlobalDoc->m_bUseLocalSpecPreset)
+	if (pDoc->m_bUseLocalSpecPreset)
 	{
-		strPath.Format(_T("%sSpecPreset"), pGlobalDoc->m_strLocSpecDir);
+		strPath.Format(_T("%sSpecPreset"), pDoc->m_strLocSpecDir);
 		fileOp.DoCreateFolder(strPath, NULL);
-		strPath.Format(_T("%sSpecPreset\\%d"), pGlobalDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
+		strPath.Format(_T("%sSpecPreset\\%d"), pDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
 		fileOp.DoCreateFolder(strPath, NULL);
 
-		strPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pGlobalDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
+		strPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
 	}
 	else
 	{
-		if (!pGlobalDoc->m_bUseMultiPreset)	//130128 hjc add
+		if (!pDoc->m_bUseMultiPreset)	//130128 hjc add
 		{
-			strPath.Format(_T("%sSpecPreset"), pGlobalDoc->m_strIniSpecDir);
+			strPath.Format(_T("%sSpecPreset"), pDoc->m_strIniSpecDir);
 			fileOp.DoCreateFolder(strPath, NULL);
-			strPath.Format(_T("%sSpecPreset\\%d"), pGlobalDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
+			strPath.Format(_T("%sSpecPreset\\%d"), pDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
 			fileOp.DoCreateFolder(strPath, NULL);
 
-			strPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pGlobalDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
+			strPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
 		}
 		else
 		{
-			strPath.Format(_T("%sSpecPreset%02d"), pGlobalDoc->m_strIniSpecDir, pGlobalDoc->m_nMultiPresetNumber);
+			strPath.Format(_T("%sSpecPreset%02d"), pDoc->m_strIniSpecDir, pDoc->m_nMultiPresetNumber);
 			fileOp.DoCreateFolder(strPath, NULL);
-			strPath.Format(_T("%sSpecPreset%02d\\%d"), pGlobalDoc->m_strIniSpecDir, pGlobalDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
+			strPath.Format(_T("%sSpecPreset%02d\\%d"), pDoc->m_strIniSpecDir, pDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)));
 			fileOp.DoCreateFolder(strPath, NULL);
 
-			strPath.Format(_T("%sSpecPreset%02d\\%d\\%s.MSP"), pGlobalDoc->m_strIniSpecDir, pGlobalDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
+			strPath.Format(_T("%sSpecPreset%02d\\%d\\%s.MSP"), pDoc->m_strIniSpecDir, pDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
 		}
 	}
 
@@ -23620,22 +23816,22 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	COleDateTime dt = COleDateTime::GetCurrentTime();
 	//20120629-ndy
-	if (pGlobalDoc->m_bUseLocalSpecPreset)
+	if (pDoc->m_bUseLocalSpecPreset)
 	{
 		strSpecPresetBackup.Format(_T("%sSpecPreset\\%d\\SpecLog"),
-			pGlobalDoc->m_strLocSpecDir,
+			pDoc->m_strLocSpecDir,
 			(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 			strPresetName);
 		::CreateDirectory(strSpecPresetBackup, 0);
 
 		strSpecPresetBackup.Format(_T("%sSpecPreset\\%d\\SpecLog\\%s"),
-			pGlobalDoc->m_strLocSpecDir,
+			pDoc->m_strLocSpecDir,
 			(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 			strPresetName);
 		::CreateDirectory(strSpecPresetBackup, 0);
 
 		strSpecPresetBackup.Format(_T("%sSpecPreset\\%d\\SpecLog\\%s\\%04d%02d%02d_%02d%02d%02d_%s_%s.msp"),
-			pGlobalDoc->m_strLocSpecDir,
+			pDoc->m_strLocSpecDir,
 			(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 			strPresetName,
 			dt.GetYear(),
@@ -23644,27 +23840,27 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 			dt.GetHour(),
 			dt.GetMinute(),
 			dt.GetSecond(),
-			pGlobalDoc->m_strUserID,
+			pDoc->m_strUserID,
 			strHostName);
 	}
 	else
 	{
-		if (!pGlobalDoc->m_bUseMultiPreset)	//130128 hjc add
+		if (!pDoc->m_bUseMultiPreset)	//130128 hjc add
 		{
 			strSpecPresetBackup.Format(_T("%sSpecPreset\\%d\\SpecLog"),
-				pGlobalDoc->m_strIniSpecDir,
+				pDoc->m_strIniSpecDir,
 				(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 				strPresetName);
 			::CreateDirectory(strSpecPresetBackup, 0);
 
 			strSpecPresetBackup.Format(_T("%sSpecPreset\\%d\\SpecLog\\%s"),
-				pGlobalDoc->m_strIniSpecDir,
+				pDoc->m_strIniSpecDir,
 				(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 				strPresetName);
 			::CreateDirectory(strSpecPresetBackup, 0);
 
 			strSpecPresetBackup.Format(_T("%sSpecPreset\\%d\\SpecLog\\%s\\%04d%02d%02d_%02d%02d%02d_%s_%s.msp"),
-				pGlobalDoc->m_strIniSpecDir,
+				pDoc->m_strIniSpecDir,
 				(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 				strPresetName,
 				dt.GetYear(),
@@ -23673,26 +23869,26 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 				dt.GetHour(),
 				dt.GetMinute(),
 				dt.GetSecond(),
-				pGlobalDoc->m_strUserID,
+				pDoc->m_strUserID,
 				strHostName);
 		}
 		else
 		{
 			strSpecPresetBackup.Format(_T("%sSpecPreset%02d\\%d\\SpecLog"),
-				pGlobalDoc->m_strIniSpecDir,
-				pGlobalDoc->m_nMultiPresetNumber,
+				pDoc->m_strIniSpecDir,
+				pDoc->m_nMultiPresetNumber,
 				(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
 			::CreateDirectory(strSpecPresetBackup, 0);
 
 			strSpecPresetBackup.Format(_T("%sSpecPreset%02d\\%d\\SpecLog\\%s"),
-				pGlobalDoc->m_strIniSpecDir,
-				pGlobalDoc->m_nMultiPresetNumber,
+				pDoc->m_strIniSpecDir,
+				pDoc->m_nMultiPresetNumber,
 				(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), strPresetName);
 			::CreateDirectory(strSpecPresetBackup, 0);
 
 			strSpecPresetBackup.Format(_T("%sSpecPreset%02d\\%d\\SpecLog\\%s\\%04d%02d%02d_%02d%02d%02d_%s_%s.msp"),
-				pGlobalDoc->m_strIniSpecDir,
-				pGlobalDoc->m_nMultiPresetNumber,
+				pDoc->m_strIniSpecDir,
+				pDoc->m_nMultiPresetNumber,
 				(int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)),
 				strPresetName,
 				dt.GetYear(),
@@ -23701,7 +23897,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 				dt.GetHour(),
 				dt.GetMinute(),
 				dt.GetSecond(),
-				pGlobalDoc->m_strUserID, strHostName
+				pDoc->m_strUserID, strHostName
 			);
 		}
 	}
@@ -23713,13 +23909,13 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 		CString strLog;
 
 		strLog.Format(_T("User:%s pc:%s try save SpecPreset %s[Res%.3f], Since the preset already exists, it will be overwritten"),
-			pGlobalDoc->m_strUserID, strHostName,
+			pDoc->m_strUserID, strHostName,
 			strPresetName,
 			SizeData[COMMON_PARAMETER].fPixelSize);
 		SaveLog(strLog); // totoal log
 
 		strLog.Format(_T("User:%s pc:%s  Spec Preset[%s] Backup from %s to %s"),
-			pGlobalDoc->m_strUserID,
+			pDoc->m_strUserID,
 			strHostName, strPresetName,
 			strPath, strSpecPresetBackup);
 		// totoal log
@@ -23731,34 +23927,34 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset Spec InsVia"));
 	//170320 lgh
-	strData.Format(_T("%.5f"), SpecData.ViaSpec.fViaHoleTolerance);
+	strData.Format(_T("%.5f"), pDoc->SpecData.ViaSpec.fViaHoleTolerance);
 	::WritePrivateProfileString(strTitle, _T("VH Shift Tolerance"), strData, strPath);
 
-	strData.Format(_T("%.5f"), SpecData.ViaSpec.fViaHoleDiaUpperPercent);
+	strData.Format(_T("%.5f"), pDoc->SpecData.ViaSpec.fViaHoleDiaUpperPercent);
 	::WritePrivateProfileString(strTitle, _T("VH Size Upper Size Limit"), strData, strPath);
 
-	strData.Format(_T("%.5f"), SpecData.ViaSpec.fViaHoleDiaLowerPercent);
+	strData.Format(_T("%.5f"), pDoc->SpecData.ViaSpec.fViaHoleDiaLowerPercent);
 	::WritePrivateProfileString(strTitle, _T("VH Size Lower Size Limit"), strData, strPath);
 
-	strData.Format(_T("%d"), SpecData.ViaSpec.nViaInnerEdgeGray);
+	strData.Format(_T("%d"), pDoc->SpecData.ViaSpec.nViaInnerEdgeGray);
 	::WritePrivateProfileString(strTitle, _T("VH Inner Edge Gray"), strData, strPath);
 
-	strData.Format(_T("%.1f"), SpecData.ViaSpec.fViaInnerEdgeSizePxl);
+	strData.Format(_T("%.1f"), pDoc->SpecData.ViaSpec.fViaInnerEdgeSizePxl);
 	::WritePrivateProfileString(strTitle, _T("VH Inner Edge Size Pixel"), strData, strPath);
 
-	strData.Format(_T("%d"), SpecData.ViaSpec.nViaOuterEdgeGray);
+	strData.Format(_T("%d"), pDoc->SpecData.ViaSpec.nViaOuterEdgeGray);
 	::WritePrivateProfileString(strTitle, _T("VH Outer Edge Gray"), strData, strPath);
 
-	strData.Format(_T("%.1f"), SpecData.ViaSpec.fViaOuterEdgeSizePxl);
+	strData.Format(_T("%.1f"), pDoc->SpecData.ViaSpec.fViaOuterEdgeSizePxl);
 	::WritePrivateProfileString(strTitle, _T("VH Outer Edge Size Pixel"), strData, strPath);
 
-	strData.Format(_T("%.1f"), SpecData.ViaSpec.m_fTaperWidth);
+	strData.Format(_T("%.1f"), pDoc->SpecData.ViaSpec.m_fTaperWidth);
 	::WritePrivateProfileString(strTitle, _T("VH Taper Width"), strData, strPath);
 
-	strData.Format(_T("%.1f"), SpecData.ViaSpec.m_fInnerDiamterWidthDiff);
+	strData.Format(_T("%.1f"), pDoc->SpecData.ViaSpec.m_fInnerDiamterWidthDiff);
 	::WritePrivateProfileString(strTitle, _T("VH Inner Diameter"), strData, strPath);
 
-	strData.Format(_T("%.1f"), SpecData.ViaSpec.m_fInnerCompactness);
+	strData.Format(_T("%.1f"), pDoc->SpecData.ViaSpec.m_fInnerCompactness);
 	::WritePrivateProfileString(strTitle, _T("VH Inner Compactness"), strData, strPath);
 
 
@@ -23770,35 +23966,35 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//Line Spec
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Meas Gray"));
-	strData.Format(_T("%d"), SpecData.nNickGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nNickGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Nick Gray"));
-	strData.Format(_T("%d"), SpecData.nOpenGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nOpenGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150410 hjc add
 	//	strTitle.Format(_T("Preset Spec Line"));
 	//	strIndex.Format(_T("Preset Open Gray"));
-	//	strData.Format(_T("%d"), SpecData.nOpenGraySpec);
+	//	strData.Format(_T("%d"), pDoc->SpecData.nOpenGraySpec);
 	//	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//110601 hjc add	//150413 hjc moved
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset HalfSide Nick Diff Bright Gray"));
-	strData.Format(_T("%d"), SpecData.nHalfSideNickDiffBrightGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHalfSideNickDiffBrightGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset HalfSide Nick Diff Dark Gray"));
-	strData.Format(_T("%d"), SpecData.nHalfSideNickDiffDarkGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHalfSideNickDiffDarkGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Lead Open Gray"));
-	strData.Format(_T("%d"), SpecData.nLeadOpenGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nLeadOpenGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 
@@ -23806,55 +24002,55 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//Delete 20090426-ndy	//20091019 hjc mod
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Min Line Width"));
-	strData.Format(_T("%.1f"), SpecData.fMinLineWidth);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fMinLineWidth);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 #endif
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Nick Size"));
-	strData.Format(_T("%s"), CharToString(SpecData.szNickSize[0]));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szNickSize[0]));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150413 hjc add
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Nick Size Percent"));
-	strData.Format(_T("%d"), SpecData.nNickPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nNickPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Protrusion Size"));
-	strData.Format(_T("%s"), CharToString(SpecData.szProtrusionSize[0]));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szProtrusionSize[0]));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150413 hjc add
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Protrusion Size Percent"));
-	strData.Format(_T("%d"), SpecData.nProtrusionPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nProtrusionPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Nick NG Filter Percent"));
-	strData.Format(_T("%d"), SpecData.nNickNGFilterPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nNickNGFilterPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Excs NG Filter Percent"));
-	strData.Format(_T("%d"), SpecData.nExcsNGFilterPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nExcsNGFilterPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Line WD Delta Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fLineWdDeltaGradViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fLineWdDeltaGradViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Excs WD Delta Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fExcsWdDeltaGradViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fExcsWdDeltaGradViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Line Width Group Num"));
-	strData.Format(_T("%d"), SpecData.nLineWidthGroupNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nLineWidthGroupNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
@@ -23862,29 +24058,29 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	strData.Format(_T("%d"), 1);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
-	if (SpecData.nLineWidthGroupNum > 0)		//20091009 hjc mod
+	if (pDoc->SpecData.nLineWidthGroupNum > 0)		//20091009 hjc mod
 	{
 		int idx = 0;
-		for (idx = 0; idx<SpecData.nLineWidthGroupNum + 1; idx++)
+		for (idx = 0; idx<pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 		{
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Line Width Group%d"), idx);
-			strData.Format(_T("%.2f"), SpecData.fLineWidthGroup[idx]);
+			strData.Format(_T("%.2f"), pDoc->SpecData.fLineWidthGroup[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Line Width Group Lower%d"), idx);
-			strData.Format(_T("%.2f"), SpecData.fLineWidthGroupLower[idx]);
+			strData.Format(_T("%.2f"), pDoc->SpecData.fLineWidthGroupLower[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Narrow Trace Violation%d"), idx);
-			strData.Format(_T("%.2f"), SpecData.fNarrowTraceViolation[idx]);
+			strData.Format(_T("%.2f"), pDoc->SpecData.fNarrowTraceViolation[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Wide Trace Violation%d"), idx);
-			strData.Format(_T("%.2f"), SpecData.fWideTraceViolation[idx]);
+			strData.Format(_T("%.2f"), pDoc->SpecData.fWideTraceViolation[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
@@ -23894,44 +24090,44 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Nick Size%d"), idx);
-			strData.Format(_T("%s"), CharToString(SpecData.szNickSize[idx]));
+			strData.Format(_T("%s"), CharToString(pDoc->SpecData.szNickSize[idx]));
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			//150413 hjc add
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Nick Size Percent%d"), idx);
-			strData.Format(_T("%d"), SpecData.nNickPercent[idx]);
+			strData.Format(_T("%d"), pDoc->SpecData.nNickPercent[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Protrusion Size%d"), idx);
-			strData.Format(_T("%s"), CharToString(SpecData.szProtrusionSize[idx]));
+			strData.Format(_T("%s"), CharToString(pDoc->SpecData.szProtrusionSize[idx]));
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			//150413 hjc add
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Protrusion Size Percent%d"), idx);
-			strData.Format(_T("%d"), SpecData.nProtrusionPercent[idx]);
+			strData.Format(_T("%d"), pDoc->SpecData.nProtrusionPercent[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Nick NG Filter Percent%d"), idx);
-			strData.Format(_T("%d"), SpecData.nNickNGFilterPercent[idx]);
+			strData.Format(_T("%d"), pDoc->SpecData.nNickNGFilterPercent[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Excs NG Filter Percent%d"), idx);
-			strData.Format(_T("%d"), SpecData.nExcsNGFilterPercent[idx]);
+			strData.Format(_T("%d"), pDoc->SpecData.nExcsNGFilterPercent[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Line WD Delta Grad Violation%d"), idx);
-			strData.Format(_T("%.2f"), SpecData.fLineWdDeltaGradViolation[idx]);
+			strData.Format(_T("%.2f"), pDoc->SpecData.fLineWdDeltaGradViolation[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 			strTitle.Format(_T("Preset Spec Line"));
 			strIndex.Format(_T("Preset Excs WD Delta Grad Violation%d"), idx);
-			strData.Format(_T("%.2f"), SpecData.fExcsWdDeltaGradViolation[idx]);
+			strData.Format(_T("%.2f"), pDoc->SpecData.fExcsWdDeltaGradViolation[idx]);
 			::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 		}
 
@@ -23940,22 +24136,22 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	{
 		strTitle.Format(_T("Preset Spec Line"));
 		strIndex.Format(_T("Preset Line Width Group0"));
-		strData.Format(_T("%.2f"), SpecData.fLineWidthGroup[0]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fLineWidthGroup[0]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Line"));
 		strIndex.Format(_T("Preset Line Width Group Lower0"));
-		strData.Format(_T("%.2f"), SpecData.fLineWidthGroupLower[0]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fLineWidthGroupLower[0]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Line"));
 		strIndex.Format(_T("Preset Narrow Trace Violation0"));
-		strData.Format(_T("%.2f"), SpecData.fNarrowTraceViolation[0]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fNarrowTraceViolation[0]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Line"));
 		strIndex.Format(_T("Preset Wide Trace Violation0"));
-		strData.Format(_T("%.2f"), SpecData.fWideTraceViolation[0]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fWideTraceViolation[0]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Line"));
@@ -23966,12 +24162,12 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Narrow Trace Violation"));
-	strData.Format(_T("%.2f"), SpecData.fNarrowTraceViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fNarrowTraceViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Line"));
 	strIndex.Format(_T("Preset Wide Trace Violation"));
-	strData.Format(_T("%.2f"), SpecData.fWideTraceViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fWideTraceViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//Fine Line Spec
@@ -23980,597 +24176,597 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//170403 hjc add
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Meas Gray"));
-	strData.Format(_T("%d"), SpecData.nFineNickGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineNickGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Nick Gray"));
-	strData.Format(_T("%d"), SpecData.nFineOpenGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineOpenGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine HalfSide Nick Diff Bright Gray"));
-	strData.Format(_T("%d"), SpecData.nFineHalfSideNickDiffBrightGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineHalfSideNickDiffBrightGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine HalfSide Nick Diff Dark Gray"));
-	strData.Format(_T("%d"), SpecData.nFineHalfSideNickDiffDarkGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineHalfSideNickDiffDarkGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//170403 hjc add end
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Min Line Width"));
-	strData.Format(_T("%.1f"), SpecData.fFineMinLineWidth);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fFineMinLineWidth);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Nick Size"));
-	strData.Format(_T("%s"), CharToString(SpecData.szFineNickSize[0]));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szFineNickSize[0]));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Protrusion Size"));
-	strData.Format(_T("%s"), CharToString(SpecData.szFineProtrusionSize[0]));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szFineProtrusionSize[0]));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150413 hjc add
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Nick Size Percent"));
-	strData.Format(_T("%d"), SpecData.nFineNickPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineNickPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Protrusion Size Percent"));
-	strData.Format(_T("%d"), SpecData.nFineProtrusionPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineProtrusionPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Nick NG Filter Percent"));
-	strData.Format(_T("%d"), SpecData.nFineNickNGFilterPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineNickNGFilterPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Excs NG Filter Percent"));
-	strData.Format(_T("%d"), SpecData.nFineExcsNGFilterPercent[0]);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineExcsNGFilterPercent[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Line WD Delta Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fFineLineWdDeltaGradViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineLineWdDeltaGradViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Excs WD Delta Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fFineExcsWdDeltaGradViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineExcsWdDeltaGradViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Line Width Group Num"));
-	strData.Format(_T("%d"), SpecData.nLineWidthGroupNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nLineWidthGroupNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
-	for (int idx = 0; idx < SpecData.nLineWidthGroupNum + 1; idx++)
+	for (int idx = 0; idx < pDoc->SpecData.nLineWidthGroupNum + 1; idx++)
 	{
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Nick Size%d"), idx);
-		strData.Format(_T("%s"), CharToString(SpecData.szFineNickSize[idx]));
+		strData.Format(_T("%s"), CharToString(pDoc->SpecData.szFineNickSize[idx]));
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Protrusion Size%d"), idx);
-		strData.Format(_T("%s"), CharToString(SpecData.szFineProtrusionSize[idx]));
+		strData.Format(_T("%s"), CharToString(pDoc->SpecData.szFineProtrusionSize[idx]));
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		//150413 hjc add
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Nick Size Percent%d"), idx);
-		strData.Format(_T("%d"), SpecData.nFineNickPercent[idx]);
+		strData.Format(_T("%d"), pDoc->SpecData.nFineNickPercent[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Protrusion Size Percent%d"), idx);
-		strData.Format(_T("%d"), SpecData.nFineProtrusionPercent[idx]);
+		strData.Format(_T("%d"), pDoc->SpecData.nFineProtrusionPercent[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Nick NG Filter Percent%d"), idx);
-		strData.Format(_T("%d"), SpecData.nFineNickNGFilterPercent[idx]);
+		strData.Format(_T("%d"), pDoc->SpecData.nFineNickNGFilterPercent[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Excs NG Filter Percent%d"), idx);
-		strData.Format(_T("%d"), SpecData.nFineExcsNGFilterPercent[idx]);
+		strData.Format(_T("%d"), pDoc->SpecData.nFineExcsNGFilterPercent[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Line WD Delta Grad Violation%d"), idx);
-		strData.Format(_T("%.2f"), SpecData.fFineLineWdDeltaGradViolation[idx]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fFineLineWdDeltaGradViolation[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Excs WD Delta Grad Violation%d"), idx);
-		strData.Format(_T("%.2f"), SpecData.fFineExcsWdDeltaGradViolation[idx]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fFineExcsWdDeltaGradViolation[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Narrow Trace Violation%d"), idx);
-		strData.Format(_T("%.2f"), SpecData.fFineNarrowTraceViolation[idx]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fFineNarrowTraceViolation[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Spec Fine Line"));
 		strIndex.Format(_T("Preset Fine Wide Trace Violation%d"), idx);
-		strData.Format(_T("%.2f"), SpecData.fFineWideTraceViolation[idx]);
+		strData.Format(_T("%.2f"), pDoc->SpecData.fFineWideTraceViolation[idx]);
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	}
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Line Width Group0"));
-	strData.Format(_T("%.2f"), SpecData.fFineLineWidthGroup[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineLineWidthGroup[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Narrow Trace Violation0"));
-	strData.Format(_T("%.2f"), SpecData.fFineNarrowTraceViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineNarrowTraceViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Wide Trace Violation0"));
-	strData.Format(_T("%.2f"), SpecData.fFineWideTraceViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineWideTraceViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Line Width Group"));
-	strData.Format(_T("%.2f"), SpecData.fFineLineWidthGroup[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineLineWidthGroup[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Narrow Trace Violation"));
-	strData.Format(_T("%.2f"), SpecData.fFineNarrowTraceViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineNarrowTraceViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Fine Line"));
 	strIndex.Format(_T("Preset Fine Wide Trace Violation"));
-	strData.Format(_T("%.2f"), SpecData.fFineWideTraceViolation[0]);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fFineWideTraceViolation[0]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 
 	//Space Spec
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Min Space Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nMinSpaceGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nMinSpaceGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090412 hjc
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Neib Space Gray Diff"));
-	strData.Format(_T("%d"), SpecData.nNeibSpGrayDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nNeibSpGrayDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Space"));	//150413 hjc mod
 	strIndex.Format(_T("Preset US Dark Gray Minus"));
-	strData.Format(_T("%d"), SpecData.nUSDarkGrayMinus);
+	strData.Format(_T("%d"), pDoc->SpecData.nUSDarkGrayMinus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 #if CUSTOMER_COMPANY == UMTC || CUSTOMER_COMPANY == SHINKO_DENKKI
 	//Delete 20090426-ndy	//20091019 hjc mod
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Min Space Width"));
-	strData.Format(_T("%.1f"), SpecData.fMinSpWidth);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fMinSpWidth);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 #endif
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Min Space Size"));
-	strData.Format(_T("%s"), CharToString(SpecData.szMinSPSize));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szMinSPSize));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150413 hjc add
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Min Space Size Percent"));
-	strData.Format(_T("%d"), SpecData.nMinSPPercent);
+	strData.Format(_T("%d"), pDoc->SpecData.nMinSPPercent);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Space NG Filter Percent"));
-	strData.Format(_T("%d"), SpecData.nSpaceNGFilterPercent);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpaceNGFilterPercent);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090405 hjc
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Space WD Delta Outer Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fSpWdDeltaOuterGradViolation);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fSpWdDeltaOuterGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//---------------
 
 	strTitle.Format(_T("Preset Spec Space"));
 	strIndex.Format(_T("Preset Space WD Delta Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fSpWdDeltaGradViolation);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fSpWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Space"));	//121226 hjc add
 	strIndex.Format(_T("Preset Fine Min Space Size"));
-	strData.Format(_T("%.1f"), SpecData.fFineMinSpWidth);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fFineMinSpWidth);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//Ext/Pin Hole Spec
 	// except list
-	//SpecData.szPADRLPrecName
-	//SpecData.szLPADRLName
-	//SpecData.szSPRLName
-	//SpecData.szARLandPrecName
-	//SpecData.szPADTipPrecName
-	//SpecData.szPADFine_PrecName
+	//pDoc->SpecData.szPADRLPrecName
+	//pDoc->SpecData.szLPADRLName
+	//pDoc->SpecData.szSPRLName
+	//pDoc->SpecData.szARLandPrecName
+	//pDoc->SpecData.szPADTipPrecName
+	//pDoc->SpecData.szPADFine_PrecName
 
 	//150823 hjc add
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Virtual Drill Diff Bright Gray"));
-	strData.Format(_T("%d"), SpecData.nVDrillDiffBrightGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVDrillDiffBrightGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Virtual Drill Diff Dark Gray"));
-	strData.Format(_T("%d"), SpecData.nVDrillDiffDarkGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVDrillDiffDarkGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Virtual Drill Pad Precision"));
-	strData.Format(_T("%.1f"), SpecData.fVDPadPrecName);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fVDPadPrecName);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090419 hjc
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Virtual Drill Location Tolerance"));
-	strData.Format(_T("%.1f"), SpecData.fVDLocationTolerance);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fVDLocationTolerance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//-----------
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Virtual Drill Pad Min"));
-	strData.Format(_T("%.1f"), SpecData.fVDPadMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fVDPadMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Pad Void Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nPADVoidGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nPADVoidGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Pad Void Min"));
-	strData.Format(_T("%f"), SpecData.fPADVoidMin);
+	strData.Format(_T("%f"), pDoc->SpecData.fPADVoidMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Pad Tip Min"));
-	strData.Format(_T("%.1f"), SpecData.fPADTipMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fPADTipMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset AR Land Min"));
-	strData.Format(_T("%.1f"), SpecData.fARLandMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fARLandMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Hole Fill Ext"));
-	strData.Format(_T("%.1f"), SpecData.fHoleFillExt);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fHoleFillExt);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20100323 hjc add
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset CO2Hole Fill Ext"));
-	strData.Format(_T("%.1f"), SpecData.fCO2HoleFillExt);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCO2HoleFillExt);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Fine PAD Void Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nFinePADVoidGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nFinePADVoidGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Fine PAD Void Min"));
-	strData.Format(_T("%.1f"), SpecData.fFinePADVoidMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fFinePADVoidMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Pin Hole Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nPinHoleGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nPinHoleGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Pin Hole Min"));
-	strData.Format(_T("%.1f"), SpecData.fPinHoleMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fPinHoleMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Island Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nIsLandGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nIsLandGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Island Min"));
-	strData.Format(_T("%.1f"), SpecData.fIsLandMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fIsLandMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090412 hjc
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Island Extra Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nIsLandExtGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nIsLandExtGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset Island Extra Min"));
-	strData.Format(_T("%.1f"), SpecData.fIsLandExtMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fIsLandExtMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//jun 20120903 for LG_CCL-Inspector
 	strTitle.Format(_T("Preset Spec CCL Inspection"));
 	strIndex.Format(_T("Preset CCL Gray Spec"));
-	strData.Format(_T("%d"), SpecData.nCCLGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCCLGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec CCL Inspection"));
 	strIndex.Format(_T("Preset CCL Circularity"));
-	strData.Format(_T("%.1f"), SpecData.fCCLCircularity);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCCLCircularity);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec CCL Inspection"));
 	strIndex.Format(_T("Preset CCL Defect Size"));
-	strData.Format(_T("%.1f"), SpecData.fCCLDefSize);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCCLDefSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	//20100322 hjc add
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset HoleLand Void Gray"));
-	strData.Format(_T("%d"), SpecData.nHoleLandVoidGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleLandVoidGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset CO2Land Void Gray"));
-	strData.Format(_T("%d"), SpecData.nCO2LandVoidGraySpec);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2LandVoidGraySpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset CO2Land Min"));
-	strData.Format(_T("%.1f"), SpecData.fCO2LandMin);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCO2LandMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Extra PinHole"));
 	strIndex.Format(_T("Preset CO2Land Align Mode"));
-	strData.Format(_T("%s"), CharToString(SpecData.szCO2LandAlignMode));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szCO2LandAlignMode));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//---------------
 
 	//Hole/VH Spec
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Tolerance"));
-	strData.Format(_T("%.1f"), SpecData.fHoleTolerance);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fHoleTolerance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Dia Upper"));
-	strData.Format(_T("%.1f"), SpecData.fHoleDiaUpper);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fHoleDiaUpper);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Dia Lower"));
-	strData.Format(_T("%.1f"), SpecData.fHoleDiaLower);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fHoleDiaLower);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Open Gray"));
-	strData.Format(_T("%d"), SpecData.nHoleOpenGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleOpenGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Missing Gray"));
-	strData.Format(_T("%d"), SpecData.nHoleMissingGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleMissingGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Inner Gray"));
-	strData.Format(_T("%d"), SpecData.nHoleInnerGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleInnerGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole RL Precision Name"));
-	strData.Format(_T("%s"), CharToString(SpecData.szHoleRLPrecName));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szHoleRLPrecName));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset Hole Def Size"));
-	strData.Format(_T("%d"), SpecData.nHoleDefNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleDefNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset VH Mode"));
-	strData.Format(_T("%s"), CharToString(SpecData.szVHMode));
+	strData.Format(_T("%s"), CharToString(pDoc->SpecData.szVHMode));
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset CO2 Missing Gray"));
-	strData.Format(_T("%d"), SpecData.nCO2MissingGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2MissingGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset CO2 Hole Num"));
-	strData.Format(_T("%d"), SpecData.nCO2HoleNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2HoleNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset CO2 Open Gray"));
-	strData.Format(_T("%d"), SpecData.nCO2OpenGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2OpenGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset CO2 Miss Align Gray"));
-	strData.Format(_T("%d"), SpecData.nCO2MisAgnGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2MisAgnGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset CO2 Miss Align Defect Percent"));
-	strData.Format(_T("%d"), SpecData.nCO2MisAgnDefPercent);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2MisAgnDefPercent);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset VH Edge Thr Diff Gray"));
-	strData.Format(_T("%d"), SpecData.nVHEdgeThrDiffGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHEdgeThrDiffGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset VH BreakOut Gray"));
-	strData.Format(_T("%d"), SpecData.nVHBreakOutGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHBreakOutGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset VH Dissmear Gray"));
-	strData.Format(_T("%d"), SpecData.nVHDissmearGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHDissmearGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Hole VH"));
 	strIndex.Format(_T("Preset VH Conti BreakOut Num"));
-	strData.Format(_T("%d"), SpecData.nVHContiBreakOutNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHContiBreakOutNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//Edge Spec
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Pad Edge Nick Gray"));
-	strData.Format(_T("%d"), SpecData.nPadEdgeNickGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadEdgeNickGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));	//120105 hjc add
 	strIndex.Format(_T("Preset Pad Edge Neib Gray Diff"));
-	strData.Format(_T("%d"), SpecData.nPadEdgeNeibGrayDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadEdgeNeibGrayDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//140127 hjc add
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Pad Edge BA Diff Dark Gray"));
-	strData.Format(_T("%d"), SpecData.nPadEdgeBADiffDarkGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadEdgeBADiffDarkGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Pad Edge Nick WD Delta Grad Violation"));
-	strData.Format(_T("%.1f"), SpecData.fPadEdgeNickWdDeltaGradViolation);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fPadEdgeNickWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Pad Edge Excs WD Delta Grad Violation"));
-	strData.Format(_T("%.1f"), SpecData.fPadEdgeExcsWdDeltaGradViolation);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fPadEdgeExcsWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090412 hjc
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Pad VD Edge Gray"));
-	strData.Format(_T("%d"), SpecData.nPadVDEdgeGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadVDEdgeGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Pad VD Edge Wd Delta Grad Violation"));
-	strData.Format(_T("%.2f"), SpecData.fPadVDEdgeWdDeltaGradViolation);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fPadVDEdgeWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//---------------
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Hole Edge Nick Gray"));
-	strData.Format(_T("%d"), SpecData.nHoleEdgeNickGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleEdgeNickGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));	//120109 hjc add
 	strIndex.Format(_T("Preset Hole Edge Neib Gray Diff"));
-	strData.Format(_T("%d"), SpecData.nHoleEdgeNeibGrayDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleEdgeNeibGrayDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Hole Edge Nick WD Delta Grad Violation"));
-	strData.Format(_T("%.1f"), SpecData.fHoleEdgeNickWdDeltaGradViolation);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fHoleEdgeNickWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Hole Edge Excs WD Delta Grad Violation"));
-	strData.Format(_T("%.1f"), SpecData.fHoleEdgeExcsWdDeltaGradViolation);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fHoleEdgeExcsWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Via Edge Nick Gray"));
-	strData.Format(_T("%d"), SpecData.nViaEdgeNickGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nViaEdgeNickGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));	//120109 hjc add
 	strIndex.Format(_T("Preset Via Edge Neib Gray Diff"));
-	strData.Format(_T("%d"), SpecData.nViaEdgeNeibGrayDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nViaEdgeNeibGrayDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Via Edge Nick WD Delta Grad Violation"));
-	strData.Format(_T("%.1f"), SpecData.fViaEdgeNickWdDeltaGradViolation);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fViaEdgeNickWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Edge"));
 	strIndex.Format(_T("Preset Via Edge Excs WD Delta Grad Violation"));
-	strData.Format(_T("%.1f"), SpecData.fViaEdgeExcsWdDeltaGradViolation);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fViaEdgeExcsWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//Model Spec
 	strTitle.Format(_T("Preset Spec Model"));
 	strIndex.Format(_T("Preset PTModel Search Range Extension"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nPtSrchRngExt);
+	strData.Format(_T("%d"), pDoc->m_nPtSrchRngExt);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Model"));
 	strIndex.Format(_T("Preset Align Tolerance"));
-	strData.Format(_T("%d"), SpecData.nAlignTolerance);
+	strData.Format(_T("%d"), pDoc->SpecData.nAlignTolerance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Model"));
 	strIndex.Format(_T("Preset Theta Align"));
-	strData.Format(_T("%s"), pGlobalDoc->m_strThetaAlign);
+	strData.Format(_T("%s"), pDoc->m_strThetaAlign);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Model"));
 	strIndex.Format(_T("Preset Defect Mask Size"));
-	strData.Format(_T("%.1f"), SpecData.fDefMaskSize);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fDefMaskSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec Model"));
 	strIndex.Format(_T("Preset Near Defect Length"));
-	strData.Format(_T("%.1f"), SpecData.fNearDefLen);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fNearDefLen);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20100210 hjc add
-	if (pGlobalDoc->m_bUseMultiVaccumControl)	//130311 hjc add
+	if (pDoc->m_bUseMultiVaccumControl)	//130311 hjc add
 	{
 		strTitle.Format(_T("Preset Spec Model"));
 		strIndex.Format(_T("Preset Select Vaccum"));
-		strData.Format(_T("%s"), CharToString(SpecData.strSelectVaccum));
+		strData.Format(_T("%s"), CharToString(pDoc->SpecData.strSelectVaccum));
 		::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
-		if (SpecData.strSelectVaccum == "Both")	//130215 hjc add
-			SpecData.nSelectVaccum = 1;
-		else if (SpecData.strSelectVaccum == "FirstOnly")
-			SpecData.nSelectVaccum = 2;
+		if (pDoc->SpecData.strSelectVaccum == "Both")	//130215 hjc add
+			pDoc->SpecData.nSelectVaccum = 1;
+		else if (pDoc->SpecData.strSelectVaccum == "FirstOnly")
+			pDoc->SpecData.nSelectVaccum = 2;
 	}
 	else
 	{
 		strTitle.Format(_T("Preset Spec Model"));
 		strIndex.Format(_T("Preset Select Vaccum"));
 		::WritePrivateProfileString(strTitle, strIndex, _T("Both"), strPath);
-		SpecData.nSelectVaccum = 1;
+		pDoc->SpecData.nSelectVaccum = 1;
 	}
 
 	//2022 07 13 lgh 
 	strTitle.Format(_T("Preset Spec Model"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nIRISPosID);
+	strData.Format(_T("%d"), pDoc->m_nIRISPosID);
 	::WritePrivateProfileString(strTitle, _T("IRISPosID"), strData, strPath);
 
 	//ADDON Line Spec
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset GTC Shake Extend"));
-	strData.Format(_T("%d"), SpecData.bGTCShakeExtend);
+	strData.Format(_T("%d"), pDoc->SpecData.bGTCShakeExtend);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20101210 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Use PT Align Cell One"));
-	strData.Format(_T("%d"), pGlobalDoc->m_bUsePTAlignCellOne);
+	strData.Format(_T("%d"), pDoc->m_bUsePTAlignCellOne);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
@@ -24593,7 +24789,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//110526 hjc add	
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Apply Skip Check In VD Line"));
-	strData.Format(_T("%d"), SpecData.bSkipChkInVDLine);
+	strData.Format(_T("%d"), pDoc->SpecData.bSkipChkInVDLine);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
@@ -24604,55 +24800,55 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//20220316 LGH ADD
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset CheckProtFromSpaceWidth"));
-	strData.Format(_T("%d"), SpecData.m_bCheckProtFromSpaceWidth);
+	strData.Format(_T("%d"), pDoc->SpecData.m_bCheckProtFromSpaceWidth);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20220513 add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Use Large Align Shift"));
-	strData.Format(_T("%d"), SpecData.bLargeAlignShift);
+	strData.Format(_T("%d"), pDoc->SpecData.bLargeAlignShift);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20220513 add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Use Rough Surface Pattern"));
-	strData.Format(_T("%d"), SpecData.bRoughSurface);
+	strData.Format(_T("%d"), pDoc->SpecData.bRoughSurface);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//121128 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Apply Silver Paste Via"));
-	strData.Format(_T("%d"), SpecData.bCheckSilverPasteVia);
+	strData.Format(_T("%d"), pDoc->SpecData.bCheckSilverPasteVia);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Apply VH Out Break Count"));
-	strData.Format(_T("%d"), SpecData.nVHOutBreakCnt);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHOutBreakCnt);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));		//20230508 add
 	strIndex.Format(_T("Preset Apply VH Taping Tolerence"));
-	strData.Format(_T("%d"), SpecData.nVHTapingTolerence);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHTapingTolerence);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));		//20230627 add
 	strIndex.Format(_T("Preset Apply VH Taping Min Max Diff"));
-	strData.Format(_T("%d"), SpecData.nVHTapingMinMaxDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHTapingMinMaxDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));	//20230628 add
 	strIndex.Format(_T("Preset Check Via Multi Dia"));
-	strData.Format(_T("%d"), SpecData.bChkViaMultidia);
+	strData.Format(_T("%d"), pDoc->SpecData.bChkViaMultidia);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));		//20230711 add
 	strIndex.Format(_T("Preset Apply VH Inner Gray"));
-	strData.Format(_T("%d"), SpecData.nVHInnerGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHInnerGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));		//20230713 add
 	strIndex.Format(_T("Preset Apply VH Min Max Dia Ratio"));
-	strData.Format(_T("%d"), SpecData.nVHMinMaxDiaRatio);
+	strData.Format(_T("%d"), pDoc->SpecData.nVHMinMaxDiaRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20120418-ndy
@@ -24668,9 +24864,9 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//161228 LGH
-	pGlobalDoc->SaveMachineLogicModeToPreset(INSP_MODE_NORMAL, strPath);
-	pGlobalDoc->SaveMachineLogicModeToPreset(INSP_MODE_RED, strPath);
-	pGlobalDoc->SaveMachineLogicModeToPreset(INSP_MODE_BLUE, strPath);
+	pDoc->SaveMachineLogicModeToPreset(INSP_MODE_NORMAL, strPath);
+	pDoc->SaveMachineLogicModeToPreset(INSP_MODE_RED, strPath);
+	pDoc->SaveMachineLogicModeToPreset(INSP_MODE_BLUE, strPath);
 
 	//20091203 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
@@ -24713,43 +24909,43 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Pad Tip Precision Nick Check"));
-	strData.Format(_T("%.1f"), SpecData.fPADTipNickPrecSpec);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fPADTipNickPrecSpec);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));	//130528 hjc add
 	strIndex.Format(_T("Preset Space Neib Dark Gray Tot"));
-	strData.Format(_T("%d"), SpecData.nNeibDarkGrayTot);
+	strData.Format(_T("%d"), pDoc->SpecData.nNeibDarkGrayTot);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));	//130528 hjc add
 	strIndex.Format(_T("Preset Space Neib Bright Gray Tot"));
-	strData.Format(_T("%d"), SpecData.nNeibBrightGrayTot);
+	strData.Format(_T("%d"), pDoc->SpecData.nNeibBrightGrayTot);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Pad Tip Tolerance"));
-	strData.Format(_T("%.2f"), SpecData.fSROEExceptLen);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fSROEExceptLen);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Pattern Tip Tolerance"));
-	strData.Format(_T("%.2f"), SpecData.fOEExceptLen);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fOEExceptLen);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150625 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Space Tip Tolerance"));
-	strData.Format(_T("%.2f"), SpecData.fOEExceptSpaceLen);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fOEExceptSpaceLen);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Hole Tip Tolerance"));
-	strData.Format(_T("%.2f"), SpecData.fARCO2JuncExceptLen);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fARCO2JuncExceptLen);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Trace Shake Tolerance"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nShakeTolerance);
+	strData.Format(_T("%d"), pDoc->m_nShakeTolerance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
@@ -24759,45 +24955,45 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Space Under Layer Effect Gray Plus"));
-	strData.Format(_T("%d"), SpecData.nSpaceUnderLayerEffectGrayPlus);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpaceUnderLayerEffectGrayPlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));	//20230704 add
 	strIndex.Format(_T("Preset Center Line Offset Tolerance"));
-	strData.Format(_T("%d"), SpecData.nCenterlineOffsetTolerance);
+	strData.Format(_T("%d"), pDoc->SpecData.nCenterlineOffsetTolerance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//160330 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Space Under Layer Cut Threshold"));
-	strData.Format(_T("%d"), SpecData.nUnderLayerCutTh);
+	strData.Format(_T("%d"), pDoc->SpecData.nUnderLayerCutTh);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Space Under Layer Lower Gray"));
-	strData.Format(_T("%d"), SpecData.nSpUnderLayerLowerGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpUnderLayerLowerGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Space Under Layer Upper Gray"));
-	strData.Format(_T("%d"), SpecData.nSpUnderLayerUpperGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpUnderLayerUpperGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Space Under Layer Def Size"));
-	strData.Format(_T("%.2f"), SpecData.fSpUnderLayerDefSize);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fSpUnderLayerDefSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//160330 hjc add end
 
 	// 20090630 jsy	
 	strTitle.Format(_T("Preset Pre System"));
 	strIndex.Format(_T("Preset Line Wnd Boundary Gray Minus"));
-	strData.Format(_T("%d"), SpecData.nLineWndBoundaryGrayMinus);
+	strData.Format(_T("%d"), pDoc->SpecData.nLineWndBoundaryGrayMinus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System"));
 	strIndex.Format(_T("Preset Space Wnd Boundary Gray Plus"));
-	strData.Format(_T("%d"), SpecData.nSpaceWndBoundaryGrayPlus);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpaceWndBoundaryGrayPlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//111029 hjc add
@@ -24821,7 +25017,7 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//150710 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Edge Spec Down Pixel"));
-	strData.Format(_T("%d"), SpecData.nEdgeSpecDownPxl);
+	strData.Format(_T("%d"), pDoc->SpecData.nEdgeSpecDownPxl);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150817 hjc add
@@ -24833,12 +25029,12 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 	//110701 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset PM Image Threshold Enhancement"));
-	strData.Format(_T("%d"), SpecData.bPMImgThresholdEnhancement);
+	strData.Format(_T("%d"), pDoc->SpecData.bPMImgThresholdEnhancement);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset PM Image Adaptive Threshold Ratio"));
-	strData.Format(_T("%.2f"), SpecData.fAdaptiveThresholdRatio);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fAdaptiveThresholdRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
@@ -24856,423 +25052,423 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));	//131216 hjc add
 	strIndex.Format(_T("Preset VD Neib PM MinMax Diff Gray"));
-	strData.Format(_T("%d"), SpecData.nVDNeibPMMinMaxDiffGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nVDNeibPMMinMaxDiffGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Line"));
 	strIndex.Format(_T("Preset Linked Defect Count"));
-	strData.Format(_T("%f"), SpecData.fLinkedDefectCntPix);
+	strData.Format(_T("%f"), pDoc->SpecData.fLinkedDefectCntPix);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	//ADDON Extra PinHole Spec
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Dark Pinhole Gray Minus"));
-	strData.Format(_T("%d"), SpecData.nDarkPinHoleGrayMinus);
+	strData.Format(_T("%d"), pDoc->SpecData.nDarkPinHoleGrayMinus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Bright PAD Def Gray Plus"));
-	strData.Format(_T("%d"), SpecData.nBrightPADDefGrayPlus);
+	strData.Format(_T("%d"), pDoc->SpecData.nBrightPADDefGrayPlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Dark PAD Def Gray Minus"));
-	strData.Format(_T("%d"), SpecData.nDarkPADDefGrayMinus);
+	strData.Format(_T("%d"), pDoc->SpecData.nDarkPADDefGrayMinus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));	//130528 hjc add
 	strIndex.Format(_T("Preset Relative Pad Defect Size"));
-	strData.Format(_T("%.2f"), SpecData.fRlsPadDefSize);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fRlsPadDefSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));	//130528 hjc add
 	strIndex.Format(_T("Preset Relative PinHole Defect Size"));
-	strData.Format(_T("%.2f"), SpecData.fRlsPinHoleDefSize);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fRlsPinHoleDefSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));	//130529 hjc add
 	strIndex.Format(_T("Preset Exclude PadDef Edge Pixel"));
-	strData.Format(_T("%d"), SpecData.nExcludePadDefEdgePixel);
+	strData.Format(_T("%d"), pDoc->SpecData.nExcludePadDefEdgePixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));	//130529 hjc add
 	strIndex.Format(_T("Preset Exclude PinHole Edge Pixel"));
-	strData.Format(_T("%d"), SpecData.nExcludePinHoleEdgePixel);
+	strData.Format(_T("%d"), pDoc->SpecData.nExcludePinHoleEdgePixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PinHole Width Limit Pixel"));
-	strData.Format(_T("%.2f"), SpecData.fPinHoleBreadthLimitPixel);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fPinHoleBreadthLimitPixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PinHole Circularity Limit"));
-	strData.Format(_T("%.2f"), SpecData.fPinHoleCompacenessLimit);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fPinHoleCompacenessLimit);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PinHole Merge Pixel"));
-	strData.Format(_T("%d"), SpecData.nPinHoleClosingIteration);
+	strData.Format(_T("%d"), pDoc->SpecData.nPinHoleClosingIteration);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	// 20090512 add
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PinHole Merge Distance"));
-	strData.Format(_T("%.1f"), SpecData.fPinHoleMergeDistance);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fPinHoleMergeDistance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	// 20090326 ljg NY-add
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PinHole Noise Reduction Pixel"));
-	strData.Format(_T("%d"), SpecData.nPinHoleOpeningIteration);
+	strData.Format(_T("%d"), pDoc->SpecData.nPinHoleOpeningIteration);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	// 120501 jsy add
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PadDef Noise Reduction Pixel"));
-	strData.Format(_T("%d"), SpecData.nPadDefOpeningIteration);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadDefOpeningIteration);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	// 120501 jsy add
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PadDef Merge Pixel"));
-	strData.Format(_T("%d"), SpecData.nPadDefClosingIteration);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadDefClosingIteration);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Local RleBlock"));
-	strData.Format(_T("%d"), SpecData.bUseLocalRleBlock);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseLocalRleBlock);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//130604 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Relative PinHole Radient"));
-	strData.Format(_T("%d"), SpecData.bUseRelPinHoleRadient);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseRelPinHoleRadient);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Raw Gray for PinHole"));
-	strData.Format(_T("%d"), SpecData.bUseRawGrayPinHole);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseRawGrayPinHole);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090412 hjc Extra
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Raw Gray for Island"));
-	strData.Format(_T("%d"), SpecData.bUseRawGrayForIsland);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseRawGrayForIsland);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Bright Island Gray Plus"));
-	strData.Format(_T("%d"), SpecData.nBrightIslandGrayPlus);
+	strData.Format(_T("%d"), pDoc->SpecData.nBrightIslandGrayPlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Dark Island Gray Minus"));
-	strData.Format(_T("%d"), SpecData.nDarkIslandGrayMinus);
+	strData.Format(_T("%d"), pDoc->SpecData.nDarkIslandGrayMinus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//-----------------
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Raw Gray for PADDefect"));
-	strData.Format(_T("%d"), SpecData.bUseRawGrayPADDefect);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseRawGrayPADDefect);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20190729 add start
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use New Raw Gray for PADDefect"));
-	strData.Format(_T("%d"), SpecData.bUseNewRawGrayPADDefect);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseNewRawGrayPADDefect);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use New Raw Gray for PinHole"));
-	strData.Format(_T("%d"), SpecData.bUseNewRawGrayPinHole);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseNewRawGrayPinHole);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset New Use Raw Gray for Island"));
-	strData.Format(_T("%d"), SpecData.bUseNewRawGrayForIsland);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseNewRawGrayForIsland);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//20190729 add end
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Dark Gray Minus"));
-	strData.Format(_T("%d"), SpecData.nSpLgDarkGrayMinus);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpLgDarkGrayMinus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Dark Pixel Num"));
-	strData.Format(_T("%d"), SpecData.nDarkSpaceMin);
+	strData.Format(_T("%d"), pDoc->SpecData.nDarkSpaceMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Bright Pinhole Gray Plus"));
-	strData.Format(_T("%d"), SpecData.nBrightPinHoleGrayPlus);
+	strData.Format(_T("%d"), pDoc->SpecData.nBrightPinHoleGrayPlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20090405 hjc
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Dark Pinhole Neib Gray Minus Apply Ratio"));
-	strData.Format(_T("%.2f"), SpecData.fDarkPinHoleNeibGrayMinusApplyRatio);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fDarkPinHoleNeibGrayMinusApplyRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Bright Pinhole Neib Gray Plus Apply Ratio"));
-	strData.Format(_T("%.2f"), SpecData.fBrightPinHoleNeibGrayPlusApplyRatio);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fBrightPinHoleNeibGrayPlusApplyRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//----------------------------
 
 	//20160108 ndy add - Start
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Fine Extra Inspection for ExtraDefect"));
-	strData.Format(_T("%d"), SpecData.bUseFineIslandInsp);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseFineIslandInsp);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Fine Extra Relative Gray"));
-	strData.Format(_T("(%d"), SpecData.nFineIslandRelativeGray);
+	strData.Format(_T("(%d"), pDoc->SpecData.nFineIslandRelativeGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Fine Extra Max Size"));
-	strData.Format(_T("%d"), SpecData.nFineIslandMaxSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineIslandMaxSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Fine Extra Mask Size"));
-	strData.Format(_T("%d"), SpecData.nFineIslandMaskSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nFineIslandMaskSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Fine PinHole Inspction for PinHoleDefect"));
-	strData.Format(_T("%d"), SpecData.bUseFinePinHoleInsp);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseFinePinHoleInsp);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Fine PinHole Relative Gray"));
-	strData.Format(_T("%d"), SpecData.nFinePinHoleRelativeGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nFinePinHoleRelativeGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Fine PinHole Max Size"));
-	strData.Format(_T("%d"), SpecData.nFinePinHoleMaxSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nFinePinHoleMaxSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//20160108 ndy add - End
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));	//20230417 add start
 	strIndex.Format(_T("Preset Sp Gradient Upper Limit"));
-	strData.Format(_T("%d"), SpecData.nGradientUpperLimit);
+	strData.Format(_T("%d"), pDoc->SpecData.nGradientUpperLimit);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Sp Gradient Threshold"));
-	strData.Format(_T("%d"), SpecData.nGradientThreshold);
+	strData.Format(_T("%d"), pDoc->SpecData.nGradientThreshold);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Sp Gradient Min Size"));
-	strData.Format(_T("%d"), SpecData.nGradientMinSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nGradientMinSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PadLg Gradient Upper Limit"));
-	strData.Format(_T("%d"), SpecData.nPadLgGradientUpperLimit);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadLgGradientUpperLimit);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PadLg Gradient Threshold"));
-	strData.Format(_T("%d"), SpecData.nPadLgGradientThreshold);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadLgGradientThreshold);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset PadLg Gradient Min Size"));
-	strData.Format(_T("%d"), SpecData.nPadLgGradientMinSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nPadLgGradientMinSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Extra PinHole"));
 	strIndex.Format(_T("Preset Use Relative Dark Gray Only"));
-	strData.Format(_T("%d"), SpecData.bUseRlsDarkGrayOnly);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseRlsDarkGrayOnly);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);		//20230417 add end
 
 																			//ADDON Hole Via Spec
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VH In-Out Gray Diff"));
-	strData.Format(_T("%d"), SpecData.nCO2InOutGrayDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2InOutGrayDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VH Inner Bright Def Percent"));
-	strData.Format(_T("%d"), SpecData.nCO2InnerBrightDefPercent);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2InnerBrightDefPercent);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VH Inner Saturation Gray"));
-	strData.Format(_T("%d"), SpecData.nCO2InnerSaturationGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCO2InnerSaturationGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VH Inner Bright Search Diameter Ratio"));
-	strData.Format(_T("%.1f"), SpecData.fCO2InnerBrightSrchDiaRatio);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCO2InnerBrightSrchDiaRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));			// 091214 jsy
 	strIndex.Format(_T("Preset VH Inner Roughness"));
-	strData.Format(_T("%.1f"), SpecData.fCO2InnerRoughness);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCO2InnerRoughness);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));			// 091214 jsy
 	strIndex.Format(_T("Preset VH Inner Roughness Search Diameter Ratio"));
-	strData.Format(_T("%.1f"), SpecData.fCO2InnerRoughnessSrchDiaRatio);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fCO2InnerRoughnessSrchDiaRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Use VD Ring Width Filter"));
-	strData.Format(_T("%d"), SpecData.bUseVDRingWidthFilter);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseVDRingWidthFilter);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20100517 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Extension Hole Search"));
-	strData.Format(_T("%d"), SpecData.bExtensionHoleSearch);
+	strData.Format(_T("%d"), pDoc->SpecData.bExtensionHoleSearch);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//130915 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Inspection Large Hole"));
-	strData.Format(_T("%d"), SpecData.bInspLargeHole);
+	strData.Format(_T("%d"), pDoc->SpecData.bInspLargeHole);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//140325 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Inspection Small Hole"));
-	strData.Format(_T("%d"), SpecData.bInspSmallHole);
+	strData.Format(_T("%d"), pDoc->SpecData.bInspSmallHole);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VD Ring Width Pixel"));
-	strData.Format(_T("%.1f"), SpecData.fVDRingWidthPixel);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fVDRingWidthPixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VH Ring Width Pixel"));
-	strData.Format(_T("%.1f"), SpecData.fVHRingWidthPixel);
+	strData.Format(_T("%.1f"), pDoc->SpecData.fVHRingWidthPixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//120515 jsy - start
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset BT Via Min Length Pixel"));
-	strData.Format(_T("%d"), SpecData.nBTViaMin);
+	strData.Format(_T("%d"), pDoc->SpecData.nBTViaMin);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset BT Via Closing Number"));
-	strData.Format(_T("%d"), SpecData.nBTVRingClosingNumber);
+	strData.Format(_T("%d"), pDoc->SpecData.nBTVRingClosingNumber);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset BT Via Upper Gray"));
-	strData.Format(_T("%d"), SpecData.nBTVGraySpecUpper);
+	strData.Format(_T("%d"), pDoc->SpecData.nBTVGraySpecUpper);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset BT Via Lower Gray"));
-	strData.Format(_T("%d"), SpecData.nBTVGraySpecLower);
+	strData.Format(_T("%d"), pDoc->SpecData.nBTVGraySpecLower);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//120515 jsy - end
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset HoleLand Radius Ratio"));
-	strData.Format(_T("%.2f"), SpecData.fHoleLandSizeRatio);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fHoleLandSizeRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset AR Find Line Add Pixel"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nARFindLineAddPixel);
+	strData.Format(_T("%d"), pDoc->m_nARFindLineAddPixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20100511 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset AR Edge MinMax Diff Gray"));
-	strData.Format(_T("%d"), SpecData.nAREdgeDiffGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nAREdgeDiffGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset AR Break Count"));
-	strData.Format(_T("%d"), SpecData.nARBreakCnt);
+	strData.Format(_T("%d"), pDoc->SpecData.nARBreakCnt);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset VH Find Line Add Pixel"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nCO2FindLineAddPixel);
+	strData.Format(_T("%d"), pDoc->m_nCO2FindLineAddPixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20091117
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Hole Meas Dia Successive Pixel"));
-	strData.Format(_T("%d"), SpecData.nHoleMeasDiaSuccessivePixel);
+	strData.Format(_T("%d"), pDoc->SpecData.nHoleMeasDiaSuccessivePixel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//130726 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset LargeCircle Check InnerOuter Pixels"));
-	strData.Format(_T("%d"), SpecData.nLargeCircle_Check_InnerOuter_Pixels);
+	strData.Format(_T("%d"), pDoc->SpecData.nLargeCircle_Check_InnerOuter_Pixels);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//141105 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Diff Delta Pixel In ARCO2"));
-	strData.Format(_T("%d"), SpecData.nDiffDeltaPxlARCO2);
+	strData.Format(_T("%d"), pDoc->SpecData.nDiffDeltaPxlARCO2);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//140325 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset SmallCircle Check Inner Pixels"));
-	strData.Format(_T("%d"), SpecData.nSmallCircle_Check_Inner_Pixels);
+	strData.Format(_T("%d"), pDoc->SpecData.nSmallCircle_Check_Inner_Pixels);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));	//120131 hjc add
 	strIndex.Format(_T("Preset Hole Min Max Diff Gray Plus"));
-	strData.Format(_T("%d"), SpecData.nVDHoleMinMaxDiffGrayPlus);
+	strData.Format(_T("%d"), pDoc->SpecData.nVDHoleMinMaxDiffGrayPlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//121206 jsy - start
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Dimple Lower Gray"));
-	strData.Format(_T("%d"), SpecData.nDimpleLowerGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nDimpleLowerGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Dimple Upper Gray"));
-	strData.Format(_T("%d"), SpecData.nDimpleUpperGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nDimpleUpperGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Dimple Copper Miss Num"));
-	strData.Format(_T("%d"), SpecData.nDimpleCopperMissNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nDimpleCopperMissNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Dimple Copper Search Ratio"));
-	strData.Format(_T("%.2f"), SpecData.fDimpleCopperSearchRatio);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fDimpleCopperSearchRatio);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Hole Via"));
 	strIndex.Format(_T("Preset Dimple Ring Num"));
-	strData.Format(_T("%d"), SpecData.nDimpleRingNum);
+	strData.Format(_T("%d"), pDoc->SpecData.nDimpleRingNum);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//121206 jsy - end
 
 	//ADDON Edge Violation Spec
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Use fixed PM ID - Etching Pixels"));
-	strData.Format(_T("%d"), SpecData.bUseFixedPMId);
+	strData.Format(_T("%d"), pDoc->SpecData.bUseFixedPMId);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//2022 12 16 lgh
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset ApplySCurveEdge"));
-	strData.Format(_T("%d"), SpecData.bApplySCurveEdge);
+	strData.Format(_T("%d"), pDoc->SpecData.bApplySCurveEdge);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 
@@ -25323,324 +25519,324 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Core Neutral Zone"));
-	strData.Format(_T("%d"), SpecData.nCoreNeutralZone);
+	strData.Format(_T("%d"), pDoc->SpecData.nCoreNeutralZone);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Core Diff Gray"));
-	strData.Format(_T("%d"), SpecData.nCoreDiffGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCoreDiffGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Core Defect Size"));
-	strData.Format(_T("%d"), SpecData.nCoreDefSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nCoreDefSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	//111003 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Extension Space Trace"));
-	strData.Format(_T("%d"), SpecData.bExtensionSpaceTrace);
+	strData.Format(_T("%d"), pDoc->SpecData.bExtensionSpaceTrace);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//140425 hjc add	
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Apply Wide Open"));
-	strData.Format(_T("%d"), SpecData.bChkWideOpen);
+	strData.Format(_T("%d"), pDoc->SpecData.bChkWideOpen);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Wide Open Pixel"));
-	strData.Format(_T("%d"), SpecData.nWideOpenPxl);
+	strData.Format(_T("%d"), pDoc->SpecData.nWideOpenPxl);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//140425 hjc add end
 
 	//20200511 add
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Pt Match Level"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nPtMatchLevel);
+	strData.Format(_T("%d"), pDoc->m_nPtMatchLevel);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20210818 add	
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Apply Template Match"));
-	strData.Format(_T("%d"), SpecData.bChkTemplateMatch);
+	strData.Format(_T("%d"), pDoc->SpecData.bChkTemplateMatch);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//111005 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Spectial Space MinMax Diff Gray"));
-	strData.Format(_T("%d"), SpecData.nSpMinMaxDiffGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nSpMinMaxDiffGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset Fixed PM ID"));
-	strData.Format(_T("%d"), SpecData.nFixedPMId);
+	strData.Format(_T("%d"), pDoc->SpecData.nFixedPMId);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20101201 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset SPE Gray"));
-	strData.Format(_T("%d"), SpecData.nSPEdgeNickGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nSPEdgeNickGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset SPE Nick Size Pixel"));
-	strData.Format(_T("%.2f"), SpecData.fSPEdgeNickWdDeltaGradViolation);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fSPEdgeNickWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset SPE Prot Size Pixel"));
-	strData.Format(_T("%.2f"), SpecData.fSPEdgeExcsWdDeltaGradViolation);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fSPEdgeExcsWdDeltaGradViolation);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//131123 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Edge Violation"));
 	strIndex.Format(_T("Preset SPEdge Gray Diff"));
-	strData.Format(_T("%d"), SpecData.nSPEdgeGrayDiff);
+	strData.Format(_T("%d"), pDoc->SpecData.nSPEdgeGrayDiff);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	//ADDON Sud Spec	//	100429 ljh
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Sud InOut Lower Gray"));
-	strData.Format(_T("%d"), SpecData.nSudInOutLowerGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nSudInOutLowerGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Sud InOut Upper Gray"));
-	strData.Format(_T("%d"), SpecData.nSudInOutUpperGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nSudInOutUpperGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Sud InOut Def Size"));
-	strData.Format(_T("%f"), SpecData.fSudInOutDefSize);
+	strData.Format(_T("%f"), pDoc->SpecData.fSudInOutDefSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//110620 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Check for Fiducial Mark"));
-	strData.Format(_T("%d"), SpecData.bCheckFiducialMark);
+	strData.Format(_T("%d"), pDoc->SpecData.bCheckFiducialMark);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Fiducial Mark Def Area"));
-	strData.Format(_T("%f"), SpecData.fFMDArea);
+	strData.Format(_T("%f"), pDoc->SpecData.fFMDArea);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Fiducial Mark Def SizeX"));
-	strData.Format(_T("%f"), SpecData.fFMDSizeX);
+	strData.Format(_T("%f"), pDoc->SpecData.fFMDSizeX);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Fiducial Mark Def SizeY"));
-	strData.Format(_T("%f"), SpecData.fFMDSizeY);
+	strData.Format(_T("%f"), pDoc->SpecData.fFMDSizeY);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Fiducial Mark PT Range Plus"));
-	strData.Format(_T("%f"), SpecData.fFMDPtRangePlus);
+	strData.Format(_T("%f"), pDoc->SpecData.fFMDPtRangePlus);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset Fiducial Mark PT Score"));
-	strData.Format(_T("%f"), SpecData.fFMDPtScore);
+	strData.Format(_T("%f"), pDoc->SpecData.fFMDPtScore);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	//150806 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset AICL Tolerance"));
-	strData.Format(_T("%.2f"), SpecData.fAICLTolerance);
+	strData.Format(_T("%.2f"), pDoc->SpecData.fAICLTolerance);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset AICL Bound Check Gray"));
-	strData.Format(_T("%d"), SpecData.nBoundChkGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nBoundChkGray);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//150827 hjc add
 	strTitle.Format(_T("Preset Spec AddOn Sud"));
 	strIndex.Format(_T("Preset AICL Shrink Size"));
-	strData.Format(_T("%d"), SpecData.nShrinkSize);
+	strData.Format(_T("%d"), pDoc->SpecData.nShrinkSize);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
-	pGlobalDoc->SaveInspModeDataToPreset(INSP_MODE_NORMAL, strPath);
-	pGlobalDoc->SaveInspModeDataToPreset(INSP_MODE_BLUE, strPath);
-	pGlobalDoc->SaveInspModeDataToPreset(INSP_MODE_RED, strPath);
+	pDoc->SaveInspModeDataToPreset(INSP_MODE_NORMAL, strPath);
+	pDoc->SaveInspModeDataToPreset(INSP_MODE_BLUE, strPath);
+	pDoc->SaveInspModeDataToPreset(INSP_MODE_RED, strPath);
 
 
 	////ADDON Inspection Logic Control Spec
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Line Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspLine);
+	//strData.Format(_T("%d"), pDoc->m_bInspLine);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	////131104 hjc add
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset SR Line Tip Extention Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspSrLineTipExt);
+	//strData.Format(_T("%d"), pDoc->m_bInspSrLineTipExt);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Space Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspSpace);
+	//strData.Format(_T("%d"), pDoc->m_bInspSpace);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Pad Pixel Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspPadPixel);
+	//strData.Format(_T("%d"), pDoc->m_bInspPadPixel);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Pat Pixel Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspPatPixel);
+	//strData.Format(_T("%d"), pDoc->m_bInspPatPixel);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Space Pixel Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_nInspSpacePixel);
+	//strData.Format(_T("%d"), pDoc->m_nInspSpacePixel);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Virtual Drill Pixel Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspVDPixel);
+	//strData.Format(_T("%d"), pDoc->m_bInspVDPixel);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Hole Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspHole);
+	//strData.Format(_T("%d"), pDoc->m_bInspHole);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Via Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspVia);
+	//strData.Format(_T("%d"), pDoc->m_bInspVia);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Dimple Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspDimple);
+	//strData.Format(_T("%d"), pDoc->m_bInspDimple);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset CCL Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspCCL);
+	//strData.Format(_T("%d"), pDoc->m_bInspCCL);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Only Via Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bUseOnlyViaInsp);
+	//strData.Format(_T("%d"), pDoc->m_bUseOnlyViaInsp);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset BarType Via Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspBarTypeVia);
+	//strData.Format(_T("%d"), pDoc->m_bInspBarTypeVia);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Edge Hole Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspContourAR);
+	//strData.Format(_T("%d"), pDoc->m_bInspContourAR);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Edge Via Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspContourVIA);
+	//strData.Format(_T("%d"), pDoc->m_bInspContourVIA);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Edge Pad Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspContourLP);
+	//strData.Format(_T("%d"), pDoc->m_bInspContourLP);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	////110718 hjc add
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset Edge VD Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspContourVD);
+	//strData.Format(_T("%d"), pDoc->m_bInspContourVD);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	////131212 hjc add
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));
 	//strIndex.Format(_T("Preset SREdge Space Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspSREdgeSpace);
+	//strData.Format(_T("%d"), pDoc->m_bInspSREdgeSpace);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));	// 100429 ljh
 	//strIndex.Format(_T("Preset SUD In Out Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspSudInOut);
+	//strData.Format(_T("%d"), pDoc->m_bInspSudInOut);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 
 	//strTitle.Format(_T("Preset Spec Inspection Logic Control"));	// 100510 jsy
 	//strIndex.Format(_T("Preset SPE Space Inspection"));
-	//strData.Format(_T("%d"), pGlobalDoc->m_bInspSPESpace);
+	//strData.Format(_T("%d"), pDoc->m_bInspSPESpace);
 	//::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Open Check Cell Bound"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nOpenChkCellBnd);
+	strData.Format(_T("%d"), pDoc->m_nOpenChkCellBnd);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Nick Check Cell Bound"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nNickChkCellBnd);
+	strData.Format(_T("%d"), pDoc->m_nNickChkCellBnd);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Excs Check Cell Bound"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nExcsChkCellBnd);
+	strData.Format(_T("%d"), pDoc->m_nExcsChkCellBnd);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//120521 hjc add
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Check Good Range For Line"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nChkGoodRangeForLine);
+	strData.Format(_T("%d"), pDoc->m_nChkGoodRangeForLine);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//111005 hjc add
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Min Space Check Bound Tip"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nMinSpCheckBoundTip);
+	strData.Format(_T("%d"), pDoc->m_nMinSpCheckBoundTip);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Min Space Check Bound"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nMinSpCheckBound);
+	strData.Format(_T("%d"), pDoc->m_nMinSpCheckBound);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset Min Space Check Bound Edge"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nMinSpCheckBoundEdge);
+	strData.Format(_T("%d"), pDoc->m_nMinSpCheckBoundEdge);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	strTitle.Format(_T("Preset Pre System Parameters"));
 	strIndex.Format(_T("Preset UShort Check Bound Tip"));
-	strData.Format(_T("%d"), pGlobalDoc->m_nUShortCheckBoundTip);
+	strData.Format(_T("%d"), pDoc->m_nUShortCheckBoundTip);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 	//end
 
 	//140702 hjc add
 	strTitle.Format(_T("Preset Calibration Measure Offset Parameters"));
 	strIndex.Format(_T("Preset Calib F"));
-	strData.Format(_T("%.4f"), pGlobalDoc->m_fCalibF[INSP_MODE_NORMAL]);
+	strData.Format(_T("%.4f"), pDoc->m_fCalibF[INSP_MODE_NORMAL]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 	//20200625 add
 	strTitle.Format(_T("Preset Calibration Space Measure Offset Parameters"));
 	strIndex.Format(_T("Preset Calib Sp F"));
-	strData.Format(_T("%.4f"), pGlobalDoc->m_fSpCalibF[INSP_MODE_NORMAL]);
+	strData.Format(_T("%.4f"), pDoc->m_fSpCalibF[INSP_MODE_NORMAL]);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
 
 	//2021 06 29 lgh
-	strData.Format(_T("%d"), SpecData.nCharInspectionGray);
+	strData.Format(_T("%d"), pDoc->SpecData.nCharInspectionGray);
 	WritePrivateProfileString(_T("TextInspection"), _T("CharInspectionGray"), strData, strPath);
 
-	strData.Format(_T("%.3f"), SpecData.dCharRegionUpperPercent);
+	strData.Format(_T("%.3f"), pDoc->SpecData.dCharRegionUpperPercent);
 	WritePrivateProfileString(_T("TextInspection"), _T("dCharRegionUpperPercent"), strData, strPath);
 
-	strData.Format(_T("%.3f"), SpecData.dCharRegionLowerPercent);
+	strData.Format(_T("%.3f"), pDoc->SpecData.dCharRegionLowerPercent);
 	WritePrivateProfileString(_T("TextInspection"), _T("dCharRegionLowerPercent"), strData, strPath);
 
 
@@ -25653,12 +25849,12 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 		strTitle.Format(_T("Preset Calibration Measure Offset Parameters"));
 		strIndex.Format(_T("Preset Calib F"));
-		strData.Format(_T("%.4f"), pGlobalDoc->m_fCalibF[nMode]);
+		strData.Format(_T("%.4f"), pDoc->m_fCalibF[nMode]);
 		::WritePrivateProfileString(strTitle + strDelimter, strIndex, strData, strPath);
 
 		strTitle.Format(_T("Preset Calibration Space Measure Offset Parameters"));	//20200625 add
 		strIndex.Format(_T("Preset Calib Sp F"));
-		strData.Format(_T("%.4f"), pGlobalDoc->m_fSpCalibF[nMode]);
+		strData.Format(_T("%.4f"), pDoc->m_fSpCalibF[nMode]);
 		::WritePrivateProfileString(strTitle + strDelimter, strIndex, strData, strPath);
 	}
 
@@ -25669,10 +25865,10 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	strTitle.Format(_T("Preset info"));
 	strIndex.Format(_T("User"));
-	strData.Format(_T("%s"), pGlobalDoc->m_strUserID);
+	strData.Format(_T("%s"), pDoc->m_strUserID);
 	::WritePrivateProfileString(strTitle, strIndex, strData, strPath);
 
-	::WritePrivateProfileString(_T("Preset info"), _T("User Name"), pGlobalDoc->m_strUserName, strPath);
+	::WritePrivateProfileString(_T("Preset info"), _T("User Name"), pDoc->m_strUserName, strPath);
 
 	if (pGlobalView->m_nUserID == OPERATOR)
 		::WritePrivateProfileString(_T("Preset info"), _T("User Access"), _T("Operator"), strPath);
@@ -25688,13 +25884,16 @@ void CDlgSpec::OnButtonSaveDefaultLocalSpec()
 
 	::WritePrivateProfileString(_T("Preset info"), _T("SAVE TIME"), strTemp, strPath);
 
-	GetDefaultSpecData();*/
+	GetDefaultpDoc->SpecData();*/
 }
 
 void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 {
 	// TODO: Add your control notification handler code here
-/*	int nIndex;
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	/*	int nIndex;
 	CString strSpecPath;
 	CString strMsg;
 	CFileOperation fileOp(GetWindowVersion());
@@ -25710,7 +25909,7 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		{
 			if (!pMainFrame->CheckLogin())
 			{
-				if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+				if (pDoc->m_nSelectedLanguage == KOREA)
 					strMsg.Format(_T("로그인에 실패하였습니다. 사용자 로그인 후 다시 시도하십시오."));
 				else
 					strMsg.Format(_T("Access denied. before delete the lot, you must loggined."));
@@ -25728,7 +25927,7 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 
 			CString strError;
 
-			strError.Format(_T("사용자 %s가 프리셋 스펙 저장 메뉴에 접근하였습니다."), pGlobalDoc->m_strUserID);
+			strError.Format(_T("사용자 %s가 프리셋 스펙 저장 메뉴에 접근하였습니다."), pDoc->m_strUserID);
 			SaveLog(strError);
 		}
 #endif
@@ -25750,14 +25949,14 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		GetDlgItem(IDC_COMBO_DEFAULT_SPEC_COMBO)->SetWindowText(pGlobalView->m_strPresetSpecCurr);
 
 		//20120629-ndy
-		if (pGlobalDoc->m_bUseLocalSpecPreset)
-			strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pGlobalDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
+		if (pDoc->m_bUseLocalSpecPreset)
+			strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
 		else
 		{
-			if (!pGlobalDoc->m_bUseMultiPreset)	//130128 hjc add
-				strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pGlobalDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
+			if (!pDoc->m_bUseMultiPreset)	//130128 hjc add
+				strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
 			else
-				strSpecPath.Format(_T("%sSpecPreset%02d\\%d\\%s.MSP"), pGlobalDoc->m_strIniSpecDir, pGlobalDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
+				strSpecPath.Format(_T("%sSpecPreset%02d\\%d\\%s.MSP"), pDoc->m_strIniSpecDir, pDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
 		}
 
 		LoadOriginDataTab(0);
@@ -25773,28 +25972,28 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		pGlobalView->LoadSpecPreset(pGlobalView->m_strPresetSpecCurr, TRUE);	// 
 		pGlobalView->SetInspectSlideControl();
 		CompareVariablesWithLoadPresetSpec();
-		pGlobalDoc->ParseLineSpecs();
+		pDoc->ParseLineSpecs();
 		DisplayChangedData();
 
 
-		if (pGlobalDoc->m_bInspCCL[0])
+		if (pDoc->m_bInspCCL[0])
 		{
-			pGlobalDoc->LoadBackupParameter(_T("c:\\aoiset\\cclmode.ini"));
+			pDoc->LoadBackupParameter(_T("c:\\aoiset\\cclmode.ini"));
 			g_bGlassInspectMode = 2;
 
 			CString strPath;
-			strPath.Format(_T("%s%s\\%s.LSp"), pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+			strPath.Format(_T("%s%s\\%s.LSp"), pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 			WritePrivateProfileString(_T("Model_Spec_Loc"), _T("GlassInspectMode"), _T("2"), strPath);
 		}
 		else
 		{
 			if (g_bGlassInspectMode == 2)
 			{
-				pGlobalDoc->LoadBackupParameter(_T("c:\\aoiset\\PCBmode.ini"));
+				pDoc->LoadBackupParameter(_T("c:\\aoiset\\PCBmode.ini"));
 				g_bGlassInspectMode = 0;
 
 				CString strPath;
-				strPath.Format(_T("%s%s\\%s.LSp"), pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+				strPath.Format(_T("%s%s\\%s.LSp"), pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 				WritePrivateProfileString(_T("Model_Spec_Loc"), _T("GlassInspectMode"), _T("0"), strPath);
 			}
 		}
@@ -25806,19 +26005,19 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		CString filePath, strPath;
 		CFileFind finder;
 
-		if (AoiParam()->m_bUseExtensionViaSpec && pGlobalDoc->m_nInspMode[AoiParam()->m_nCurrentInspectionMode] == VIA_MODE)
+		if (AoiParam()->m_bUseExtensionViaSpec && pDoc->m_nInspMode[AoiParam()->m_nCurrentInspectionMode] == VIA_MODE)
 		{
 			m_dlgViaSpec.CompareVariablesWithLoadPresetSpec();
 			m_dlgViaSpec.DisplayChangedData();
 			m_dlgViaSpec.DisplaySpread(m_dlgViaSpec.m_nTabNum);
 		}
 
-		filePath = pGlobalDoc->m_strLocSpecDir + pGlobalDoc->m_strModel;
+		filePath = pDoc->m_strLocSpecDir + pDoc->m_strModel;
 		if (!finder.FindFile(filePath))
 			if (!fileOp.DoCreateFolder(filePath, NULL))
 				return;
 
-		strPath.Format(_T("%s%s\\%s.LSp"), pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+		strPath.Format(_T("%s%s\\%s.LSp"), pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 
 		::WritePrivateProfileString(_T("Model_Spec_Loc"), _T("Spec Preset Name"), pGlobalView->m_strPresetSpecCurr, strPath);
 
@@ -25830,7 +26029,7 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		{
 			pGlobalView->m_pDlgInspection->PostMessage(WM_CONTROL_DLG, 2, 0);
 		}
-		pGlobalDoc->m_bCheckMsgLSFilteringAlarm = TRUE;
+		pDoc->m_bCheckMsgLSFilteringAlarm = TRUE;
 
 #if MACHINE_MODEL == INSMART_GM4000
 		Project()->m_CurrentSpecPreset.SetValid(TRUE);
@@ -25846,14 +26045,14 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		GetDlgItem(IDC_COMBO_DEFAULT_SPEC_COMBO)->SetWindowText(pGlobalView->m_strPresetSpecCurr);
 
 		//20120629-ndy
-		if (pGlobalDoc->m_bUseLocalSpecPreset)
-			strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pGlobalDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
+		if (pDoc->m_bUseLocalSpecPreset)
+			strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pDoc->m_strLocSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
 		else
 		{
-			if (!pGlobalDoc->m_bUseMultiPreset)	//130128 hjc add
-				strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pGlobalDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
+			if (!pDoc->m_bUseMultiPreset)	//130128 hjc add
+				strSpecPath.Format(_T("%sSpecPreset\\%d\\%s.MSP"), pDoc->m_strIniSpecDir, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
 			else
-				strSpecPath.Format(_T("%sSpecPreset%02d\\%d\\%s.MSP"), pGlobalDoc->m_strIniSpecDir, pGlobalDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
+				strSpecPath.Format(_T("%sSpecPreset%02d\\%d\\%s.MSP"), pDoc->m_strIniSpecDir, pDoc->m_nMultiPresetNumber, (int)(round(SizeData[COMMON_PARAMETER].fPixelSize * 100)), pGlobalView->m_strPresetSpecCurr);
 		}
 
 		LoadOriginDataTab(0);
@@ -25875,28 +26074,28 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 
 		pGlobalView->SetInspectSlideControl();
 		CompareVariablesWithLoadPresetSpec();
-		pGlobalDoc->ParseLineSpecs();
+		pDoc->ParseLineSpecs();
 		DisplayChangedData();
 
 
-		if (pGlobalDoc->m_bInspCCL[0])
+		if (pDoc->m_bInspCCL[0])
 		{
-			pGlobalDoc->LoadBackupParameter(_T("c:\\aoiset\\cclmode.ini"));
+			pDoc->LoadBackupParameter(_T("c:\\aoiset\\cclmode.ini"));
 			g_bGlassInspectMode = 2;
 
 			CString strPath;
-			strPath.Format(_T("%s%s\\%s.LSp"), pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+			strPath.Format(_T("%s%s\\%s.LSp"), pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 			WritePrivateProfileString(_T("Model_Spec_Loc"), _T("GlassInspectMode"), _T("2"), strPath);
 		}
 		else
 		{
 			if (g_bGlassInspectMode == 2)
 			{
-				pGlobalDoc->LoadBackupParameter(_T("c:\\aoiset\\PCBmode.ini"));
+				pDoc->LoadBackupParameter(_T("c:\\aoiset\\PCBmode.ini"));
 				g_bGlassInspectMode = 0;
 
 				CString strPath;
-				strPath.Format(_T("%s%s\\%s.LSp"), pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+				strPath.Format(_T("%s%s\\%s.LSp"), pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 				WritePrivateProfileString(_T("Model_Spec_Loc"), _T("GlassInspectMode"), _T("0"), strPath);
 			}
 		}
@@ -25909,19 +26108,19 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		CFileFind finder;
 
 
-		if (AoiParam()->m_bUseExtensionViaSpec && pGlobalDoc->m_nInspMode[AoiParam()->m_nCurrentInspectionMode] == VIA_MODE)
+		if (AoiParam()->m_bUseExtensionViaSpec && pDoc->m_nInspMode[AoiParam()->m_nCurrentInspectionMode] == VIA_MODE)
 		{
 			m_dlgViaSpec.CompareVariablesWithLoadPresetSpec();
 			m_dlgViaSpec.DisplayChangedData();
 			m_dlgViaSpec.DisplaySpread(m_dlgViaSpec.m_nTabNum);
 		}
 
-		filePath = pGlobalDoc->m_strLocSpecDir + pGlobalDoc->m_strModel;
+		filePath = pDoc->m_strLocSpecDir + pDoc->m_strModel;
 		if (!finder.FindFile(filePath))
 			if (!fileOp.DoCreateFolder(filePath, NULL))
 				return;
 
-		strPath.Format(_T("%s%s\\%s.LSp"), pGlobalDoc->m_strLocSpecDir, pGlobalDoc->m_strModel, pGlobalDoc->m_strLayer);
+		strPath.Format(_T("%s%s\\%s.LSp"), pDoc->m_strLocSpecDir, pDoc->m_strModel, pDoc->m_strLayer);
 
 		::WritePrivateProfileString(_T("Model_Spec_Loc"), _T("Spec Preset Name"), pGlobalView->m_strPresetSpecCurr, strPath);
 
@@ -25932,7 +26131,7 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 		{
 			pGlobalView->m_pDlgInspection->PostMessage(WM_CONTROL_DLG, 2, 0);
 		}
-		pGlobalDoc->m_bCheckMsgLSFilteringAlarm = TRUE;
+		pDoc->m_bCheckMsgLSFilteringAlarm = TRUE;
 
 #if MACHINE_MODEL == INSMART_GM4000
 		Project()->m_CurrentSpecPreset.SetValid(TRUE);
@@ -25943,8 +26142,8 @@ void CDlgSpec::OnSelchangeComboDefaultSpecCombo()
 
 	m_bMultilineSaved = 1;
 	pGlobalView->m_bInitVisionAdjust = 0;
-	pGlobalDoc->m_fEntireMeanLineWidthDiff = 0.0;
-	pGlobalDoc->m_fEntireMeanFineLineWidthDiff = 0.0;
+	pDoc->m_fEntireMeanLineWidthDiff = 0.0;
+	pDoc->m_fEntireMeanFineLineWidthDiff = 0.0;
 	g_nProcessStepState[PSTEP_ADJUST] = 0;*/
 }
 
@@ -25986,34 +26185,34 @@ void CDlgSpec::OnDropdownComboDefaultSpecCombo()
 			if (!dlgPassword.m_bAdmin)
 				return;
 
-			pGlobalDoc->SaveAccessLog(_T("Spec Lock"));
+			pDoc->SaveAccessLog(_T("Spec Lock"));
 
 			DlgSpecLockNew dlg;
-			dlg.m_nLanguage = pGlobalDoc->m_nSelectedLanguage;
+			dlg.m_nLanguage = pDoc->m_nSelectedLanguage;
 			dlg.DoModal();
 
 			CFileFind finder;
 			CString strSpecNew;
 			strSpecNew.Format(_T("%s%s\\%s_speclock.bin"),
-				pGlobalDoc->m_strSpecDir,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer);
+				pDoc->m_strSpecDir,
+				pDoc->m_strModel,
+				pDoc->m_strLayer);
 
 			if (finder.FindFile(strSpecNew))
 			{
-				LoadLockedSpecData(strSpecNew);
+				LoadLockedpDoc->SpecData(strSpecNew);
 			}
 			else if (finder.FindFile(SPEC_LOCK_1_PATH))
-				LoadLockedSpecData(SPEC_LOCK_1_PATH);
+				LoadLockedpDoc->SpecData(SPEC_LOCK_1_PATH);
 			else if (finder.FindFile(SPEC_LOCK_2_PATH))
-				LoadLockedSpecData(SPEC_LOCK_2_PATH);
+				LoadLockedpDoc->SpecData(SPEC_LOCK_2_PATH);
 			else
 				AfxMessageBox(_T("[MSG515] Fail Save Spec Lock Data."));
 		}
 		else
 		{
 			CString strMsg;
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 			{
 				AfxMessageBox(_T("SpecLock : 권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 				SaveLog(strMsg);
@@ -26039,32 +26238,32 @@ void CDlgSpec::OnDropdownComboDefaultSpecCombo()
 				return;
 
 			DlgSpecLockNew dlg;
-			dlg.m_nLanguage = pGlobalDoc->m_nSelectedLanguage;
+			dlg.m_nLanguage = pDoc->m_nSelectedLanguage;
 			dlg.DoModal();
 
 			CFileFind finder;
 
 			CString strSpecNew;
 			strSpecNew.Format(_T("%s%s\\%s_speclock.bin"),
-				pGlobalDoc->m_strSpecDir,
-				pGlobalDoc->m_strModel,
-				pGlobalDoc->m_strLayer);
+				pDoc->m_strSpecDir,
+				pDoc->m_strModel,
+				pDoc->m_strLayer);
 
 			if (finder.FindFile(strSpecNew))
 			{
-				LoadLockedSpecData(strSpecNew);
+				LoadLockedpDoc->SpecData(strSpecNew);
 			}
 			else if (finder.FindFile(SPEC_LOCK_1_PATH))
-				LoadLockedSpecData(SPEC_LOCK_1_PATH);
+				LoadLockedpDoc->SpecData(SPEC_LOCK_1_PATH);
 			else if (finder.FindFile(SPEC_LOCK_2_PATH))
-				LoadLockedSpecData(SPEC_LOCK_2_PATH);
+				LoadLockedpDoc->SpecData(SPEC_LOCK_2_PATH);
 			else
 				AfxMessageBox(_T("[MSG515] Fail Save Spec Lock Data."));
 		}
 		else
 		{
 			CString strMsg;
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 			{
 				AfxMessageBox(_T("SpecLock : 권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 				SaveLog(strMsg);
@@ -26150,7 +26349,7 @@ void CDlgSpec::OnDropdownComboDefaultSpecCombo()
 			if (!dlgPassword.m_bAdmin)
 				return;
 
-			pGlobalDoc->SaveAccessLog(_T("LightLock"));
+			pDoc->SaveAccessLog(_T("LightLock"));
 
 
 			CDlgSetLightLock dlg;
@@ -26228,7 +26427,7 @@ void CDlgSpec::OnDropdownComboDefaultSpecCombo()
 		else
 		{
 			CString strMsg;
-			if (pGlobalDoc->m_nSelectedLanguage == KOREA)
+			if (pDoc->m_nSelectedLanguage == KOREA)
 			{
 				AfxMessageBox(_T("Light Lock : 권한이 없습니다. 관리자만 / 엔지니어만 저장이 가능합니다."), MB_ICONSTOP);
 				SaveLog(strMsg);
@@ -26271,6 +26470,11 @@ BOOL CDlgSpec::OnInitDialog()
 
 void CDlgSpec::Init()
 {
+	m_nTabNum = 0;
+	m_strMainFont = _T("MS PGothic");
+	m_fDataFontSize = 11;
+	m_bEnableCheckBox = FALSE;
+
 	m_Spread.SetParentWnd(this, IDC_FPSPREAD_SPEC1);
 	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
 	m_Spread.SetScrollBarStyle(SS_SCROLLBARSTYLE_CLASSIC);
@@ -26289,7 +26493,7 @@ void CDlgSpec::Init()
 	//GetDefaultSpecData();
 	//DefineMasterLocalSpecColor();
 
-	//InitTabCtrl();
+	InitTabCtrl();
 	InitSpread();
 	InitSpreadTab0();
 	LoadSpreadDataTab0();
@@ -26299,9 +26503,9 @@ void CDlgSpec::Init()
 
 	//SetSpecAccess(pGlobalView->m_nUserID); // syd-20100115
 
-	//if (AoiParam()->m_bFontRead[pGlobalDoc->m_nSelectedLanguage])
+	//if (AoiParam()->m_bFontRead[pDoc->m_nSelectedLanguage])
 	//{
-	//	HFONT hfont = CreateFont(12, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pGlobalDoc->m_nSelectedLanguage].lfFaceName);
+	//	HFONT hfont = CreateFont(12, 0, 0, 0, 700, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfCharSet, 0, 0, 0, 0, AoiParam()->m_Language[pDoc->m_nSelectedLanguage].lfFaceName);
 	//	LOGFONT lf;
 	//	if (GetObject(hfont, sizeof(LOGFONT), &lf))
 	//	{

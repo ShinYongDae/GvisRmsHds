@@ -30,15 +30,28 @@
 #define SS_ALIGN_RIGHT		1
 #define SS_ALIGN_CENTER		2
 
+#define SPREAD_GROUP_COLOR		RGB(235,255,255)
+#define SPREAD_GROUP_COLOR1		RGB(252,255,215)
+#define SPREAD_GROUP_COLOR2		RGB(237,254,231)
+#define SPREAD_GROUP_COLOR3		RGB(255,244,231)
+#define SPREAD_GROUP_COLOR4		RGB(254,236,188)
+#define SPREAD_GROUP_COLOR5		RGB(210,240,155)
+
+
 // CDlgSpec 대화 상자입니다.
 
 class CDlgSpec : public CDialog
 {
 	DECLARE_DYNAMIC(CDlgSpec)
 
-	TSpreadEx	m_Spread;
-	HBRUSH m_hDlgSpecBkBrush;
-
+	TSpreadEx		m_Spread;
+	HBRUSH			m_hDlgSpecBkBrush;
+	CString			m_strMainFont;
+	CFont			m_FontOfTabCtrl;
+	int				m_nTabNum;
+	float			m_fDataFontSize;
+	LOGFONT			m_Language;
+	BOOL			m_bEnableCheckBox;
 
 	void Init();
 	void Close();
@@ -74,6 +87,7 @@ class CDlgSpec : public CDialog
 	void InitSpreadTab6();
 	void InitSpreadTab7();
 
+	void InitTabCtrl();
 	void TabChange(int nTap);
 	void TabRestore();
 
