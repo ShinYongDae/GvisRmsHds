@@ -5298,3 +5298,28 @@ BOOL CGvisRmsHdsDoc::LoadSpecPreset(CString nSelectString, BOOL bUseTempBuf)
 	*/
 	return TRUE;
 }
+
+
+float CGvisRmsHdsDoc::GetSpecValuePxlMicron(float input)	//20100122-ndy for use micron to spec
+{
+	float fRet;
+
+	//if (m_bUseMicron2Spec)
+	//	fRet = input * SizeData[COMMON_PARAMETER].fPixelSize;
+	//else
+		fRet = input;
+
+	return(fRet);
+}
+
+float CGvisRmsHdsDoc::GetSpecValueMicronPxl(float input)	//20100122-ndy for use micron to spec
+{
+	float fRet;
+
+	//if (m_bUseMicron2Spec)
+	//	fRet = input * SizeData[COMMON_PARAMETER].fMicron2Pixel;
+	//else
+		fRet = input;
+
+	return(fRet);
+}

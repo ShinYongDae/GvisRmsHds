@@ -19,6 +19,9 @@ CDlgSpec::CDlgSpec(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_DLG_SPEC, pParent)
 {
 	m_hDlgSpecBkBrush = NULL;
+	InitSpecParam();
+	InitTab();
+	InitSpecTempParam();
 }
 
 CDlgSpec::~CDlgSpec()
@@ -63,6 +66,702 @@ END_MESSAGE_MAP()
 
 
 // CDlgSpec 메시지 처리기입니다.
+void CDlgSpec::InitSpecParam()
+{
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	int i = 0;
+
+	for (i = 0; i < 15; i++)
+	{
+		m_fLineWdDeltaGradViolation[i] = 0; //130813 lgh fix
+		m_fExcsWdDeltaGradViolation[i] = 0; //130813 lgh fix	
+
+		m_fNarrowTraceViolation[i] = 0; //130813 lgh fix
+		m_fWideTraceViolation[i] = 0; //130813 lgh fix
+	}
+
+	// Spec Line Group
+	m_fNominalLine = 50.0f;
+	m_fRealNormLine = 45.0f;
+	//20090228 hjc
+	m_nNickGray = 120;
+	m_nOpenGray = 120;	//150410 hjc add
+	m_nHalfSideNickDiffBrightGray = 35;
+	m_nHalfSideNickDiffDarkGray = 60;
+	m_strMinSP = _T("Normal");
+
+	for (i = 0; i < 15; i++)
+	{
+		m_strNick[i] = _T("Normal");	//150611 hjc add
+		m_strProtrusion[i] = _T("Normal");
+		m_strFineNick[i] = _T("Normal");
+		m_strFineProtrusion[i] = _T("Normal");
+
+
+		m_nNickPercent[i] = 60;
+		m_nProtrusionPercent[i] = 140;
+
+		m_nExcsNGFilterPercent[i] = 140;
+		m_nNickNGFilterPercent[i] = 70;
+	}
+
+	m_nMinSPPercent = 60;
+
+	m_nSpaceNGFilterPercent = 70;
+	//20090228 hjc
+	m_fSpWdDeltaGradViolation = 2.0f * pDoc->SizeData[COMMON_PARAMETER].fPixelSize;
+	m_fSpWdDeltaOuterGradViolation = 2.0f * pDoc->SizeData[COMMON_PARAMETER].fPixelSize;  //20090405 hjc
+	m_fFineMinSpWidth = 1.0;	//121226 hjc add
+
+	//170403 hjc add
+	m_nFineNickGray = 120;
+	m_nFineOpenGray = 120;
+	m_nFineHalfSideNickDiffBrightGray = 35;
+	m_nFineHalfSideNickDiffDarkGray = 35;
+
+	m_MinSpGray = 85;
+
+	m_nNeibSpGrayDiff = 20;  //20090412 hjc
+	m_nPadVDEdgeGray = 100;	//20090420 hjc
+	m_fPadVDEdgeWdDeltaGradViolation = 3.0f * pDoc->SizeData[COMMON_PARAMETER].fPixelSize;	   //20090420 hjc
+	m_nLeadOpenGray = 65;
+	m_fTollerance = 0.0f;
+	m_strThetaAlign = _T("");
+	m_fCompPADLen = 0.0f;
+	m_fMinCheckWidth = 0.0f;
+
+	//20090216 Spec Fines
+	m_fFineMinCheckWidth = 0.0f;
+
+	for (i = 0; i < 15; i++)
+	{
+		m_nFineNickNGFilterPercent[i] = 80;
+		m_nFineExcsNGFilterPercent[i] = 150;
+	}
+
+	// Spec PAD BALLs
+	m_strPadBallPrec = _T("");
+	m_strLP_Prec = _T("");
+	m_nIsLandGray = 0;
+	m_fARLandMin = 0.0f;
+	m_fPADTipMin = 0.0f;
+	m_fIsLandMin = 0.0f;
+	//20090415 hjc
+	m_fVDLocationTolerance = 40.0f;
+	m_fFineVDPadMin = 20.0f;
+	m_fVDPadMin = 0.0f;
+	//20090412 hjc
+	m_nIsLandExtGray = 0;
+	m_fIsLandExtMin = 0.0f;
+
+	//2022 01 10 lgh add
+	m_nCharInspectionGray = 120;
+	m_dCharRegionUpperPercent = 80;
+	m_dCharRegionLowerPercent = 40;
+
+
+	//jun 20120903 for LG_CCL-Inspector
+	m_nCCLGray = 120;
+	m_fCCLCircularity = 1.5;
+	m_fCCLDefSize = 2.0;
+	//------------
+
+	m_nPinHoleGray = 0;
+	m_nPADVoidGray = 0;
+	m_fPinHoleMin = 0.0f;
+	m_fPADVoidMin = 0.0f;
+
+	//20100322 hjc add CO2 Spec
+	m_nHoleLandVoidGray = 120;
+	m_nCO2LandVoidGraySpec = 120;
+	m_strCO2Land_Prec = _T("Normal");
+	m_fCO2LandMin = 20.0f;
+	m_strCO2LandAlignMode = _T("Yes");
+	//end
+
+	// Holes
+	m_fHoleTolerance = 0.0f;
+	m_strHolePrec = _T("");
+	m_nHoleOpenGray = 0;
+	m_nHoleMissingGray = 0;
+	m_nHoleDefSize = 0;
+
+	// CO2
+	m_nCO2MissingGray = 240;	//20191122 mod
+	m_nCO2HoleNum = 5;
+	m_nCO2OpenGray = 80;
+	m_nCO2MisAgnGray = 130;
+	m_nCO2MisAgnDefPercent = 30;	//20191122 mod
+
+									// Others
+	m_cboPTMOD_SIZE = _T("");
+	m_strSelectVaccum = _T("Both");	//20100210 hjc add
+	m_fDefMaskSize = 0.0f;
+	m_fNearDefLen = 0.0f;
+	m_nAlignTolerance = 35;
+
+	m_nLockedSpecNickDiffBrightGrayUpperLimit = 0;// - 842150451	int
+	m_nLockedSpecNickDiffBrightGrayLowerLimit = 0;// - 842150451	int
+	m_nLockedSpecNickDiffDarkGrayUpperLimit = 0;//- 842150451	int
+	m_nLockedSpecNickDiffDarkGrayLowerLimit = 0;//- 842150451	int
+	m_nLockedSpecExcsGrayLowerLimit = 0;// - 842150451	int
+	m_nLockedSpecExcsGrayUpperLimit = 0;//- 842150451	int
+	m_nLockedSpecLeadOpenGrayUpperLimit = 0;//- 842150451	int
+	m_nLockedSpecLeadOpenGrayLowerLimit = 0;//- 842150451	int
+	m_fLockedSpecMinChkWidthUpperLimit = 0;// - 6.2774385622041925e+66	double
+	m_fLockedSpecMinChkWidthLowerLimit = 0;//- 6.2774385622041925e+66	double
+	m_nLockedSpecExcsNGFilterPercentUpperLimit = 0;// - 842150451	int
+	m_nLockedSpecExcsNGFilterPercentLowerLimit = 0;// - 842150451	int
+	m_nLockedSpecMinSpGrayUpperLimit = 0;//- 842150451	int
+	m_nLockedSpecMinSpGrayLowerLimit = 0;//- 842150451	int
+	m_nLockedSpecNeibSpGrayDiffUpperLimit = 0;// - 842150451	int
+	m_nLockedSpecNeibSpGrayDiffLowerLimit = 0;//- 842150451	int
+	m_fLockedSpecMinSpWidthUpperLimit = 0;// - 6.2774385622041925e+66	double
+	m_fLockedSpecMinSpWidthLowerLimit = 0;// - 6.2774385622041925e+66	double
+	m_nLockedSpecSpaceNGFilterPercentUpperLimit = 0;//- 842150451	int
+	m_nLockedSpecSpaceNGFilterPercentLowerLimit = 0;// - 842150451	int
+
+	m_nSpecComboIndex = 0;//- 842150451	int
+
+	m_PADARFlag = 0;// - 842150451	int
+	m_PADCO2Flag = 0;//- 842150451	int
+	m_PADTipFlag = 0;// - 842150451	int
+	m_PADSmFlag = 0;//- 842150451	int
+	m_PADLgFlag = 0;//- 842150451	int
+	m_PADSpaceFlag = 0;//- 842150451	int
+	m_nTabNum = 0;// - 842150451	int
+	for (i = 0; i < 15; i++)
+	{
+		m_nFineNickPercent[i] = 110;// -842150451	int
+		m_nFineProtrusionPercent[i] = 110;// -842150451	int
+	}
+	m_nUSDarkGrayMinus = 35;// -842150451	int
+	m_fMinSpWidth = 0;// -6.2774385622041925e+66	double
+
+	for (i = 0; i < 15; i++)
+	{
+		m_fFineLineWdDeltaGradViolation[i] = 0;// -431602080.	float
+		m_fFineExcsWdDeltaGradViolation[i] = 0;// -431602080.	float
+	}
+
+	m_nPadEdgeNickGray = 0;//- 842150451	int
+	m_nPadEdgeNeibGrayDiff = 0;//- 842150451	int
+	m_nPadEdgeBADiffDarkGray = 0;//- 842150451	int
+	m_fPadEdgeNickWdDeltaGradViolation = 0;// - 431602080.	float
+	m_fPadEdgeExcsWdDeltaGradViolation = 0;//- 431602080.	float
+	m_nPadVDEdgeGray = 0;//	100	int
+	m_fPadVDEdgeWdDeltaGradViolation = 0;//	0.000000000	float
+	m_nHoleEdgeNickGray = 0;// - 842150451	int
+	m_nHoleEdgeNeibGrayDiff = 0;//- 842150451	int
+	m_fHoleEdgeNickWdDeltaGradViolation = 0;//- 431602080.	float
+	m_fHoleEdgeExcsWdDeltaGradViolation = 0;// - 431602080.	float
+	m_nViaEdgeNickGray = 0;// - 842150451	int
+	m_nViaEdgeNeibGrayDiff = 0;// - 842150451	int
+	m_fViaEdgeNickWdDeltaGradViolation = 0;// - 431602080.	float
+	m_fViaEdgeExcsWdDeltaGradViolation = 0;//- 431602080.	float
+
+	m_fHoleDiaLower = 0;//- 431602080.	float
+	m_fHoleDiaUpper = 0;//- 431602080.	float
+	m_nHoleInnerGray = 0;//- 842150451	int
+	m_dPanelSizeX = DEFAULT_PANEL_SIZE_X;// -6.2774385622041925e+66	double
+	m_dPanelSizeY = DEFAULT_PANEL_SIZE_Y;// -6.2774385622041925e+66	double
+}
+
+void CDlgSpec::InitSpecTempParam()
+{
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
+
+	int i = 0;
+
+	pDoc->SpecTempData.nLineWidthGroupNum = 0;
+	pDoc->SpecTempData.nLineWidthGroupNum = 0;
+	pDoc->SpecTempData.nDimpleCopperMissNum = 0;
+	pDoc->SpecTempData.nDimpleLowerGray = 0;
+	pDoc->SpecTempData.nDimpleRingNum = 0;
+	pDoc->SpecTempData.nDimpleUpperGray = 0;
+
+	pDoc->SpecTempData.nBTVGraySpecLower = 0;
+	pDoc->SpecTempData.nBTVGraySpecUpper = 0;
+	pDoc->SpecTempData.nBTViaMin = 0;
+	pDoc->SpecTempData.nBTVRingClosingNumber = 0;
+
+	pDoc->SpecTempData.fNominalLineWidth = 50.0;
+	pDoc->SpecTempData.fRealNominalLineWidth = 40.0;
+	pDoc->SpecTempData.fMinLineWidth = 20.0;
+
+	pDoc->SpecTempData.nNickGraySpec = 120;		// gray spec of nick defect detection
+	pDoc->SpecTempData.nOpenGraySpec = 120;		//150410 hjc add
+	pDoc->SpecTempData.nHalfSideNickDiffBrightGray = 35;
+	pDoc->SpecTempData.nHalfSideNickDiffDarkGray = 60;
+
+	//170403 hjc add
+	pDoc->SpecTempData.nFineNickGraySpec = 120;
+	pDoc->SpecTempData.nFineOpenGraySpec = 120;
+	pDoc->SpecTempData.nFineHalfSideNickDiffBrightGray = 35;
+	pDoc->SpecTempData.nFineHalfSideNickDiffDarkGray = 35;
+
+	//150515 hjc move start
+	pDoc->SpecTempData.bSkipChkInVDLine = FALSE;
+	pDoc->SpecTempData.bCheckSilverPasteVia = FALSE;	//121128 hjc add
+	pDoc->SpecTempData.nVHOutBreakCnt = 2;
+	//150515 hjc move end
+	pDoc->SpecTempData.nVHTapingTolerence = 0;	//20230508 add
+	pDoc->SpecTempData.nVHTapingMinMaxDiff = 0;	//20230627 add
+	pDoc->SpecTempData.bChkViaMultidia = FALSE;	//20230628 add
+	pDoc->SpecTempData.nVHInnerGray = 0;			//20230711 add
+	pDoc->SpecTempData.nVHMinMaxDiaRatio = 60;	//20230713 add
+
+	pDoc->SpecTempData.fSpWdDeltaOuterGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec  //20090405 hjc
+	pDoc->SpecTempData.fSpWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+	pDoc->SpecTempData.fFineMinSpWidth = 1.0f;	//121226 hjc add
+
+	for (i = 0; i < 15; i++)
+		pDoc->SpecTempData.szNickSize[i][0] = NULL;		// detect precision(string) of nick defect
+
+	for (i = 0; i < 15; i++)
+		pDoc->SpecTempData.nNickPercent[i] = 60;		// detect precision(%) of nick defect 
+
+	pDoc->SpecTempData.szPADFine_PrecName[0] = NULL;
+	pDoc->SpecTempData.PADFine_Prec = 0;
+
+	pDoc->SpecTempData.nMinSpaceGraySpec = 0;	// gray spec of minimum space violation defect detection
+	pDoc->SpecTempData.szMinSPSize[0] = NULL;		// detect precision(string) of minimum space violation defect
+	pDoc->SpecTempData.nMinSPPercent = 70;		// detect precision(%) of PAD minimum space violation defect
+
+	pDoc->SpecTempData.nThinIter = 0;			// iteration value of thinning to pattern 
+	pDoc->SpecTempData.nMinSpaceThinIter = 0;	// iteration value of thinning to minimum space   
+
+	pDoc->SpecTempData.fMinSpWidth = 0.0;			// minimum space width
+
+											//20090420 hjc
+	pDoc->SpecTempData.nNeibSpGrayDiff = 20;
+	pDoc->SpecTempData.nUSDarkGrayMinus = 20;	//150413 hjc add
+	pDoc->SpecTempData.nPadVDEdgeGray = 100;
+	pDoc->SpecTempData.fPadVDEdgeWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(3.0f);	//20100122-ndy for use micron to spec
+
+																							//150802 hjc add
+	pDoc->SpecTempData.bPtModelUsingTinyFeature = FALSE;
+	pDoc->SpecTempData.nTinyFeaturePitch = 0;
+	pDoc->SpecTempData.nUnderLayer = 0;	//160330 hjc add
+
+	pDoc->SpecTempData.nHoleMissingGray = 150;		// gray spec of hole defect detection
+	pDoc->SpecTempData.nHoleOpenGray = 50;		    // Hole Open Gray
+	pDoc->SpecTempData.nHoleInnerGray = max(35, min(220, (pDoc->SpecTempData.nHoleOpenGray + pDoc->SpecTempData.nHoleMissingGray * 4) / 5));
+
+	pDoc->SpecTempData.bOneSideCheckUShort = 1;		// 
+
+	for (i = 0; i < 15; i++)
+		pDoc->SpecTempData.szProtrusionSize[i][0] = NULL;// detect precision(string) of protrusion defect
+
+	for (i = 0; i < 15; i++)
+		pDoc->SpecTempData.nProtrusionPercent[i] = 140;   // detect precision(%) of protrusion defect
+
+													//161228 lgh
+	for (i = 0; i < INSP_MODE_COUNT; i++)
+	{
+		for (int j = 0; j < LIGHT_CHANNEL_NUM; j++)
+			pDoc->SpecTempData.nInspectLight[j][i] = 50;
+	}
+
+	for (int j = 0; j < LIGHT_CHANNEL_NUM; j++)
+	{
+		pDoc->SpecTempData.nFocusAdjustLight[i] = 0;
+		pDoc->SpecTempData.nAlignLight[i] = 0;
+	}
+
+	pDoc->SpecTempData.fDefMaskSize = 100.0;		// double type defect mask size
+	pDoc->SpecTempData.nDefMaskSize = 0;		    // integer type defect mask size
+
+	pDoc->SpecTempData.fNearDefLen = 100.0;			// double type near defect length
+	pDoc->SpecTempData.nNearDefLen = 0;			// integer type near defect length
+
+	pDoc->SpecTempData.nLeadOpenGray = 70;		    // gray spec of lead portion
+
+	for (i = 0; i < INSP_MODE_COUNT; i++)
+	{
+		pDoc->SpecTempData.nUseManualLUT[i] = 0;         // 20080326 ljg add
+		pDoc->SpecTempData.nLowerGray[i] = 25;
+		pDoc->SpecTempData.nUpperGray[i] = 225;
+		//	pDoc->SpecTempData.nThreshold = (pDoc->SpecTempData.nUpperGray + pDoc->SpecTempData.nLowerGray)/2;
+		pDoc->SpecTempData.nThreshold[i] = ((pDoc->SpecTempData.nUpperGray[i] + pDoc->SpecTempData.nLowerGray[i]) / 2) - ((pDoc->SpecTempData.nUpperGray[i] - pDoc->SpecTempData.nLowerGray[i]) / 10);
+		pDoc->SpecTempData.HistoThreshold[i] = pDoc->SpecTempData.nThreshold[i];  // 20090721 add
+	}
+	pDoc->SpecTempData.szPADRLPrecName[0] = NULL; // detect precision(string) of RunLength of PAD
+	pDoc->SpecTempData.szLPADRLName[0] = NULL; // ..
+	pDoc->SpecTempData.szSPRLName[0] = NULL;
+	pDoc->SpecTempData.szSPACEEXTRLName[0] = NULL;
+	pDoc->SpecTempData.szPADFine_PrecName[0] = NULL;
+	pDoc->SpecTempData.szARLandPrecName[0] = NULL;
+	pDoc->SpecTempData.szCO2LandPrecName[0] = NULL;
+	pDoc->SpecTempData.szPADTipPrecName[0] = NULL;
+
+	pDoc->SpecTempData.fHoleTolerance = 0.0;     // double type hole tolerance
+	pDoc->SpecTempData.szHoleRLPrecName[0] = NULL; // ..
+	pDoc->SpecTempData.nHoleRLPrec = 0;			// Hole 내부 검퍊E불감큱E크콅E
+
+	pDoc->SpecTempData.nHoleDefNum = 0;          // Hole 내부 불량크콅E
+
+
+
+										   //20100210 hjc add
+	pDoc->SpecTempData.strSelectVaccum[0] = NULL;
+	pDoc->SpecTempData.nSelectVaccum = 1;
+
+	pDoc->SpecTempData.nCO2MissingGray = 0;
+	pDoc->SpecTempData.nCO2MisAgnGray = 0;
+	pDoc->SpecTempData.nCO2HoleNum = 0;
+	pDoc->SpecTempData.nCO2MisAgnDefPercent = 30;
+	pDoc->SpecTempData.nCO2OpenGray = 0;
+	pDoc->SpecTempData.nCO2InOutGrayDiff = 20;
+	// 20080310 ljg add
+	pDoc->SpecTempData.nCO2InnerBrightDefPercent = 30;
+	pDoc->SpecTempData.nCO2InnerSaturationGray = 230;
+	pDoc->SpecTempData.fCO2InnerBrightSrchDiaRatio = 1.0f;
+	// 091214 jsy
+	pDoc->SpecTempData.fCO2InnerRoughness = 0.0f;
+	pDoc->SpecTempData.fCO2InnerRoughnessSrchDiaRatio = 0.0f;
+	// 100429 jsy
+	pDoc->SpecTempData.nSudInOutLowerGray = 0;
+	pDoc->SpecTempData.nSudInOutUpperGray = 0;
+	pDoc->SpecTempData.fSudInOutDefSize = 0;
+	pDoc->SpecTempData.bImagePolarity = FALSE;
+	pDoc->SpecTempData.fAICLTolerance = 15.0f; //150806 hjc mod
+	pDoc->SpecTempData.nBoundChkGray = 35;
+	pDoc->SpecTempData.nShrinkSize = 0;
+
+	//110620 hjc add
+	pDoc->SpecTempData.bCheckFiducialMark = FALSE;
+	pDoc->SpecTempData.fFMDArea = 50.0f;
+	pDoc->SpecTempData.fFMDSizeX = 80.0f;
+	pDoc->SpecTempData.fFMDSizeY = 80.0f;
+	pDoc->SpecTempData.fFMDPtRangePlus = 15.0f;
+	pDoc->SpecTempData.fFMDPtScore = 80.0f;
+	//end
+
+	pDoc->SpecTempData.fVDRingWidthPixel = 0.0f;       // 20080430 add
+	pDoc->SpecTempData.fVHRingWidthPixel = 0.0f;       // 20120410 jsy
+
+	pDoc->SpecTempData.bUseVDRingWidthFilter = FALSE;   // 20080430 add
+	pDoc->SpecTempData.bExtensionHoleSearch = FALSE;		//20100517 hjc add
+	pDoc->SpecTempData.bInspLargeHole = TRUE;		//130915 hjc add
+	pDoc->SpecTempData.bInspSmallHole = FALSE;	//140325 hjc add
+
+	pDoc->SpecTempData.bUseRawGrayPinHole = FALSE;		//20080516 add
+	pDoc->SpecTempData.bUseRawGrayPADDefect = FALSE;	    //20080516 add
+													//20190729 add start
+	pDoc->SpecTempData.bUseNewRawGrayPADDefect = FALSE;
+	pDoc->SpecTempData.bUseNewRawGrayPinHole = FALSE;
+	pDoc->SpecTempData.bUseNewRawGrayForIsland = FALSE;
+	//20190729 add end
+	pDoc->SpecTempData.bUseLocalRleBlock = FALSE;
+	pDoc->SpecTempData.bUseRelPinHoleRadient = TRUE;	//130604 hjc add
+
+												//20091117 //110728 jsy mod
+	pDoc->SpecTempData.nHoleMeasDiaSuccessivePixel = 1; // 20160503 chg
+	pDoc->SpecTempData.nLargeCircle_Check_InnerOuter_Pixels = 3;	//130726 hjc add
+	pDoc->SpecTempData.nSmallCircle_Check_Inner_Pixels = 3;	//140325 hjc add
+	pDoc->SpecTempData.nVDHoleMinMaxDiffGrayPlus = 10;	//120131 hjc add
+
+	pDoc->SpecTempData.nDiffDeltaPxlARCO2 = 3;	//141105 hjc add	
+											//20090412 hjc
+	pDoc->SpecTempData.bUseRawGrayForIsland = FALSE;
+	pDoc->SpecTempData.nBrightIslandGrayPlus = 30;
+	pDoc->SpecTempData.nDarkIslandGrayMinus = 30;
+	//--------------
+
+	pDoc->SpecTempData.nVHEdgeThrDiffGray = 35;
+	pDoc->SpecTempData.nVHBreakOutGray = 100;
+	pDoc->SpecTempData.nVHDissmearGray = 35;
+	pDoc->SpecTempData.nVHContiBreakOutNum = 4;
+	for (i = 0; i < 15; i++)
+	{
+		pDoc->SpecTempData.nNickNGFilterPercent[i] = 70;	    // detect sensitivity of excess defect
+		pDoc->SpecTempData.nExcsNGFilterPercent[i] = 140;	// detect sensitivity of excess defect
+	}
+	pDoc->SpecTempData.nSpaceNGFilterPercent = 70;
+
+	pDoc->SpecTempData.nIsLandMode = MODE_YES;
+	pDoc->SpecTempData.szIsLandMode[0] = NULL;
+	pDoc->SpecTempData.fARLandMin = 30.0;
+	pDoc->SpecTempData.fPADTipMin = 20.0;
+	pDoc->SpecTempData.fIsLandMin = 0.0;
+	pDoc->SpecTempData.nARLandMin = 0;
+	pDoc->SpecTempData.nIsLandMin = 0;
+	pDoc->SpecTempData.nVDLocationTolerancePixel = 0;	//20090419 hjc
+
+												//120515 jsy
+	pDoc->SpecTempData.nBTViaMin = 18;
+	pDoc->SpecTempData.nBTVRingClosingNumber = 2;
+	pDoc->SpecTempData.nBTVGraySpecUpper = 45;
+	pDoc->SpecTempData.nBTVGraySpecLower = 55;
+
+	//121206 jsy
+	pDoc->SpecTempData.nDimpleLowerGray = 0;
+	pDoc->SpecTempData.nDimpleUpperGray = 0;
+	pDoc->SpecTempData.nDimpleCopperMissNum = 3;
+	pDoc->SpecTempData.fDimpleCopperSearchRatio = 0.25;
+	pDoc->SpecTempData.nDimpleRingNum = 220;
+
+	//20100322 hjc add
+	pDoc->SpecTempData.nHoleLandVoidGray = 120;
+	pDoc->SpecTempData.nCO2LandVoidGraySpec = 120;
+	pDoc->SpecTempData.szCO2LandPrecName[0] = NULL;
+	pDoc->SpecTempData.fCO2LandMin = 20.0f;
+	strcpy(pDoc->SpecTempData.szCO2LandAlignMode, "Yes");
+	if (strcmp(pDoc->SpecTempData.szCO2LandAlignMode, "Yes") == 0)		//130420 hjc add
+		pDoc->SpecTempData.nCO2LandAlignMode = 1;
+	else
+		pDoc->SpecTempData.nCO2LandAlignMode = 0;
+	//end
+
+	//20090412 hjc
+	pDoc->SpecTempData.fIsLandExtMin = 0.0f;
+	pDoc->SpecTempData.nIsLandExtMin = 0;
+	pDoc->SpecTempData.nIsLandExtGray = 0;
+	pDoc->SpecTempData.nCCLGray = 120;	//jun 20120903 for LG_CCL-Inspector
+	pDoc->SpecTempData.fCCLCircularity = 1.5;
+	pDoc->SpecTempData.fCCLDefSize = 2.0;
+	//----------
+	pDoc->SpecTempData.nIsLandGraySpec = 0;
+
+	pDoc->SpecTempData.nCO2LandMin = 0;
+
+	pDoc->SpecTempData.nPinHoleMode = MODE_YES;
+	pDoc->SpecTempData.szPinHoleMode[0] = NULL;
+	pDoc->SpecTempData.fPinHoleMin = 0.0;
+	pDoc->SpecTempData.fPADVoidMin = 0.0;
+	pDoc->SpecTempData.nPinHoleMin = 0;
+	pDoc->SpecTempData.nPADVoidMin = 0;
+	pDoc->SpecTempData.nPinHoleGraySpec = 0;
+	pDoc->SpecTempData.nPADVoidGraySpec = 120;
+	pDoc->SpecTempData.nVDrillDiffBrightGray = 40;
+	pDoc->SpecTempData.nVDrillDiffDarkGray = 120;
+
+	pDoc->SpecTempData.fFocusPos = 0.0;       // 2005,10,15일 float?E【?double?E막?변컖Ekhc
+	pDoc->SpecTempData.fFocus2Pos = 0.0;       // 2005,10,15일 float?E【?double?E막?변컖Ekhc
+	pDoc->SpecTempData.fMagPos = 0.0;			// 2005,10,31일 추가,khc
+										// 2001.8.16 Temp 
+	pDoc->SpecTempData.fVariZoomPos = 0.0;    // 1 camera 방식 2005,10,15일 short?E【?double?E막?변컖Ekhc
+
+	pDoc->SpecTempData.nAlignTolerance = 35;	// Alignment tolerance
+
+	pDoc->SpecTempData.m_strRefLoc[0] = "";
+	pDoc->SpecTempData.m_strRefLoc[1] = "";
+	pDoc->SpecTempData.m_strRefLoc[2] = "";
+	pDoc->SpecTempData.m_strRefLoc[3] = "";
+	pDoc->SpecTempData.m_strRefLoc[4] = "";
+	pDoc->SpecTempData.m_strRefLoc[5] = "";
+	pDoc->SpecTempData.m_strReferShared = "";
+	pDoc->SpecTempData.m_strAOIRefer = "";
+	pDoc->SpecTempData.m_strRefDataPCName = "";
+
+	pDoc->SpecTempData.nPTModelSize = 0;   // Pattern model size
+
+	pDoc->SpecTempData.bGTCShakeExtend = FALSE;
+	pDoc->SpecTempData.nGTCShakeNumber = 0;
+	pDoc->SpecTempData.nResizingSize = 0;
+
+	pDoc->SpecTempData.nMasterLoc = 0;    // Master Location
+
+	pDoc->SpecTempData.fOEExceptLen = 15.0;
+	pDoc->SpecTempData.fOEExceptSpaceLen = 15.0f; // 15um	//150625 hjc add
+	pDoc->SpecTempData.fSROEExceptLen = 15.0;
+
+	pDoc->SpecTempData.fHoleFillExt = pDoc->SizeData[COMMON_PARAMETER].fPixelSize * 2;
+	pDoc->SpecTempData.nHoleFillExt = 0;
+
+	pDoc->SpecTempData.fCO2HoleFillExt = pDoc->SizeData[COMMON_PARAMETER].fPixelSize * 15;	//20100323 hjc add
+	pDoc->SpecTempData.nCO2HoleFillExt = 15;
+
+	pDoc->SpecTempData.fVDLocationTolerance = 40.0f;	//20090419 hjc
+	pDoc->SpecTempData.fVDPadMin = 20.0;
+	pDoc->SpecTempData.nVDPadMin = 1;
+	pDoc->SpecTempData.nBestPMIndex = 1;  // 에칭없음
+	pDoc->SpecTempData.fHoleDiaUpper = 1.5f;
+	pDoc->SpecTempData.fHoleDiaLower = 0.6f;
+	pDoc->SpecTempData.fHoleLandSizeRatio = 1.7f;   // Land의 1.7퉩E
+											  //20100511 hjc add
+	pDoc->SpecTempData.nAREdgeDiffGray = 20;
+	pDoc->SpecTempData.nARBreakCnt = 3;
+
+	//end
+	for (i = 0; i < 15; i++)
+	{
+		pDoc->SpecTempData.fLineWdDeltaGradViolation[i] = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+		pDoc->SpecTempData.fExcsWdDeltaGradViolation[i] = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+
+		pDoc->SpecTempData.fNarrowTraceViolation[i] = 0.0f;	//20100122-ndy for use micron to spec	//151215 hjc mod GetSpecValuePxlMicron(2.0f) -> 0.0
+		pDoc->SpecTempData.fWideTraceViolation[i] = 0.0f;	//20100122-ndy for use micron to spec
+		pDoc->SpecTempData.fLineWidthGroupAdjusted[i] = 0.0f;
+		pDoc->SpecTempData.fLineWidthGroupLower[i] = 0.0; //170524
+
+	}
+
+	pDoc->SpecTempData.fSpWdDeltaOuterGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec  //20090405 hjc
+	pDoc->SpecTempData.fSpWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+
+	if (pDoc->SpecTempData.nLineWidthGroupNum < 1)
+	{
+		pDoc->SpecTempData.fNarrowTraceViolation[0] = 0.0f;	//20100122-ndy for use micron to spec	//151215 hjc mod GetSpecValuePxlMicron(2.0f) -> 0.0
+		pDoc->SpecTempData.fWideTraceViolation[0] = 0.0f;	//20100122-ndy for use micron to spec
+		pDoc->SpecTempData.fLineWidthGroupAdjusted[0] = 0.0f;
+		pDoc->SpecTempData.fLineWidthGroupLower[0] = 0.0; //170524
+	}
+
+	//20090216 Spec Fines
+	for (i = 0; i < 15; i++)
+	{
+		pDoc->SpecTempData.fFineLineWdDeltaGradViolation[i] = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+		pDoc->SpecTempData.fFineExcsWdDeltaGradViolation[i] = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+	}
+
+	if (pDoc->SpecTempData.nLineWidthGroupNum < 1)
+	{
+		pDoc->SpecTempData.fFineNarrowTraceViolation[0] = 0.0f;	//20100122-ndy for use micron to spec
+		pDoc->SpecTempData.fFineWideTraceViolation[0] = 0.0f;	//20100122-ndy for use micron to spec
+	}
+
+	for (i = 0; i < 15; i++)
+	{
+		//20090216 chg
+		pDoc->SpecTempData.nFineNickPercent[i] = 70;
+		pDoc->SpecTempData.nFineProtrusionPercent[i] = 135;
+	}
+
+	pDoc->SpecTempData.fHoleEdgeExcsWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);  // 111214 hjc mod
+	pDoc->SpecTempData.fHoleEdgeNickWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);  // 20080517
+	pDoc->SpecTempData.fViaEdgeNickWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);
+	pDoc->SpecTempData.fViaEdgeExcsWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);
+	pDoc->SpecTempData.fPadEdgeExcsWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+	pDoc->SpecTempData.fPadEdgeNickWdDeltaGradViolation = pDoc->GetSpecValuePxlMicron(2.0f);	//20100122-ndy for use micron to spec
+	pDoc->SpecTempData.nHoleEdgeNickGray = 90;	//111214 hjc mod
+	pDoc->SpecTempData.nHoleEdgeNeibGrayDiff = 30;		//120109 hjc add
+	pDoc->SpecTempData.nPadEdgeNickGray = 90;
+	pDoc->SpecTempData.nPadEdgeNeibGrayDiff = 30;		//120105 hjc add
+	pDoc->SpecTempData.nPadEdgeBADiffDarkGray = 60;
+	pDoc->SpecTempData.nViaEdgeNickGray = 90;
+	pDoc->SpecTempData.nViaEdgeNeibGrayDiff = 30;		//120109 hjc add
+
+	pDoc->SpecTempData.fFinePADVoidMin = 20.0f;	// 20080525			//090324-ndy
+
+	pDoc->SpecTempData.nFinePADVoidGraySpec = 20;  // 20080525		
+
+	pDoc->SpecTempData.fFineMinSpWidth = 1.0f;	//121226 hjc add
+											//20090215 add
+	pDoc->SpecTempData.nSpLgDarkGrayMinus = 30;
+	pDoc->SpecTempData.nVDNeibPMMinMaxDiffGray = 40;	//131216 hjc add
+	pDoc->SpecTempData.nMeasureNum = 15;	//150920 hjc add
+	pDoc->SpecTempData.nNeibDarkGrayTot = 2;	//130528 hjc add
+	pDoc->SpecTempData.nNeibBrightGrayTot = 1;	//130528 hjc add
+	pDoc->SpecTempData.nDarkSpaceMin = 0;    // Pixel  , Default : 0  // 20080330 ljg
+
+									   // 20090324 ljg
+	pDoc->SpecTempData.nBrightPinHoleGrayPlus = 35;
+	pDoc->SpecTempData.nDarkPinHoleGrayMinus = 35;
+	pDoc->SpecTempData.fDarkPinHoleNeibGrayMinusApplyRatio = 0.5f;  //20090405 hjc
+	pDoc->SpecTempData.fBrightPinHoleNeibGrayPlusApplyRatio = 0.5f;  //20090405 hjc
+	pDoc->SpecTempData.nBrightPADDefGrayPlus = 35;
+	pDoc->SpecTempData.nDarkPADDefGrayMinus = 35;
+	pDoc->SpecTempData.fRlsPadDefSize = 50.0f;		//130528 hjc add
+	pDoc->SpecTempData.fRlsPinHoleDefSize = 60.0f;
+	pDoc->SpecTempData.nExcludePadDefEdgePixel = 3;	//130529 hjc add
+	pDoc->SpecTempData.nExcludePinHoleEdgePixel = 5;
+	pDoc->SpecTempData.fPinHoleBreadthLimitPixel = 0.0; // Pixel
+	pDoc->SpecTempData.fPinHoleCompacenessLimit = 0.0;
+	pDoc->SpecTempData.nPinHoleClosingIteration = 3;
+	pDoc->SpecTempData.fPinHoleMergeDistance = 50.0f;
+	// 20090324 ljg
+	pDoc->SpecTempData.nPinHoleOpeningIteration = 1;  // 20090326 ljg NY-add
+
+	pDoc->SpecTempData.nPadDefClosingIteration = 0;	// 120501 jsy
+	pDoc->SpecTempData.nPadDefOpeningIteration = 0;
+
+	pDoc->SpecTempData.nSpaceUnderLayerEffectGrayPlus = 0;  // 20090301 ljg
+	pDoc->SpecTempData.nCenterlineOffsetTolerance = 4;	//20230704 add
+													//160330 hjc add
+	pDoc->SpecTempData.nUnderLayerCutTh = 0;	//20220823 mod 75;
+	pDoc->SpecTempData.nSpUnderLayerLowerGray = 15;
+	pDoc->SpecTempData.nSpUnderLayerUpperGray = 25;
+	pDoc->SpecTempData.fSpUnderLayerDefSize = 3.0f;
+	//160330 hjc add end
+	// 20090305 ljg
+	pDoc->SpecTempData.bUseFixedPMId = FALSE;          // Default : Must be FALSE
+	pDoc->SpecTempData.bExtensionSpaceTrace = FALSE;	//111003 hjc add
+	pDoc->SpecTempData.nSpMinMaxDiffGray = 15;	//111005 hjc add
+	pDoc->SpecTempData.nFixedPMId = 1;
+
+	pDoc->SpecTempData.bApplySCurveEdge = 0; //2022 12 16 lgh add
+
+									   //140425 hjc add
+	pDoc->SpecTempData.bChkWideOpen = FALSE;
+	pDoc->SpecTempData.nWideOpenPxl = 2;
+	pDoc->SpecTempData.bChkTemplateMatch = FALSE;	//20210818 add
+											//20101201 hjc add
+	pDoc->SpecTempData.nSPEdgeNickGray = 90;
+	pDoc->SpecTempData.fSPEdgeNickWdDeltaGradViolation = 2.0f;
+	pDoc->SpecTempData.fSPEdgeExcsWdDeltaGradViolation = 2.0f;
+	pDoc->SpecTempData.nSPEdgeGrayDiff = 25;	//131123 hjc add
+										//end
+										//131031 hjc add
+	pDoc->SpecTempData.nCoreNeutralZone = 1;
+	pDoc->SpecTempData.nCoreDiffGray = 20;
+	pDoc->SpecTempData.nCoreDefSize = 2;
+	//end
+
+	//110701 hjc add
+	pDoc->SpecTempData.bPMImgThresholdEnhancement = FALSE;
+	pDoc->SpecTempData.fAdaptiveThresholdRatio = 50.0f;
+
+	pDoc->SpecTempData.nEdgeSpecDownPxl = 1;
+	pDoc->SpecTempData.nLineWndBoundaryGrayMinus = 0;
+	pDoc->SpecTempData.nSpaceWndBoundaryGrayPlus = 0;
+	pDoc->SpecTempData.fLinkedDefectCntPix = 0.0;	//121022 hjc add
+	//end
+
+	//20160108 ndy add - Start
+	pDoc->SpecTempData.bUseFineIslandInsp = FALSE;
+	pDoc->SpecTempData.nFineIslandRelativeGray = 0;
+	pDoc->SpecTempData.nFineIslandMaxSize = 0;
+	pDoc->SpecTempData.nFineIslandMaskSize = 0;
+
+	pDoc->SpecTempData.bUseFinePinHoleInsp = FALSE;
+	pDoc->SpecTempData.nFinePinHoleRelativeGray = 0;
+	pDoc->SpecTempData.nFinePinHoleMaxSize = 0;
+
+	pDoc->SpecTempData.nGradientUpperLimit = 100;		//20230417 add start
+	pDoc->SpecTempData.nGradientThreshold = 15;
+	pDoc->SpecTempData.nGradientMinSize = 0;
+
+	pDoc->SpecTempData.nPadLgGradientUpperLimit = 200;
+	pDoc->SpecTempData.nPadLgGradientThreshold = 45;
+	pDoc->SpecTempData.nPadLgGradientMinSize = 0;
+	pDoc->SpecTempData.bUseRlsDarkGrayOnly = FALSE;		//20230417 add end
+}
+
+void CDlgSpec::InitTab()
+{
+	int i = 0;
+
+	for (i = 0; i < 8; i++)
+		m_lChangedDataSpreadCellPos[i] = 0x00000000;
+	for (i = 0; i < 8; i++)
+		m_lOldSelectRow[i] = 0; // Tab 6ea
+
+	m_lNewSelectRow[0] = 1;
+	m_lNewSelectRow[1] = 1;
+	m_lNewSelectRow[2] = 1;
+	m_lNewSelectRow[3] = 1;
+	m_lNewSelectRow[4] = 1;
+	m_lNewSelectRow[5] = 1;
+	m_lNewSelectRow[6] = 1;
+	m_lNewSelectRow[7] = 8;	//20100322 hjc add
+
+	m_bEnableCheckBox = FALSE;
+
+}
 
 void CDlgSpec::OnShowWindow(BOOL bShow, UINT nStatus)
 {
@@ -13722,62 +14421,62 @@ void CDlgSpec::LoadSpreadDataTab0()
 	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
 	CGvisRmsHdsDoc *pDoc = (CGvisRmsHdsDoc*)pFrame->GetActiveDocument();
 
-	//m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
-	//CString strTemp;
+	m_Spread.Attach(ConvertTSpread(IDC_FPSPREAD_SPEC1));
+	CString strTemp;
 
-	//m_Spread.SetCol(1);
+	m_Spread.SetCol(1);
 
-	//m_Spread.SetRow(1);
-	//strTemp.Format(_T("%.1f"), m_fNominalLine);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 1 !!!"));
-	//SetSpecAccessItem(0, 1);
+	m_Spread.SetRow(1);
+	strTemp.Format(_T("%.1f"), m_fNominalLine);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 1 !!!"));
+	SetSpecAccessItem(0, 1);
 
-	//m_Spread.SetRow(2);
-	//strTemp.Format(_T("%.1f"), m_fRealNormLine);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 2 !!!"));
-	//SetSpecAccessItem(0, 2);
+	m_Spread.SetRow(2);
+	strTemp.Format(_T("%.1f"), m_fRealNormLine);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 2 !!!"));
+	SetSpecAccessItem(0, 2);
 
-	//m_Spread.SetRow(3);
-	//strTemp.Format(_T("%d"), m_nNickGray);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 3 !!!"));
-	//SetSpecAccessItem(0, 3);
+	m_Spread.SetRow(3);
+	strTemp.Format(_T("%d"), m_nNickGray);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 3 !!!"));
+	SetSpecAccessItem(0, 3);
 
-	////20090216 chg
-	//m_Spread.SetRow(4);
-	//strTemp.Format(_T("%d"), m_nOpenGray);	//150410 hjc add
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 4 !!!"));
-	//SetSpecAccessItem(0, 4);
+	//20090216 chg
+	m_Spread.SetRow(4);
+	strTemp.Format(_T("%d"), m_nOpenGray);	//150410 hjc add
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 4 !!!"));
+	SetSpecAccessItem(0, 4);
 
-	////150413 hjc add
-	//m_Spread.SetRow(5);
-	//strTemp.Format(_T("%d"), m_nHalfSideNickDiffBrightGray);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 5 !!!"));
-	//SetSpecAccessItem(0, 5);
+	//150413 hjc add
+	m_Spread.SetRow(5);
+	strTemp.Format(_T("%d"), m_nHalfSideNickDiffBrightGray);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 5 !!!"));
+	SetSpecAccessItem(0, 5);
 
-	//m_Spread.SetRow(6);
-	//strTemp.Format(_T("%d"), m_nHalfSideNickDiffDarkGray);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 6 !!!"));
-	//SetSpecAccessItem(0, 6);
+	m_Spread.SetRow(6);
+	strTemp.Format(_T("%d"), m_nHalfSideNickDiffDarkGray);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 6 !!!"));
+	SetSpecAccessItem(0, 6);
 
-	//m_Spread.SetRow(7);
-	//strTemp.Format(_T("%d"), m_nLeadOpenGray);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 7 !!!"));
-	//SetSpecAccessItem(0, 7);
+	m_Spread.SetRow(7);
+	strTemp.Format(_T("%d"), m_nLeadOpenGray);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 7 !!!"));
+	SetSpecAccessItem(0, 7);
 
-	//m_Spread.SetRow(8);
-	//strTemp.Format(_T("%.1f"), m_fMinCheckWidth);
-	//m_Spread.SetText(strTemp);
-	//m_Spread.SetCellNote(_T("GigaVis _ Note 8 !!!"));
-	//SetSpecAccessItem(0, 8);
+	m_Spread.SetRow(8);
+	strTemp.Format(_T("%.1f"), m_fMinCheckWidth);
+	m_Spread.SetText(strTemp);
+	m_Spread.SetCellNote(_T("GigaVis _ Note 8 !!!"));
+	SetSpecAccessItem(0, 8);
 
-	//CString strVal;
+	CString strVal;
 
 
 	//if (pDoc->SpecData.nLineWidthGroupNum > 0 && AoiParam()->m_bUseMultilineSpecEx)	//170526 hjc mod

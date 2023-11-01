@@ -9,6 +9,21 @@
 #define LIGHT_CHANNEL_NUM			16
 #define	MAX_CLIENT					6	// Maximum Client number
 #define MAX_MASTERBK_LOC_NUM		10	//ndy070620 - for Multi Master BackUp
+#define MAX_PROCNODENUM				110
+#define MAX_MOTOR_SWATH_NUM			50     // MAX Motor swath num : 500mm/(8k*2.5um) = 25
+#define MAX_CELL_NUM				(MAX_PROCNODENUM * MAX_MOTOR_SWATH_NUM)
+
+#define MAX_SEPERATE_MODEL_NUM_X	2
+#define MAX_SEPERATE_MODEL_NUM_Y	2
+
+#define MAX_RGN_GROUP_NUM			3		// Number of Groups
+#define MAX_RGN_BLOCK_NUM			20		// Number of Blocks
+
+#define COMMON_PARAMETER			0
+
+
+typedef enum { MODE_YES = 0, MODE_NO = 1, MODE_CRITICAL = 2 } Island_Void_Mode;
+
 
 typedef enum 
 {
@@ -611,6 +626,79 @@ typedef struct
 	BOOL bNearDefLenDevide;
 } SPEC_DATA;
 
+typedef struct {
+	int   nPixelPrecision;
+	int   nImageCompression;
+	int   nEntireCell;		// Camera별 Cell Number
+							//	int   nStripCell;
+	int   nNumofMstCell; //Renamed nStripCell
+	int   nIPULoadCellNum[MAX_CLIENT];
+
+	int   OverLapX;
+	int   OverLapY;
+
+	double fPixelSize;	// micron, logical							// ID:70
+	double fPixelSizeX;	// Camera 1 Pixel Size [um],	physical	// ID:71
+	double fPixelSizeY;	// um,	physical, Integer					// ID:73
+	double fMicron2Pixel;
+
+	int   ProcNodeNum;  // Swath 별 ProcNodeNum
+	int   nIPUProcNodeNum[MAX_CLIENT];  // Swath 별 ProcNodeNum
+	int   nCellDivideX, nCellDivideY;				// 하나의 제품 PCS가 뫈犬의 검퍊ECell로 나누엉痺는 펯E 
+
+	int   nWRXPixels;   // work region x pixels
+	int   nWRYPixels;   // work region y pixels
+
+	int   nMSwath;      // Motor Swath
+	int   nCell[MAX_CLIENT];     // IPU별 Cell
+
+	int   nPtCell[8];
+	int   nFocCell[2];
+
+	int*   CellInspID;							// 
+	int*  CellLoadID;							// 
+	int   ProcSizeX, ProcSizeY;						// = ProcSizeX - OvrXPix, = ProcSizeY - OvrYPix
+	int   ProcSizeXNet, ProcSizeYNet;				// = ProcSizeX - OvrXPix, = ProcSizeY - OvrYPix
+	int   GrabSizeX, GrabSizeY;						//  8192에서 IPU별 X Size계퍊E 
+	int   GrabSizeXNet, GrabSizeYNet;				//  GrabSizeXNet = GrabSizeX - (nScanMarginX*2 +OvrXPix) 
+	int   GrabMarginX, GrabMarginY;					// 얼라인을 위한 확장영역 = GrabSizeX - ProcSizeX
+	int   GrabStartX[MAX_CLIENT];				    //  8192에서 IPU별 X Start위치계퍊E
+	int   nGrabUnitNum;
+	int   GrabStartY[2][MAX_PROCNODENUM];				//  연속된버퍼이미지에서 Grab단위 Cell Start Y 위치계퍊E
+	int   GrabEndY[2][MAX_PROCNODENUM];
+	int   nGrabEndUI[2][MAX_PROCNODENUM];
+	int   GrabCenterX[MAX_MOTOR_SWATH_NUM];
+
+	double fMotorStartX[MAX_MOTOR_SWATH_NUM];		// Swath별 모터 x위치 
+	double fMotorStartY[MAX_SEPERATE_MODEL_NUM_X * MAX_SEPERATE_MODEL_NUM_Y][2];					// Scan Start y 위치 0: 정퉩EE1: 역퉩EE
+	double fCellCenterStartY[MAX_SEPERATE_MODEL_NUM_X * MAX_SEPERATE_MODEL_NUM_Y][2];	//151223 lgh 
+	double fScanSize;						// Scan y Length
+	double fImageSize;					// 실제 이미햨E크콅E선행더미 + 패널 크콅E
+
+	int	  nAdjSwath;		// 화상조정을 위한 Swath펯E
+	int	  nAdjCell[MAX_CLIENT];
+	int	  nCADPinPosPixX;
+	int   nCADPinPosPixY;					// Pin Position X, y
+	double fPinPosX;						// mm 좌표컖E
+	double fPinPosY;
+	int   nRefMaxOffsetTolerance;  // 20080525 add
+	double fRefTheta;   // 20080526 ljg
+
+	int nBeModNumPerSwath[MAX_MOTOR_SWATH_NUM];
+	BOOL bModValidIPUPerSwath[MAX_CLIENT][MAX_MOTOR_SWATH_NUM];
+
+#ifndef MEMORY_LESS
+	char  nBlankNode[MAX_CELL_NUM];		// Blank Cell Information, Normal : 0, White : 1, Black : 2
+	char  nPartBlankNode[MAX_CELL_NUM];		// Partial Blank Cell Information, Normal : 0, White : 1, Black : 2
+	char  CellHVDdir[MAX_CELL_NUM];		// 16 Pattern Direction in Cell
+#endif
+
+	BOOL bAllocVirtualCellInspID;
+	BOOL bAllocVirtualCellLoadID;
+
+
+} SIZE_DATA;
+
 
 class CGvisRmsHdsDoc : public CDocument
 {
@@ -622,7 +710,8 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
-	SPEC_DATA SpecData;
+	SPEC_DATA SpecData, SpecTempData;
+	SIZE_DATA SizeData[MAX_RGN_BLOCK_NUM];
 	int m_nSpecNickGrayLowerLimit;
 	int m_nSpecNickGrayUpperLimit;
 	int m_nSpecOpenGrayLowerLimit;
@@ -647,6 +736,11 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+
+
+	float GetSpecValueMicronPxl(float input);
+	float GetSpecValuePxlMicron(float input);
+
 
 protected:
 
